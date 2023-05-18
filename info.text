@@ -7,8 +7,42 @@ When you decide to work on something, just pull from T0DO - to inProgress
 NB! After installing a new package to project – add it to requirements.text    pip freeze > requirements.txt
 
 1. create project
-2. create app.
-3 setup the project
+2. create app.  (Tackle 1by1, easyest first)
+        -- accounts: This application can handle user
+                - authentication,
+                - registration,
+                - profile management.
+        -- posts: The posts application can handle
+                - creating,
+                - editing,
+                - displaying user-generated posts, including text, images, or multimedia content.
+        -- comments: This application can manage the comments section for posts, allowing users to
+                - leave comments,
+                - reply to comments,
+                - moderate discussions.
+        -- likes: The likes application can handle user interactions such as
+                - liking posts,
+                - tracking likes,
+                - displaying the number of likes on each post.
+        -- friends: This application can handle user
+                - connections, allowing users to send friend requests,
+                - accept or decline requests,
+                - manage their list of friends.
+        -- notifications: The notifications application can handle notifying users about important events, such as
+                - receiving new friend requests,
+                - comments on their posts, or
+                - mentions.
+        -- messages: This application can provide functionality for users to send private messages to each other, facilitating direct communication.
+        -- search: The search application can implement search functionality, allowing users to
+                - search for other users,
+                - posts,
+                - specific content within the social media platform.
+
+
+
+#######################################################################################################################
+
+3. setup the project
 Add media & static folders
 - create reqiored folders, models, url paths etc.. ( everythinog to get the project running for start)
 4. create admin / everyone can setup on own .

@@ -1,1 +1,46 @@
-I deleted all files, to see if it allows to start clean..
+
+Backend first
+
+We can add ideas here, and break them down in the SMP section!
+When you decide to work on something, just pull from T0DO - to inProgress
+
+NB! After installing a new package to project – add it to requirements.text    pip freeze > requirements.txt
+
+1. create project
+2. create app.
+3 setup the project
+Add media & static folders
+- create reqiored folders, models, url paths etc.. ( everythinog to get the project running for start)
+4. create admin / everyone can setup on own .
+5. create basic html templates
+6. add authentication
+7. create basic navigation on the page .
+8. make posts display on page
+Enable authentication users only to see posts
+9. impliment comment section on post
+++++++++++++++++++++++++++++++++++
+
+
+
+Frontend ?
+1. firstpage
+  - users see priew of the platform / needs to have some info about the app
+ - users are asked to login / register
+ - logo required
+ -app name required
+ 2. logged in users can create posts
+ - can like
+ -can follow
+ -edit/delete own posts
+ -display large image
+ -images will display howmany likes
+ - users will display how many followers
+ 3. can search for other users
+ 4. feed page will display all posts from all users
+ - display last post created first
+ 5. profile page
+ - edit name
+ - change password
+ - profile image
+ -delete account?
+ 6. also the page must be device compatable , ( look good on mobile aswell as the computer)

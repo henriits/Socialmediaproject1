@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
+from posts import urls as posts_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", include(posts_urls, namespace="posts"))
 ]

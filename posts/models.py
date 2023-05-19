@@ -5,8 +5,8 @@ from sorl.thumbnail import ImageField
 
 
 class Post(models.Model):
-    title = models.CharField(250)
-    text = models.CharField(250)
+    title = models.CharField(max_length=250)
+    text = models.CharField(max_length=250)
     image = ImageField()
 
     def __str__(self):

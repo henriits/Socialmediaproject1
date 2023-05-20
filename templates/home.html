@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-its working?
-</body>
-</html>
+{% extends 'base.html' %}
+
+
+{% block content %}
+ <div class="hero-image">
+    <div class="hero-text">
+      <h1>Welcome to Our Website</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <br>
+        <button type="button" class="btn btn-dark btn-rounded" data-mdb-ripple-color="dark">Have an account? - Login</button>
+        <button type="button" class="btn btn-dark btn-rounded" data-mdb-ripple-color="dark">Don't have one yet? - Register</button>
+    </div>
+  </div>
+
+{% endblock %}

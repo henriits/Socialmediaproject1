@@ -1,30 +1,70 @@
-# Social media project 
+# Social Media Project 
 
-This project aims to develop a social media platform with different functionalities.
+This Python-based social media platform aims to provide users with a range of functionalities. It includes applications for user authentication, post creation and display, comment management, likes, followers connections, notifications, messages, and search. The project covers both backend and frontend development.
 
 Main languages that will be used: 
 Python, Django, jQuery, JavaScript, HTML, CSS, Bootstrap
 
-## Backend development
+
+## Installation Instructions
+
+Clone the repository to your local machine: 
+
+`git clone https://github.com/henriits/Socialmediaproject1.git`
+
+Navigate to the project directory: 
+
+`cd project-directory`
+
+Install the required packages by running the following command: 
+
+`pip install -r requirements.txt`
+
+By following these steps, you will have successfully cloned the project and installed the required dependencies. 
+
+## Backend Development
 
 The backend development will focus on creating the following applications:
 
-**Accounts**: This application handles user authentication, registration, and profile management.
-Posts: The posts application allows users to create, edit, and display user-generated posts, including text, images, or multimedia content.
+**Accounts**:
+- authentication
+- registration
+- profile management
 
-**Comments**: Users can leave comments, reply to comments, and moderate discussions on posts.
+**Posts**: 
+- creating
+- editing
+- displaying user-generated posts, including text, images, or multimedia content
 
-**Likes**: This application handles user interactions such as liking posts, tracking likes, and displaying the number of likes on each post.
+**Comments**: 
+- leave comments
+- reply to comments
+- moderate discussions
 
-**Friends**: Users can send friend requests, accept or decline requests, and manage their list of friends.
+**Likes**: 
+- liking posts
+- tracking likes
+- displaying the number of likes on each post
 
-**Notifications**: This application notifies users about important events, such as receiving new friend requests, comments on their posts, or mentions.
+**Notifications**: 
 
-**Messages**: Users can send private messages to each other, facilitating direct communication.
+Receiving notification regarding:
+- new followers
+- comments on their posts
+- likes
+- mentions
 
-**Search**: The search application implements search functionality, allowing users to search for other users, posts, and specific content within the social media platform.
+**Messages**: 
+- send private messages between users, facilitating direct communication
 
-## Frontend development
+**Search**:
+
+Allows users to:
+- search for other users
+- posts
+- specific content within the social media platform
+
+## Frontend Development
 
 The frontend development will include the following features:
 
@@ -40,6 +80,10 @@ The frontend development will include the following features:
 
 **Responsive Design**: The platform will be compatible with different devices, ensuring a seamless experience on both mobile and desktop.
 
-## Usage
+### Authors 
 
-Once the project is set up and running, users can access the social media platform by visiting the homepage and logging in or registering. From there, they can create posts, interact with other users, search for specific content, and manage their profile. The platform provides a seamless experience for users to connect and engage with each other.
+- Henri Tsarents
+- Kät Ladva
+- Anna Brõnkina
+
+### Credits

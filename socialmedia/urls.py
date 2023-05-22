@@ -18,8 +18,11 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from posts import urls as posts_urls
+from socialmedia.views import UserCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include(posts_urls, namespace="posts"))
+    path("", include(posts_urls, namespace="posts")),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/signup/", UserCreateView.as_view(), name="signup"),
 ]

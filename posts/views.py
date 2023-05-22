@@ -6,7 +6,7 @@ from posts.models import Post
 
 
 # Create your views here.
-class PostView(ListView):
+class AllPostView(ListView):
     model = Post
     template_name = "feed/posts.html"
     success_url = reverse_lazy("posts")

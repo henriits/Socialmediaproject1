@@ -6,8 +6,8 @@ from sorl.thumbnail import ImageField
 
 class Post(models.Model):
     title = models.CharField(max_length=250)
+    image = models.ImageField(upload_to="images/")
     text = models.CharField(max_length=250)
-    image = ImageField()
 
     def __str__(self):
         return self.title

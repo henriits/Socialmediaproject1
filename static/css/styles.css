@@ -1,24 +1,34 @@
- .hero-image {
-      position: relative;
-      height: 100vh;
-      background-image: url('/static/img/background.jpg');
-      background-size: cover;
-      background-position: center;
-      text-align: center;
+.hero-image {
+    position: relative;
+    height: 100vh;
+    background-image: url('/static/img/background1.jpg');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+}
+
+
+
+
+@media (max-width: 1920px) {
+    .header-title {
+        font-size: 6rem;
     }
 
-    .hero-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
+}
+
+
+@media (max-width: 1020px) {
+    .header-title {
+        font-size: 3rem;
     }
 
-    .hero-text h1 {
-      font-size: 40px;
+}
+
+
+@media (max-width: 520px) {
+    .header-title {
+        font-size: 2rem;
     }
 
-    .hero-text p {
-      font-size: 20px;
-    }
+}

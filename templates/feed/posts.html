@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load static from staticfiles %}
-
 {% block content %}
 
 {% for post in posts %}
@@ -9,7 +7,7 @@
     <br>
     {{post.text}}
     <br>
-{{post.image.url}}
+{{post.image}}
 {% endfor %}
 
 

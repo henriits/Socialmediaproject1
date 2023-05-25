@@ -34,16 +34,20 @@
 }
 
 .rounded-picture {
-  width: 80px; /* Adjust the width as needed */
-  height: 80px; /* Adjust the height as needed */
+  width: 80px;
+  height: 80px;
   float: left;
   border-radius: 50%;
-  margin-right: 10px; /* Adjust the margin as needed */
+  margin-right: 10px;
+}
+
+.post-class {
+    padding: 20px;
 }
 
 
 .card {
-  padding: 10px; /* Adjust the padding as needed */
+  padding: 10px;
 }
 
 

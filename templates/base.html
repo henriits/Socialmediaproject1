@@ -21,7 +21,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Core CSS-->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
-    <title>SocialMedia</title>
+    <title>SocialVibes</title>
 </head>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -43,10 +43,11 @@
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Navbar brand -->
-            <a class="navbar-brand mt-2 mt-lg-0" href="#">
+            <a class="navbar-brand mt-2 mt-lg-0" href="/">
                 <!-- Logo image here!  -->
-                <h1>SocialMedia</h1>
+                <h1>SocialVibes</h1>
             </a>
+
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -65,7 +66,7 @@
 
         <!-- Right elements -->
         <div class="d-flex align-items-center">
-
+             {% if request.user.is_authenticated %}
             <!-- Avatar -->
             <div class="dropdown">
                 <a
@@ -90,16 +91,19 @@
                         aria-labelledby="navbarDropdownMenuAvatar"
                 >
                     <li>
-                        <a class="dropdown-item" href="#">My profile</a>
+                        <a class="dropdown-item" href="">My profile</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="#">Settings</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                     </li>
                 </ul>
             </div>
+            {% else %}
+            <div><a href="{% url 'login' %}">Login</a></div>
+            {% endif %}
         </div>
 
     </div>

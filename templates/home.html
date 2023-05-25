@@ -2,14 +2,100 @@
 
 
 {% block content %}
- <div class="hero-image">
-    <div class="hero-text">
-      <h1>Welcome to Our Website</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <br>
-        <button type="button" class="btn btn-dark btn-rounded" data-mdb-ripple-color="dark">Have an account? - Login</button>
-        <button type="button" class="btn btn-dark btn-rounded" data-mdb-ripple-color="dark">Don't have one yet? - Register</button>
+
+
+
+<header class="py-5 bg-image-full hero-image">
+    <div class="text-center my-5">
+
+        <div class="text-center text-white row justify-content-center">
+            <h1 class="display-4 fw-bolder header-title">First thing that people see</h1>
+            <p class="lead fw-normal text-white-50 mb-0 header-subtitle">sub header</p>
+        </div>
     </div>
-  </div>
+</header>
+
+<section class="py-5" id="about">
+    <h1>Some text, explaining the page</h1>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+
+            <div class="col-lg-4">
+                <h2>Title 1</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci
+                            aspernatur dolores, eveniet, d!</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <h2>Title 2</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ea error eveniet ex
+                            illo quasi veritatis.!</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <h2>Title 3</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid aperiam
+                            aut consequuntur eligendi eos et eum, explicabo .</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- Image element - set the background image for the header in the line below-->
+<div class="py-5 bg-image-full hero-image " id="example">
+
+    <div><h1>in here maybe some images to display the app?</h1> </div>
+</div>
+<!-- Content section-->
+<section class="py-5">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2>Lorem ipsum dolor?</h2>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. At deserunt in iure neque
+                    nobis repellat veritatis voluptate. Atque cum ea facere nulla, numquam, provident quae quo ratione
+                    reprehenderit temporibus voluptatibus?</p>
+                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet animi at sit unde. Alias
+                    aperiam assumenda beatae, culpa esse ex exercitationem fugit ipsam molestiae odio omnis praesentium
+                    provident rerum ullam.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Footer-->
+
+<div class="hero-image" id="register">
+
+    <div class="hero-text text-white ">
+
+        <a href="{% url 'login' %}">
+            <button type="button" class="btn btn-rounded" data-mdb-ripple-color="dark">Login
+            </button>
+        </a>
+        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{% url 'signup' %}"
+                                                                          class="link-danger">Register</a>
+        </p>
+        <!--        this text needs is not visible, needs to be white-->
+        <p><a href="{% url 'password_reset' %}" class="text-body text-white">Forgot password?</a></p>
+
+    </div>
+</div>
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
+
 
 {% endblock %}

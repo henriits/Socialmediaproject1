@@ -18,8 +18,17 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from posts import urls as posts_urls
+from socialmedia.views import UserCreateView
+from django.conf.urls.static import static
+from django.conf import settings
+# from users import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include(posts_urls, namespace="posts"))
-]
+    path("", include(posts_urls, namespace="posts")),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/signup/", UserCreateView.as_view(), name="signup"),
+    path("posts/", include("posts.urls")),
+    # path('profile/', user_views.profile, name='profile'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

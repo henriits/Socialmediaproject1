@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if form.errors %}
+<div class="mx-auto" style="color:red;">
+    <p>Your username and password didn't match. Please try again.</p>
+</div>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %}
+{% endif %}
+
+
+<div class="container my-4">
+    <div class="p-3 text-center">
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-3">
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <!-- Checkbox -->
+                <div class="form-check mb-0">
+                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3"/>
+                    <label class="form-check-label" for="form2Example3">
+                        Remember me
+                    </label>
+                </div>
+
+                {# Assumes you setup the password_reset view in your URLconf #}
+                <a href="{% url 'password_reset' %}" class="text-body">Forgot password?</a>
+            </div>
+
+            <div class="">
+                <button type="submit" value="login" class="btn btn-success btn w-100"
+                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Login
+                </button>
+                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{% url 'signup' %}"
+                                                                                  class="link-danger">Register</a>
+                </p>
+            </div>
+
+
+            <input type="hidden" name="next" value="{{ next }}"/>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

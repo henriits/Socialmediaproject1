@@ -8,7 +8,20 @@
 }
 
 
+.sticky-footer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px; /* Increase the font size as desired */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    width: 40px; /* Adjust the width as desired */
+    height: 40px;
 
+
+}
 
 @media (max-width: 1920px) {
     .header-title {

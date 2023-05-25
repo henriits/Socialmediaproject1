@@ -32,3 +32,21 @@
     }
 
 }
+
+.rounded-picture {
+  width: 80px; /* Adjust the width as needed */
+  height: 80px; /* Adjust the height as needed */
+  float: left;
+  border-radius: 50%;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+
+.card {
+  padding: 10px; /* Adjust the padding as needed */
+}
+
+
+.card-content {
+  overflow: hidden;
+}

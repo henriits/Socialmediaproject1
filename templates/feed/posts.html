@@ -2,19 +2,22 @@
 
 {% load static %}
 
-{% block content %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock %}
 
+{% block content %}
 <div class="container">
   <div class="row">
     {% for post in posts %}
       <div class="col-md-6">
         <div class="card mb-4">
           {% if post.image %}
-            <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+            <img src="{{ post.image.url }}" class="rounded-picture" alt="{{ post.title }}">
           {% else %}
-            <img src="{% static 'img/default_img.jpg' %}" class="card-img-top" alt="Default Image">
+            <img src="{% static 'img/default_img.jpg' %}" class="rounded-picture" alt="Default Image">
           {% endif %}
-          <div class="card-body">
+          <div class="card-body card-content">
             <h5 class="card-title">{{ post.title }}</h5>
             <p class="card-text">{{ post.text }}</p>
           </div>
@@ -23,20 +26,4 @@
     {% endfor %}
   </div>
 </div>
-
-<!--{% endblock %}-->
-
-<!--{% extends 'base.html' %}-->
-
-<!--{% block content %}-->
-
-<!--{% for post in posts %}-->
-<!--    {{post.title}}-->
-<!--    <br>-->
-<!--    {{post.text}}-->
-<!--    <br>-->
-<!--{{post.image}}-->
-<!--{% endfor %}-->
-
-
-<!--{% endblock %}-->
+{% endblock %}

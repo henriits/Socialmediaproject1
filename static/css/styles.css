@@ -77,3 +77,25 @@
     }
 
 }
+
+.rounded-picture {
+  width: 80px;
+  height: 80px;
+  float: left;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.post-class {
+    padding: 20px;
+}
+
+
+.card {
+  padding: 10px;
+}
+
+
+.card-content {
+  overflow: hidden;
+}

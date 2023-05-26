@@ -1,14 +1,33 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
 {% block content %}
-
-{% for post in posts %}
-    {{post.title}}
-    <br>
-    {{post.text}}
-    <br>
-{{post.image}}
-{% endfor %}
-
-
+<div class="container">
+  <div class="row">
+    {% for post in posts %}
+      <div class="col-md-6">
+        <div class="card mb-4 post-card">
+          <div class="card-body card-content">
+            <div class="row">
+              <div class="col-md-3">
+                <img src="{{ post.image.url }}" class="rounded-picture" alt="{{ post.title }}">
+              </div>
+              <div class="col-md-9">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.text }}</p>
+                <p class="card-text"><span class="text-muted">Author:</span> <span class="text-dark">{{ post.author }}</span></p>
+                <p class="card-text"><span class="text-muted">Created Date:</span> <span class="text-dark">{{ post.created_date }}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

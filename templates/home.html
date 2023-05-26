@@ -4,63 +4,75 @@
 {% block content %}
 
 
-
-<header class="py-5 bg-image-full hero-image">
+<header class="py-5 bg-image-full large-section gray-background">
     <div class="text-center my-5">
 
         <div class="text-center text-white row justify-content-center">
-            <h1 class="display-4 fw-bolder header-title">First thing that people see</h1>
-            <p class="lead fw-normal text-white-50 mb-0 header-subtitle">sub header</p>
+            <h1 class="display-4 fw-bolder header-title yellow-text">Welcome <br> TO <br>HumbleBee</h1>
+            <p class="lead fw-normal text-white-50 mb-0 header-subtitle yellow-text">The best place you can buzz your
+                friends!</p>
         </div>
     </div>
+    <a href="#" class="btn btn-success text-white sticky-footer text-center"><i
+            class="bi bi-caret-up sticky-footer"></i></a>
 </header>
 
-<section class="py-5" id="about">
-    <h1>Some text, explaining the page</h1>
+<section class="py-5 yellow-background" id="about">
     <div class="container my-5">
-        <div class="row justify-content-center">
-
+        <div class="row justify-content-center yellow-background">
             <div class="col-lg-4">
                 <h2>Title 1</h2>
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci
-                            aspernatur dolores, eveniet, d!</p>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus adipisci aspernatur dolores, eveniet, d!</p>
                     </div>
-
                 </div>
             </div>
             <div class="col-lg-4">
                 <h2>Title 2</h2>
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ea error eveniet ex
-                            illo quasi veritatis.!</p>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ea error eveniet ex illo quasi veritatis.!</p>
                     </div>
-
                 </div>
             </div>
             <div class="col-lg-4">
                 <h2>Title 3</h2>
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid aperiam
-                            aut consequuntur eligendi eos et eum, explicabo .</p>
+                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquid aperiam aut consequuntur eligendi eos et eum, explicabo .</p>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
 </section>
-<!-- Image element - set the background image for the header in the line below-->
-<div class="py-5 bg-image-full hero-image " id="example">
 
-    <div><h1>in here maybe some images to display the app?</h1> </div>
-</div>
+<section class="large-section gray-background example-section p-5" id="example">
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <h2 class="yellow-text">First featurette heading. <span class="text-muted"><br>It’ll blow your mind.</span></h2>
+            <p class="lead">Some great</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="static/img/example1.jpg" alt="Your image" class="img-fluid example-images p-3 mb-5 bg-body mx-auto">
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-6">
+            <img src="static/img/example2.jpg" alt="Your image" class="img-fluid example-images p-3 mb-5 bg-body mx-auto">
+        </div>
+        <div class="col-md-6">
+            <h2 class="yellow-text">Oh yeah, it’s that good. <span class="text-muted"><br>See for yourself.</span></h2>
+            <p class="lead">Another featurette?</p>
+        </div>
+    </div>
+</section>
+
+
 <!-- Content section-->
-<section class="py-5">
+<section class="py-5 p-5 yellow-background">
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -77,24 +89,25 @@
 </section>
 <!-- Footer-->
 
-<div class="hero-image" id="register">
+<div class="large-section gray-background" id="register">
 
     <div class="hero-text text-white ">
 
         <a href="{% url 'login' %}">
-            <button type="button" class="btn btn-rounded" data-mdb-ripple-color="dark">Login
+            <button type="button" class="btn btn-rounded yellow-text" data-mdb-ripple-color="dark">Login
             </button>
         </a>
-        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{% url 'signup' %}"
-                                                                          class="link-danger">Register</a>
+        <p class="small fw-bold mt-2 pt-1 mb-0 yellow-text">Don't have an account? <a href="{% url 'register' %}"
+                                                                                      class="link-danger">Register</a>
         </p>
         <!--        this text needs is not visible, needs to be white-->
-        <p><a href="{% url 'password_reset' %}" class="text-body text-white">Forgot password?</a></p>
+        <p><a href="{% url 'password_reset' %}" class="yellow-text">Forgot password?</a></p>
 
     </div>
 </div>
-<footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+
+<footer class="py-5 gray-background">
+    <div class="container"><p class="m-0 text-center yellow-text">Copyright &copy; SocialVibes 2023</p></div>
 </footer>
 
 

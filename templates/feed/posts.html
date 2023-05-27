@@ -7,15 +7,15 @@
 <div class="container">
   <div class="row">
     {% for post in posts %}
-      <div class="col-md-6">
-        <div class="card mb-4 post-card">
+      <div class="col-md-8">
+        <div class="card mb-4 post-card" {% cycle 'align-right' 'align-left' %}">
           <div class="card-body card-content">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-3 d-flex justify-content-center align-items-center">
                 {% if post.image %}
                 <img src="{{ post.image.url }}" class="rounded-picture" alt="{{ post.title }}">
                 {% else %}
-                <img src="{% static 'images/default_img.jpg' %}" class="rounded-picture" alt="Default Image">
+                <img src="{% static 'img/defaultpost_img.jpg' %}" class="rounded-picture" alt="Default Image">
                 {% endif %}
               </div>
               <div class="col-md-9">
@@ -23,7 +23,7 @@
                 <p class="card-text">{{ post.text }}</p>
                 <p class="card-text"><span class="text-muted">Author:</span> <span class="text-dark">{{ post.author }}</span></p>
                 <p class="card-text"><span class="text-muted">Created Date:</span> <span class="text-dark">{{ post.created_date }}</span>
-                <img src="{% static 'images/bee_logo.png' %}" class="bee-logo" alt="Bee Logo"></p>
+                <img src="{% static 'img/bee_logo.png' %}" class="bee-logo" alt="Bee Logo"></p>
               </div>
             </div>
           </div>

@@ -79,8 +79,8 @@
 }
 
 .rounded-picture {
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
   float: left;
   border-radius: 50%;
   margin-right: 10px;
@@ -98,4 +98,49 @@
 
 .card-content {
   overflow: hidden;
+}
+
+/* Little bee logo into post page */
+.bee-logo {
+  width: 40px;
+  margin-left: 250px;
+}
+
+
+.post-card {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.align-right {
+  justify-content: flex-end;
+}
+
+.align-left {
+  justify-content: flex-start;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+
+
+/* Add new post style */
+.bee-heading {
+  color: #defa00;
+  font-size: 24px;
+
+}
+
+.bee-form {
+  background-color: #201b1b;
+}
+
+.bee-button {
+  background-color: #defa00;
+  color: #201b1b;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
 }

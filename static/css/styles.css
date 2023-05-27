@@ -121,9 +121,29 @@
 }
 
 .container {
-  margin-top: 20px; /* Add margin-top as needed */
+  margin-top: 20px;
 }
 
 .navbar {
-  margin-bottom: 20px; /* Add margin-bottom as needed */
+  margin-bottom: 20px;
+}
+
+
+/* Add new post style */
+.bee-heading {
+  color: #defa00;
+  font-size: 24px;
+
+}
+
+.bee-form {
+  background-color: #201b1b;
+}
+
+.bee-button {
+  background-color: #defa00;
+  color: #201b1b;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
 }

@@ -2,9 +2,6 @@
 
 {% load static %}
 
-{% block head %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -25,7 +22,8 @@
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">{{ post.text }}</p>
                 <p class="card-text"><span class="text-muted">Author:</span> <span class="text-dark">{{ post.author }}</span></p>
-                <p class="card-text"><span class="text-muted">Created Date:</span> <span class="text-dark">{{ post.created_date }}</span></p>
+                <p class="card-text"><span class="text-muted">Created Date:</span> <span class="text-dark">{{ post.created_date }}</span>
+                <img src="{% static 'images/bee_logo.png' %}" class="bee-logo" alt="Bee Logo"></p>
               </div>
             </div>
           </div>

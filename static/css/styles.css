@@ -99,3 +99,10 @@
 .card-content {
   overflow: hidden;
 }
+
+/* Little bee logo into post page */
+.bee-logo {
+  width: 20px;
+  padding: 5px
+  margin-left: 10px;
+}

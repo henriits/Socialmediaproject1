@@ -47,8 +47,18 @@
                 <!-- Logo image here!  -->
                 <h1>HumbleBee</h1>
             </a>
-
+            {% if request.user.is_authenticated %}
             <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'posts:allposts' %}">Feed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'posts:create' %}">Create Post</a>
+                </li>
+
+            </ul>
+            {% else %}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="#about">About</a>
@@ -60,13 +70,14 @@
                     <a class="nav-link" href="#register">Register</a>
                 </li>
             </ul>
+            {% endif %}
             <!-- Left links -->
         </div>
         <!-- Collapsible wrapper -->
 
         <!-- Right elements -->
         <div class="d-flex align-items-center">
-             {% if request.user.is_authenticated %}
+            {% if request.user.is_authenticated %}
             <!-- Avatar -->
             <div class="dropdown">
                 <a
@@ -102,7 +113,12 @@
                 </ul>
             </div>
             {% else %}
-            <div><a href="{% url 'login' %}">Login</a></div>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            </ul>
+
             {% endif %}
         </div>
 
@@ -112,11 +128,11 @@
 
 <!--it will display success message -->
 {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
 {% endif %}
 {% block content %}{% endblock %}
 

@@ -26,4 +26,5 @@ class CreatePostView(CreateView):
         post.author = self.request.user
         post.created_date = timezone.now()
         post.save()
-        return redirect('posts')
+        return redirect('posts')   # this here needs fixing , currently does not redirect , when creating post
+        # create Post, itself works fine!

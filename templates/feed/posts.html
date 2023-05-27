@@ -15,7 +15,11 @@
           <div class="card-body card-content">
             <div class="row">
               <div class="col-md-3">
+                {% if post.image %}
                 <img src="{{ post.image.url }}" class="rounded-picture" alt="{{ post.title }}">
+                {% else %}
+                <img src="{% static 'images/default_img.jpg' %}" class="rounded-picture" alt="Default Image">
+                {% endif %}
               </div>
               <div class="col-md-9">
                 <h5 class="card-title">{{ post.title }}</h5>

@@ -24,9 +24,19 @@
 #
 # class Like(models.Model):
 #     like_id = models.AutoField(primary_key=True)
-#     post_id = models.ForeignKey('posts.Post', on_delete=models.CASCADE)
+#     post_id = models.ForeignKey('posts.Post', on_delete=models.CASCADE, null=True)
 #     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+#     comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
 #     created_at = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         if self.post:
+#             return f"{self.user.username} likes post: {self.post}"
+#         elif self.comment:
+#             return f"{self.user.username} likes comment: {self.comment}"
+#         else:
+#             return "Invalid like"
+#
 #
 #
 # class Notification(models.Model):

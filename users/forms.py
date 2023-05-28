@@ -109,8 +109,10 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from datetime import datetime
+from crispy_forms.helper import FormHelper
 
 class UserRegisterForm(UserCreationForm):
+
     username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'placeholder': 'Username'}))
     first_name = forms.CharField(label='First Name', widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
     last_name = forms.CharField(label='Last Name', widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
@@ -119,6 +121,14 @@ class UserRegisterForm(UserCreationForm):
     password2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput(attrs={'placeholder': 'Repeat Password'}))
     date_of_birth = forms.DateField(label='Date of Birth', widget=forms.DateInput(attrs={'type': 'date', 'max': datetime.now().date()}))
 
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterForm, self).__init__(*args, **kwargs)
+
+        for field_name, field in self.fields.items():
+            field.label = ''
+
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
+
+

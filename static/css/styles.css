@@ -104,12 +104,11 @@
 /* Little bee logo into post page */
 .bee-logo {
   width: 40px;
-  margin-left: 250px;
+  margin-left: 300px;
 }
 
 
 .post-card {
-  padding: 10px;
   margin-bottom: 10px;
 }
 
@@ -124,6 +123,21 @@
 .container {
   margin-top: 20px;
 }
+
+/* posts page style */
+.container-post-feed {
+  background-color: #201b1b;
+  color: #201b1b;
+}
+
+.card-content {
+  padding: 0px
+}
+
+.post-card {
+  align-items: center;
+}
+
 
 /* Add new post style */
 .bee-heading {
@@ -143,3 +157,5 @@
   padding: 10px 20px;
   font-size: 16px;
 }
+
+

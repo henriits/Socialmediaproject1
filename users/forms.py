@@ -43,30 +43,34 @@ from datetime import datetime
 #
 #     class Meta:
 #         model = User
-#         fields = ['username', 'email', 'password1', 'password2']
-
+#         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'date_of_birth']
+#
 
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(
         attrs={
+            'name': 'Username',
             'type': 'username',
             'placeholder': ('Username')
         }
     ))
     first_name = forms.CharField(widget=forms.TextInput(
         attrs={
+            'name': 'First name',
             'type': 'first_name',
             'placeholder': ('First Name')
         }
     ))
     last_name = forms.CharField(widget=forms.TextInput(
         attrs={
+            'name': 'Last name',
             'type': 'last_name',
             'placeholder': ('Last Name')
         }
     ))
     email = forms.EmailField(widget=forms.TextInput(
         attrs={
+            'name': 'Email',
             'type': 'email',
             'placeholder': ('Email')
         }
@@ -74,13 +78,15 @@ class UserRegisterForm(UserCreationForm):
     password1 = forms.CharField(max_length=16, widget=forms.PasswordInput(
         attrs={
             # 'class':'form-control',
+            'name': 'Password',
+            'type': 'password',
             'placeholder': 'Password'
         }
     ))
     password2 = forms.CharField(max_length=16, widget=forms.PasswordInput(
         attrs={
             # 'class':'form-control',
-            'name' : 'Repeat password',
+            'name': 'Repeat password',
             'placeholder': 'Repeat Password'
         }
     ))

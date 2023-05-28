@@ -38,6 +38,19 @@
 
 }
 
+.landing-register-section {
+    color:#defa00;
+    height: 30vh;
+    text-align: center;
+    padding-top: 5rem;
+}
+
+.login-page-section {
+    color: #defa00;
+    background-color: #201b1b;
+    height: 100vh;
+    padding-top: 10rem;
+}
 
 
 

@@ -39,8 +39,6 @@
 }
 
 
-
-
 .sticky-footer {
     position: fixed;
     bottom: 20px;
@@ -158,4 +156,9 @@
   font-size: 16px;
 }
 
+.posts-page-section {
+    background-color: #201b1b;
+    height: 100%;
+
+}
 

@@ -2,13 +2,7 @@
 
 {% load static %}
 
-{% block head %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/posts_styles.css' %}">
-{% endblock %}
-
-
 {% block content %}
-<body>
 <div class="container post-feed">
   <div class="row">
     {% for post in posts %}
@@ -26,38 +20,53 @@
               <div class="col-md-9">
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">{{ post.text }}</p>
-                <p class="card-text"><span class="text-muted">Author:</span> <span class="text-dark">{{ post.author.username }}</span>
+                <p class="card-text"><span class="text-muted">Author:</span> <span class="text-dark">{{ post.author.username }}</span></p>
+                <p class="card-text"><span class="text-muted">Created Date:</span> <span class="text-dark">{{ post.created_date }}</span>
                 <img src="{% static 'img/bee_logo.png' %}" class="bee-logo" alt="Bee Logo"></p>
-                <p class="card-text"><span class="text-muted">Created Date:</span> <span class="text-dark">{{ post.created_date }}</span></p>
-              </div>
-              <br>
-              <div class="card-text">
-              <h6>Likes:</h6>
-              <ul>
-                {% for like in post.likes.all %}
-                  <li>{{ like.user.username }} ({{ like.created_at }})</li>
-                {% empty %}
-                  <li>No likes yet.</li>
-                {% endfor %}
-              </ul>
-              </div>
-              <br>
-              <div class="card-text">
-              <h6>Comments:</h6>
-              <ul>
-                {% for comment in post.comments.all %}
-                  <li>{{ comment.text }} - {{ comment.user.username }} ({{ comment.created_at }})</li>
-                {% empty %}
-                  <li>No comments yet.</li>
-                {% endfor %}
-              </ul>
               </div>
             </div>
+
+            <div class="card-text">
+            <h6>Likes:</h6>
+            <ul>
+              <!-- Display the likes -->
+              {% for like in post.likes.all %}
+                <li>{{ like.user.username }} ({{ like.created_at }})</li>
+              {% empty %}
+                <li>No likes yet.</li>
+              {% endfor %}
+            </ul>
+
+            <!-- Display the like button -->
+            <form method="POST" action="{% url 'like_post' post.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-primary">Like</button>
+            </form>
+            </div>
+
+            <div class="card-text">
+            <h6>Comments:</h6>
+            <ul>
+              <!-- Display the comments -->
+              {% for comment in post.comments.all %}
+                <li>{{ comment.text }} - {{ comment.user.username }} ({{ comment.created_at }})</li>
+              {% empty %}
+                <li>No comments yet.</li>
+              {% endfor %}
+            </ul>
+
+            <!-- Display the comment field -->
+            <form method="POST" action="{% url 'add_comment' post.id %}">
+              {% csrf_token %}
+              <textarea name="comment" class="form-control" placeholder="Add a comment"></textarea>
+              <button type="submit" class="btn btn-sm btn-primary">Post Comment</button>
+            </form>
+            </div>
+
           </div>
         </div>
       </div>
     {% endfor %}
   </div>
 </div>
-</body>
 {% endblock %}

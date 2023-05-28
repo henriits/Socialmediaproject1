@@ -1,31 +1,20 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags}
+{% load static %}
+
+<head>
+  <title>Register Page</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+</head>
 
 {% block content %}
 
-
-<!--<div class="container my-4">-->
-<!--  <div class="row justify-content-center">-->
-<!--    <div class="col-md-8 col-lg-6">-->
-<!--      <h2 class="mb-4 text-center">Register a new user</h2>-->
-
-<!--      <form method="post">-->
-<!--        {% csrf_token %}-->
-<!--        <fieldset class="form-group">-->
-<!--          {{ form|crispy }}-->
-<!--        </fieldset>-->
-
-<!--        <button type="submit" class="btn btn-primary w-100 mt-4">Sign up</button>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
 
 
 <section class="vh-100" style="background-color: #201b1c;">
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-12 col-xl-11">
+      <div class="col-lg-12 col-xl-11 custom-background">
         <div class="card text-black" style="border-radius: 25px;">
           <div class="card-body p-md-5">
             <div class="row justify-content-center">

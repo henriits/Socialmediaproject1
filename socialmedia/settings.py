@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'posts',
     'sorl.thumbnail',
     'users.apps.UsersConfig',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -132,4 +134,6 @@ LOGOUT_REDIRECT_URL = "/"
 
 SIGNUP_REDIRECT_URL = "/login/"
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
+CRISPY_TEMPLATE_PACK = "bootstrap5"

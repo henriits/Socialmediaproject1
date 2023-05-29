@@ -4,6 +4,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib import auth
 
+
 # Create your views here.
 
 def login(request):
@@ -18,7 +19,7 @@ def login(request):
             if user and user.is_active:
                 # then authorize him
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('home'))
+                return redirect('allposts')
         else:
             print(form.errors)
     else:
@@ -27,6 +28,7 @@ def login(request):
     form = UserLoginForm()
     context = {'form': form}
     return render(request, 'users/login.html', context)
+
 
 def register(request):
     if request.method == 'POST':
@@ -39,4 +41,3 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
-

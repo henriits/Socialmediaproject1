@@ -18,8 +18,9 @@
 {% endif %}
 
 
-<div class="container my-4">
-    <div class="p-3 text-center">
+<section class="login-page-section">
+
+    <div class="p-3 text-center container ">
 
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
@@ -46,10 +47,12 @@
                     <label class="form-check-label" for="form2Example3">
                         Remember me
                     </label>
+                     <br>
                 </div>
 
+
                 {# Assumes you setup the password_reset view in your URLconf #}
-                <a href="{% url 'password_reset' %}" class="text-body">Forgot password?</a>
+                <a href="{% url 'password_reset' %}" class="yellow-text">Forgot password?</a>
             </div>
 
             <div class="">
@@ -65,7 +68,6 @@
             <input type="hidden" name="next" value="{{ next }}"/>
         </form>
     </div>
-</div>
-
+</section>
 
 {% endblock %}

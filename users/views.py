@@ -33,7 +33,13 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
+
+            # Add a print statement to check if this line is reached
+            print('Redirecting to login page...')
+
             return redirect('login')
+        else:
+            print(form.errors)
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})

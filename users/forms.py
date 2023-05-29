@@ -45,8 +45,8 @@ class UserLoginForm(AuthenticationForm):
         model = User
         fields = ('username', 'password')
 
-class UserRegisterForm(UserCreationForm):
 
+class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
@@ -101,5 +101,3 @@ class UserRegisterForm(UserCreationForm):
             'max': datetime.now().date()
         }
     ))
-
-

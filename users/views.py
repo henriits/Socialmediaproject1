@@ -1,5 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
-from django.urls import reverse
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib import auth
@@ -15,16 +14,13 @@ def login(request):
             username = request.POST['username']
             password = request.POST['password']
             user = auth.authenticate(username=username, password=password)
-            # if the user is in our system and if he is active, then:
             if user and user.is_active:
-                # then authorize him
                 auth.login(request, user)
                 return redirect('allposts')
         else:
             print(form.errors)
     else:
         form = UserLoginForm()
-    # get request:
     form = UserLoginForm()
     context = {'form': form}
     return render(request, 'users/login.html', context)

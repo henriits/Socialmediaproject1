@@ -22,9 +22,9 @@
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4 custom-signup-text">Sign up</p>
 
-                <form method="POST" class="mx-1 mx-md-4 custom-signup-text">
+                <form method="POST" class="mx-1 mx-md-4 custom-signup-text" >
                     {% csrf_token %}
-                  <p class="form-group custom-form-field custom-signup-text">
+                  <p class="form-group custom-form-field custom-signup-text" style='display: flex'>
                     {{ form|crispy }}
                     </p>
 

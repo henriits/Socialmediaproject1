@@ -18,7 +18,7 @@ def login(request):
             if user and user.is_active:
                 # then authorize him
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('posts'))
         else:
             print(form.errors)
     else:

@@ -19,12 +19,11 @@ class CreatePostView(CreateView):
     model = Post
     form_class = CreateNewPost
     template_name = "feed/create_post.html"
-    success_url = reverse_lazy("create")
+    success_url = reverse_lazy("posts:allposts")
 
     def form_valid(self, form):
         post = form.save(commit=False)
         post.author = self.request.user
         post.created_date = timezone.now()
         post.save()
-        return redirect('posts')   # this here needs fixing , currently does not redirect , when creating post
-        # create Post, itself works fine!
+        return super().form_valid(form)

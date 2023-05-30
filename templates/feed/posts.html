@@ -5,8 +5,10 @@
 {% block content %}
 <div class="container post-feed">
 
-  <div class="row">
-    {% for post in posts %}
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      {% for post in posts %}
+      {% if forloop.first %}
     <div class="write-post-container">
       <div class="user-profile">
         <img src="{{ post.user.profile.profile_pic.url }}">
@@ -19,64 +21,43 @@
       <div class="post-input-container">
         <textarea rows="3" placeholder="What's on Your mind {{ post.author.username }}?"></textarea>
         <div class="add-post-links">
-          <a href="#"><i class="fa-solid fa-image" style="color: #d3c845;"></i>Image</a>
+          <a href="#"><i class="fa-solid fa-image" style="color: #defa00;"></i>Image</a>
         </div>
       </div>
 
     </div>
+    {% endif %}
 
-      <div class="col-md-8">
-        <div class="card mb-4 post-card" {% cycle 'align-right' 'align-left' %}">
-          <div class="card-body card-content">
-            <div class="row">
-              <div class="col-md-3 d-flex justify-content-center align-items-center">
-
-                {% if post.image %}
-                <div class="thumbnail">
-                <img src="{{ post.image.url }}" class="img-rounded" alt="{{ post.title }}">
-                {% else %}
-                <img src="{% static 'img/defaultpost_img.jpg' %}" class="img-rounded" alt="Default Image">
-                {% endif %}
-                <div/>
-              </div>
-              <div class="col-md-9">
-                <h5 class="card-title">{{ post.title }}</h5>
-                <p class="card-text">{{ post.text }}</p>
-                <p class="card-text"><span class="text-muted">Author:</span> <span class="text-dark">{{ post.author.username }}</span></p>
-                <p class="card-text"><span class="text-muted">Created Date:</span> <span class="text-dark">{{ post.created_date }}</span>
-                <img src="{% static 'img/bee_logo.png' %}" class="bee-logo" alt="Bee Logo"></p>
-              </div>
-            </div>
-
-            <div class="card-text">
-            <h6>Likes:</h6>
-            <ul>
-              <!-- Display the likes -->
-              {% for like in post.likes.all %}
-                <li>{{ like.user.username }} ({{ like.created_at }})</li>
-              {% empty %}
-                <li>No likes yet.</li>
-              {% endfor %}
-            </ul>
-            </div>
-
-            <div class="card-text">
-            <h6>Comments:</h6>
-            <ul>
-              <!-- Display the comments -->
-              {% for comment in post.comments.all %}
-                <li>{{ comment.text }} - {{ comment.user.username }} ({{ comment.created_at }})</li>
-              {% empty %}
-                <li>No comments yet.</li>
-              {% endfor %}
-            </ul>
-
-            </div>
-
-          </div>
+    <div class="post-container">
+      <div class="user-profile">
+        <img src="{{ post.user.profile.profile_pic.url }}">
+        <div>
+          <p>{{ post.author.username }}</p>
+          <span class="text-muted">Created Date:</span> <span class="text-dark">{{ post.created_date }}</span>
+          <br>
+          <br>
         </div>
       </div>
+
+      <h5 class="post-title">{{ post.title }}</h5>
+      {% if post.image %}
+      <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
+      {% else %}
+      <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
+      {% endif %}
+      <p class="post-text">{{ post.text }}</p>
+
+      <div class="post-row">
+        <div class="activity-icons">
+          <div><i class="fa-solid fa-thumbs-up" style="color: #defa00;"></i> likes </div>
+          <div><i class="fa-solid fa-comments" style="color: #defa00;"></i> comments </div>
+          <div><i class="fa-sharp fa-solid fa-share" style="color: #defa00;"></i> followers </div>
+        </div>
+      </div>
+    </div>
+
     {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}

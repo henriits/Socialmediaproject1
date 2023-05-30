@@ -92,72 +92,6 @@
 }
 
 
-.rounded-picture {
-  width: 100%;
-  max-width: 150px;
-  height: auto;
-  border-radius: 50%;
-  margin-right: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
-}
-
-
-.post-card {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  border: 1px solid #dbdbdb;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-}
-
-.card-content {
-  padding: 10px;
-}
-
-.card-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.card-text {
-  font-size: 14px;
-  color: #000000;
-  margin-bottom: 10px;
-}
-
-.text-muted {
-  color: #999999;
-}
-
-.text-dark {
-  color: #000000;
-}
-
-ul {
-  list-style-type: none;
-  padding-left: 0;
-  margin-bottom: 10px;
-}
-
-ul li {
-  margin-bottom: 5px;
-  font-size: 14px;
-}
-
-.bee-logo {
-  width: 20px;
-  margin-left: 5px;
-}
-
-.container-post-feed {
-  background-color: #ffffff;
-  color: #000000;
-}
 
 .bee-heading {
   color: #000000;
@@ -188,6 +122,8 @@ ul li {
     background: #D3D3D3;
     border-radius: 6px;
     margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 20px;
     color: #626262;
 }
@@ -205,13 +141,19 @@ ul li {
 
 .user-profile p {
     margin-bottom: -5px;
-    font-weight: 500;
-    color: #626262;
+    font-weight: 700;
+    color: #defa00;
 }
 
 .user-profile small {
     font-size: 12px;
 }
+
+.user-profile post-text {
+    color: #201b1b;
+    font-size: 14px;
+}
+
 
 .post-input-container {
     padding-left: 55px;
@@ -245,3 +187,70 @@ ul li {
     width: 20px;
     margin-right: 10px;
 }
+
+.post-container {
+    width: 80%;
+    background: #D3D3D3;
+    border-radius: 6px;
+    padding: 20px;
+    color: #201b1b;
+    margin: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-profile span {
+    font-size: 13px;
+    color: #9a9a9a;
+}
+
+.post-text {
+    color: #201b1b;
+    margin: 15px 0;
+    font-size: 20px;
+}
+
+
+.post-img {
+    width: 100%;
+    height-max: 220px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    padding: 5px 0px;
+}
+
+
+.post-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.post-row {
+    display: fles;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.activity-icons div {
+    margin-right: 30px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.activity-icons div i {
+    margin-right: 10px;
+
+}
+
+.post-profile-icon {
+    display: flex;
+    align-items: center;
+}
+
+.post-profile-icon img {
+    width: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+

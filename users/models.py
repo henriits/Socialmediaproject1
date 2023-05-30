@@ -11,7 +11,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=36)
     date_of_birth = models.DateField(default='1900-01-01')
     bio = models.TextField(blank=True)
-    email = models.EmailField()
+    email = models.EmailField(default='johnappleseed@example.com')
 
     def __str__(self):
         return f'{self.user.username} Profile'

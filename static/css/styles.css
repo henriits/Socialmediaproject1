@@ -88,89 +88,179 @@
         font-size: 2rem;
     }
 
-}
 
-.rounded-picture {
-  width: 150px;
-  height: 150px;
-  float: left;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.post-class {
-    padding: 20px;
 }
 
 
-.card {
-  padding: 10px;
-}
 
-
-.card-content {
-  overflow: hidden;
-}
-
-/* Little bee logo into post page */
-.bee-logo {
-  width: 40px;
-  margin-left: 300px;
-}
-
-
-.post-card {
-  margin-bottom: 10px;
-}
-
-.align-right {
-  justify-content: flex-end;
-}
-
-.align-left {
-  justify-content: flex-start;
-}
-
-.container {
-}
-
-/* posts page style */
-.container-post-feed {
-  background-color: #201b1b;
-  color: #201b1b;
-}
-
-.card-content {
-  padding: 0px
-}
-
-.post-card {
-  align-items: center;
-}
-
-
-/* Add new post style */
 .bee-heading {
-  color: #defa00;
-  font-size: 24px;
-
+  color: #000000;
+  font-size: 20px;
+  margin-bottom: 20px;
 }
 
 .bee-form {
-  background-color: #201b1b;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #dbdbdb;
 }
 
 .bee-button {
-  background-color: #defa00;
-  color: #201b1b;
+  background-color: #3897f0;
+  color: #ffffff;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.posts-page-section {
+.post-feed {
     background-color: #201b1b;
-    height: 100%;
+    box-shadow: 6px 6px 60px #defa00;
+}
 
+body {
+    background-color: #201b1b;
+}
+
+
+.write-post-container {
+    width: 80%;
+    justify-content: center;
+    background: #D3D3D3;
+    border-radius: 6px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    color: #626262;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile img {
+    width: 45px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.user-profile p {
+    margin-bottom: -5px;
+    font-weight: 700;
+    color: #defa00;
+}
+
+.user-profile small {
+    font-size: 12px;
+}
+
+.user-profile post-text {
+    color: #201b1b;
+    font-size: 14px;
+}
+
+
+.post-input-container {
+    padding-left: 55px;
+    padding-top: 20px;
+}
+
+.post-input-container textarea {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+    background: transparent;
+
+}
+
+.add-post-links {
+    display: flex;
+    margin-top: 10px;
+}
+
+.add-post-links a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: #201b1b;
+    margin-right: 30px;
+    font-size: 13px;
+}
+
+.add-post-links a i {
+    width: 15px;
+    margin-right: 5px;
+}
+
+.post-container {
+    width: 80%;
+    background: #D3D3D3;
+    border-radius: 6px;
+    padding: 20px;
+    color: #201b1b;
+    margin: 20px 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-profile span {
+    font-size: 13px;
+    color: #9a9a9a;
+}
+
+.post-text {
+    color: #201b1b;
+    margin: 15px 0;
+    font-size: 20px;
+}
+
+
+.post-img {
+    width: 100%;
+    height-max: 220px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    padding: 5px 0px;
+}
+
+
+.post-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.post-row {
+    display: fles;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.activity-icons div {
+    margin-right: 30px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.activity-icons div i {
+    margin-right: 10px;
+
+}
+
+.post-profile-icon {
+    display: flex;
+    align-items: center;
+}
+
+.post-profile-icon img {
+    width: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
 }
 

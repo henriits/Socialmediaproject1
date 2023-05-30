@@ -13,4 +13,4 @@ urlpatterns = [
     path("posts/", AllPostView.as_view(), name="allposts"),
     path("create/", CreatePostView.as_view(), name="create"),
     # path("like_post/<int:post_id>/", views.like_post, name="like_post"),  # url pattern for like_post view, function like_post_view
-
+    ]

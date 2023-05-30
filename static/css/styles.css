@@ -116,6 +116,15 @@
   cursor: pointer;
 }
 
+.post-feed {
+    background-color: #201b1b;
+}
+
+body {
+    background-color: #201b1b;
+}
+
+
 .write-post-container {
     width: 80%;
     justify-content: center;
@@ -184,8 +193,8 @@
 }
 
 .add-post-links a i {
-    width: 20px;
-    margin-right: 10px;
+    width: 15px;
+    margin-right: 5px;
 }
 
 .post-container {

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'posts',
     'sorl.thumbnail',
     'users.apps.UsersConfig',
+    'notifications',
 ]
 
 MIDDLEWARE = [

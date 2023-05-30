@@ -1,7 +1,10 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
+
+from notifications.models import Notification
 from .forms import CreateNewPost
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,6 +19,13 @@ class AllPostView(LoginRequiredMixin, ListView):
     ordering = ["-created_date"]  # ordering posts in descending order
     paginate_by = 10 # shows 10 posts per page
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(Q(title__icontains=query) | Q(text__icontains=query))  # this currently finds post text, need to fix so finds user instead
+        return queryset
+
 
 class CreatePostView(CreateView):
     model = Post
@@ -28,4 +38,12 @@ class CreatePostView(CreateView):
         post.author = self.request.user
         post.created_date = timezone.now()
         post.save()
+
+        Notification.objects.create(
+            user_id=self.request.user,
+            notification_type='new_post',
+            content=f'A new post "{post.title}" has been created.'
+        )
+
+
         return super().form_valid(form)

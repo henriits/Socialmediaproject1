@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
+
+from notifications.models import Notification
 from .forms import CreateNewPost
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -34,4 +36,12 @@ class CreatePostView(CreateView):
         post.author = self.request.user
         post.created_date = timezone.now()
         post.save()
+
+        Notification.objects.create(
+            user_id=self.request.user,
+            notification_type='new_post',
+            content=f'A new post "{post.title}" has been created.'
+        )
+
+
         return super().form_valid(form)

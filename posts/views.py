@@ -13,6 +13,8 @@ class AllPostView(LoginRequiredMixin, ListView):
     template_name = "feed/posts.html"
     success_url = reverse_lazy("posts")
     context_object_name = "posts"
+    ordering = ["-created_date"]  # ordering posts in descending order
+    paginate_by = 10 # shows 10 posts per page
 
 
 class CreatePostView(CreateView):

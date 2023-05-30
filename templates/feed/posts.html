@@ -4,18 +4,40 @@
 
 {% block content %}
 <div class="container post-feed">
+
   <div class="row">
     {% for post in posts %}
+    <div class="write-post-container">
+      <div class="user-profile">
+        <img src="{{ post.user.profile.profile_pic.url }}">
+        <div>
+          <p>{{ post.author.username }}</p>
+          <small>Public <i class="fa-solid fa-caret-down"></i></small>
+        </div>
+      </div>
+
+      <div class="post-input-container">
+        <textarea rows="3" placeholder="What's on Your mind {{ post.author.username }}?"></textarea>
+        <div class="add-post-links">
+          <a href="#"><i class="fa-solid fa-image" style="color: #d3c845;"></i>Image</a>
+        </div>
+      </div>
+
+    </div>
+
       <div class="col-md-8">
         <div class="card mb-4 post-card" {% cycle 'align-right' 'align-left' %}">
           <div class="card-body card-content">
             <div class="row">
               <div class="col-md-3 d-flex justify-content-center align-items-center">
+
                 {% if post.image %}
-                <img src="{{ post.image.url }}" class="rounded-picture" alt="{{ post.title }}">
+                <div class="thumbnail">
+                <img src="{{ post.image.url }}" class="img-rounded" alt="{{ post.title }}">
                 {% else %}
-                <img src="{% static 'img/defaultpost_img.jpg' %}" class="rounded-picture" alt="Default Image">
+                <img src="{% static 'img/defaultpost_img.jpg' %}" class="img-rounded" alt="Default Image">
                 {% endif %}
+                <div/>
               </div>
               <div class="col-md-9">
                 <h5 class="card-title">{{ post.title }}</h5>
@@ -36,7 +58,7 @@
                 <li>No likes yet.</li>
               {% endfor %}
             </ul>
-
+            </div>
 
             <div class="card-text">
             <h6>Comments:</h6>
@@ -48,7 +70,8 @@
                 <li>No comments yet.</li>
               {% endfor %}
             </ul>
-              
+
+            </div>
 
           </div>
         </div>

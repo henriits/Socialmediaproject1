@@ -37,8 +37,8 @@
               {% endfor %}
             </ul>
 
-            <!-- Display the like button -->
-            <form method="POST" action="{% url 'like_post' post.id %}">
+            <!-- Display the like button  -->
+            <form method="POST" action="">
               {% csrf_token %}
               <button type="submit" class="btn btn-sm btn-primary">Like</button>
             </form>
@@ -56,7 +56,7 @@
             </ul>
 
             <!-- Display the comment field -->
-            <form method="POST" action="{% url 'add_comment' post.id %}">
+            <form method="POST" action="">
               {% csrf_token %}
               <textarea name="comment" class="form-control" placeholder="Add a comment"></textarea>
               <button type="submit" class="btn btn-sm btn-primary">Post Comment</button>

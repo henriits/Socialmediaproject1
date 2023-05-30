@@ -1,11 +1,11 @@
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from notifications.models import Notification
-from .forms import CreateNewPost
+from .forms import CreateNewPost, CreateCommentForm
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -47,3 +47,23 @@ class CreatePostView(CreateView):
 
 
         return super().form_valid(form)
+
+def create_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        form = CreateCommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post_id = post
+            comment.user_id = request.user
+            comment.save()
+            return redirect('posts')
+    else:
+        form = CreateCommentForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'create_comment-html', context)

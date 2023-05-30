@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from messaging.models import MessageModel as Messages, ThreadModel as Thread
+
+admin.site.register(Messages)
+admin.site.register(Thread)

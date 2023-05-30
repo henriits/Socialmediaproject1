@@ -1,15 +1,62 @@
-{% extends "blog/base.html" %} {% load crispy_forms_tags %} {% block content %}
+{% extends "blog/base.html" %}
+{% block content %}
+
+{% extends "blog/base.html" %}
+
+{% block content %}
 <div class="content-section">
   <div class="media">
-    <img
-      class="rounded-circle account-img"
-      src="{{ user.profile.image.url }}"
-    />
+    <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" />
     <div class="media-body">
       <h2 class="account-heading">{{ user.username }}</h2>
       <p class="text-secondary">{{ user.email }}</p>
     </div>
   </div>
-  <!-- FORM HERE -->
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">Profile Info</legend>
+
+      <!-- User form -->
+      <div class="form-group">
+        <label for="{{ u_form.username.id_for_label }}">Username:</label>
+        {{ u_form.username }}
+      </div>
+      <div class="form-group">
+        <label for="{{ u_form.email.id_for_label }}">Email:</label>
+        {{ u_form.email }}
+      </div>
+
+      <!-- Profile form -->
+      <div class="form-group">
+        <label for="{{ p_form.image.id_for_label }}">Profile Image:</label>
+        {{ p_form.image }}
+      </div>
+      <div class="form-group">
+        <label for="{{ p_form.first_name.id_for_label }}">First Name:</label>
+        {{ p_form.first_name }}
+      </div>
+      <div class="form-group">
+        <label for="{{ p_form.last_name.id_for_label }}">Last Name:</label>
+        {{ p_form.last_name }}
+      </div>
+      <div class="form-group">
+        <label for="{{ p_form.date_of_birth.id_for_label }}">Date of Birth:</label>
+        {{ p_form.date_of_birth }}
+      </div>
+      <div class="form-group">
+        <label for="{{ p_form.bio.id_for_label }}">Bio:</label>
+        {{ p_form.bio }}
+      </div>
+    </fieldset>
+
+    <div class="form-group">
+      <button class="btn btn-outline-info" type="submit">Update</button>
+    </div>
+  </form>
 </div>
+{% endblock content %}
+
+
 {% endblock content %}

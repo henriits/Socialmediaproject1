@@ -57,7 +57,15 @@
                     <a class="nav-link" href="{% url 'posts:create' %}">Create Post</a>
                 </li>
 
+
             </ul>
+            <form method="get">
+                <div class="input-group my-3">
+                    <input type="text" class="form-control" name="q" placeholder="Search for User">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </form>
+
             {% else %}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">

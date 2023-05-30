@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default_profile_pic.png', upload_to='profile_pics')
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=36)
+    first_name = models.CharField(max_length=30, null=False, default='John')
+    last_name = models.CharField(max_length=36, null=False, default='Appleseed')
     date_of_birth = models.DateField(default='1900-01-01')
     bio = models.TextField(blank=True)
     email = models.EmailField(default='johnappleseed@example.com')

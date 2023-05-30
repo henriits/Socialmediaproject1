@@ -118,10 +118,11 @@
 
 .post-feed {
     background-color: #201b1b;
+    box-shadow: 6px 6px 60px #defa00;
 }
 
 body {
-    background-color: #defa00;
+    background-color: #201b1b;
 }
 
 

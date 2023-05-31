@@ -6,6 +6,8 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Add Comment</button>
+    <div class="comment-button">
+    <button class="add-comment-btn" type="submit">Add Comment</button>
+    </div>
   </form>
 {% endblock %}

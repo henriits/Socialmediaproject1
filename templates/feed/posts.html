@@ -9,6 +9,7 @@
     <div class="col-md-10">
       {% for post in posts %}
       {% if forloop.first %}
+
     <!-- First field to add new post -->
     <div class="write-post-container">
       <div class="user-profile">
@@ -28,8 +29,6 @@
         </div>
       </div>
 
-
-
     </div>
     {% endif %}
 
@@ -44,8 +43,6 @@
           <br>
         </div>
       </div>
-
-
 
       <h5 class="post-title">{{ post.title }}</h5>
       {% if post.image %}
@@ -76,10 +73,10 @@
       </div>
 
       <!-- Comment form -->
-      <form method="post" action="{% url 'create_comment' post.id %}">
+      <form method="post" action="{% url 'posts:create_comment' post.id %}">
         {% csrf_token %}
         {{ comment_form.as_p }}
-        <button type="submit">Add Comment</button>
+        <button class="add-comment-btn" type="submit">Add Comment</button>
       </form>
 
 

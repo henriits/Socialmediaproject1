@@ -250,7 +250,8 @@ body {
 
 .activity-icons div i {
     margin-right: 10px;
-
+    color: #FFFFFF;
+    padding: 10px 20px;
 }
 
 .post-profile-icon {
@@ -262,5 +263,18 @@ body {
     width: 20px;
     border-radius: 50%;
     margin-right: 5px;
+}
+
+.add-comment-btn {
+    background-color: #defa00;
+    color: #201b1b;
+    font-weight: bold;
+    width: 130px;
+    height: 40px;
+    padding: 3px 3px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 

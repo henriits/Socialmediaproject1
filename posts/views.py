@@ -66,4 +66,4 @@ def create_comment(request, post_id):
     context = {
         'form': form,
     }
-    return render(request, 'create_comment-html', context)
+    return render(request, 'feed/create_comment.html', context)

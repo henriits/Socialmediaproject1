@@ -49,3 +49,8 @@ def register(request):
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('allposts')

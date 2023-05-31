@@ -59,11 +59,19 @@ def create_comment(request, post_id):
             comment.post_id = post
             comment.user_id = request.user
             comment.save()
+            # get the updated list of comments for the post
+            comments = post.comments_set.all()
+            context = {
+                'post': post,
+                'comments': comments,
+            }
+
             return redirect('posts:allposts')
     else:
         form = CreateCommentForm()
 
     context = {
         'form': form,
+        'post': post,
     }
     return render(request, 'feed/create_comment.html', context)

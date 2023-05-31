@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-{% for notification in notifications %}
-<p>{{ notification.user_id.username }} created a new post "{{ notification.content }}".</p>
-<br>
-<form method="post" action="{% url 'notifications:notifications' %}">
-    {% csrf_token %}
-    <input type="hidden" name="notification_id" value="{{ notification.notification_id }}">
+<div class="container" style="background-color:white;">
+    {% for notification in notifications %}
+    <p style="">{{ notification.user_id.username }} created a new post "{{ notification.content }}".</p>
     <br>
-    <button type="submit">Mark as Read</button>
-</form>
+    <form method="post" action="{% url 'notifications:notifications' %}">
+        {% csrf_token %}
+        <input type="hidden" name="notification_id" value="{{ notification.notification_id }}">
+        <br>
+        <button type="submit">Mark as Read</button>
+    </form>
 
-{% endfor %}
-
+    {% endfor %}
+</div>
 {% endblock %}

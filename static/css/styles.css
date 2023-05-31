@@ -278,3 +278,27 @@ body {
     cursor: pointer;
 }
 
+.comment-feed {
+    background-color: #201b1b;
+    box-shadow: 6px 6px 60px #defa00;
+}
+
+
+.comment-box {
+    padding: 15px 15px;
+    margin: 20px;
+}
+
+
+.add-comment {
+    box-shadow: #defa00;
+    color: #defa00;
+    font-size: 20px;
+}
+
+.comment-form {
+    text: #FFFFFF8C;
+    font-size: 20px;
+    padding: 9px;
+}
+

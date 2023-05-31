@@ -2,12 +2,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Add Comment</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div class="comment-button">
-    <button class="add-comment-btn" type="submit">Add Comment</button>
+
+<div class="container comment-feed">
+
+  <div class="row justify-content-center comment-box">
+
+    <div class="col-md-8">
+      <div class="add-comment">Add Comment</div>
+
+      <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+        <div class="comment-button">
+        <button class="add-comment-btn" type="submit">Add Comment</button>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
+
 {% endblock %}

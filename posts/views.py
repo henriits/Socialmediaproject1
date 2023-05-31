@@ -59,7 +59,7 @@ def create_comment(request, post_id):
             comment.post_id = post
             comment.user_id = request.user
             comment.save()
-            return redirect('posts')
+            return redirect('posts:allposts')
     else:
         form = CreateCommentForm()
 

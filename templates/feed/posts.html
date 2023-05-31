@@ -75,7 +75,9 @@
       <!-- Comment form -->
       <form method="post" action="{% url 'posts:create_comment' post.id %}">
         {% csrf_token %}
+        <div class="comment-form">
         {{ comment_form.as_p }}
+        </div>
         <button class="add-comment-btn" type="submit">Add Comment</button>
       </form>
 

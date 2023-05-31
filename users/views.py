@@ -69,4 +69,4 @@ def edit_profile(request):
         form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {'form': form}
-    return render(request, 'edit_profile.html', context)
+    return render(request, 'users/edit_profile.html', context)

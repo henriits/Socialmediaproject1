@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from datetime import datetime
+from .models import Profile
 
 
 class UserLoginForm(AuthenticationForm):
@@ -73,3 +74,8 @@ class UserRegisterForm(UserCreationForm):
         }
     ))
 
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image', 'first_name', 'last_name', 'date_of_birth', 'bio', 'email']

@@ -23,33 +23,29 @@ class CreateThread(View):
     def get(self, request, *args, **kwargs):
         form = ThreadForm()
         context = {
-            "form": form
+            'form': form
         }
-        return render(request, "messages/create_thread.html", context)
+        return render(request, 'messages/create_thread.html', context)
 
     def post(self, request, *args, **kwargs):
         form = ThreadForm(request.POST)
-
-        username = request.POST.get("username")
-
+        username = request.POST.get('username')
         try:
             receiver = User.objects.get(username=username)
             if ThreadModel.objects.filter(user=request.user, receiver=receiver).exists():
-                thread = ThreadModel.objects.filter(user=request.user, reciever=receiver)[0]
-                return redirect("thread", pk=thread.pk)
+                thread = ThreadModel.objects.filter(user=request.user, receiver=receiver)[0]
+                return redirect('thread', pk=thread.pk)
 
-            elif ThreadModel.objects.filter(user=receiver, receiver=request.user).exists():
-                thread = ThreadModel.objects.filter(user=receiver, receiver=request.user)[0]
-                return redirect("thread", pk=thread.pk)
             if form.is_valid():
-                thread = ThreadModel(
+                sender_thread = ThreadModel(
                     user=request.user,
                     receiver=receiver
                 )
-                thread.save()
-                return redirect("thread", pk=thread.pk)
+                sender_thread.save()
+                thread_pk = sender_thread.pk
+                return redirect('thread', pk=thread_pk)
         except:
-            return redirect("create-thread")
+            return redirect('create-thread')
 
 
 class ThreadView(View):
@@ -58,12 +54,11 @@ class ThreadView(View):
         thread = ThreadModel.objects.get(pk=pk)
         message_list = MessageModel.objects.filter(thread__pk__contains=pk)
         context = {
-            "thread": thread,
-            "form": form,
-            "message_list": message_list
+            'thread': thread,
+            'form': form,
+            'message_list': message_list
         }
-
-        return render(request, "messages/thread.html", context)
+        return render(request, 'messages/thread.html', context)
 
 
 class CreateMessage(View):
@@ -78,8 +73,9 @@ class CreateMessage(View):
             thread=thread,
             sender_user=request.user,
             receiver_user=receiver,
-            body=request.POST.get("message")
-
+            body=request.POST.get('message')
         )
+
         message.save()
-        return redirect("thread", pk=pk)
+        return redirect('thread', pk=pk)
+

@@ -73,3 +73,8 @@ class UserRegisterForm(UserCreationForm):
         }
     ))
 
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['image', 'first_name', 'last_name', 'date_of_birth', 'bio', 'email']

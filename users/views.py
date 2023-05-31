@@ -3,6 +3,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from .models import Profile
 
 
 # Create your views here.
@@ -48,6 +49,8 @@ def register(request):
 
 @login_required
 def profile(request):
+    # form = UserUpdateForm(instance=request.user)
+    # context = {'form': form}
     return render(request, 'users/profile.html')
 
 

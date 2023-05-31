@@ -33,5 +33,6 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile'),
     path("", include("posts.urls")),
     path("notifications", include("notifications.urls")),
+    path('messaging/', include('messaging.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

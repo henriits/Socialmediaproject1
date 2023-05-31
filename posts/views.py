@@ -6,7 +6,7 @@ from django.views.generic import ListView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
-from .models import Post
+from .models import Post, Comments
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -18,6 +18,13 @@ class AllPostView(LoginRequiredMixin, ListView):
     context_object_name = "posts"
     ordering = ["-created_date"]  # ordering posts in descending order
     paginate_by = 10 # shows 10 posts per page
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        posts = context["posts"]
+        context["comments"] = Comments.objects.filter(post_id__in=posts)
+        return context
+
 
     def get_queryset(self):
         queryset = super().get_queryset()

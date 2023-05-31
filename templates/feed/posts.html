@@ -64,7 +64,7 @@
       <div class="comments">
         <h6>Comments:</h6>
         <ul>
-          {% for comment in post.comments.all %}
+          {% for comment in comments %}
             <li>{{ comment.comment }} - {{ comment.user_id.username }} ({{ comment.created_at }})</li>
           {% empty %}
             <li>No comments yet.</li>

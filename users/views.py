@@ -17,7 +17,7 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user and user.is_active:
                 auth.login(request, user)
-                return redirect('allposts')
+                return redirect('posts:home')
         else:
             print(form.errors)
     else:
@@ -53,4 +53,4 @@ def profile(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('allposts')
+    return redirect('posts:home')

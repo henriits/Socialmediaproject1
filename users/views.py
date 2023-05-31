@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import UserRegisterForm, UserLoginForm, ProfileUpdateForm
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+from .models import Profile
 
 
 # Create your views here.
@@ -16,7 +18,7 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user and user.is_active:
                 auth.login(request, user)
-                return redirect('allposts')
+                return redirect('posts:home')
         else:
             print(form.errors)
     else:
@@ -43,3 +45,28 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+@login_required
+def profile(request):
+    # form = UserUpdateForm(instance=request.user)
+    # context = {'form': form}
+    return render(request, 'users/profile.html')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('posts:home')
+
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {'form': form}
+    return render(request, 'users/edit_profile.html', context)

@@ -20,7 +20,7 @@ class Post(models.Model):
 
 class Comments(models.Model):
     comment_id = models.AutoField(primary_key=True)
-    post_id = models.ForeignKey('posts.Post', on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.CharField(max_length=300)
     created_at = models.DateTimeField(auto_now_add=True)

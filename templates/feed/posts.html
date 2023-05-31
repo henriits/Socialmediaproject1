@@ -9,6 +9,8 @@
     <div class="col-md-10">
       {% for post in posts %}
       {% if forloop.first %}
+
+    <!-- First field to add new post -->
     <div class="write-post-container">
       <div class="user-profile">
         <img src="{{ post.user.profile.profile_pic.url }}">
@@ -27,11 +29,10 @@
         </div>
       </div>
 
-
     </div>
     {% endif %}
 
-
+    <!-- Display posts -->
     <div class="post-container">
       <div class="user-profile">
         <img src="{{ post.user.profile.profile_pic.url }}">
@@ -42,8 +43,6 @@
           <br>
         </div>
       </div>
-
-
 
       <h5 class="post-title">{{ post.title }}</h5>
       {% if post.image %}
@@ -60,6 +59,27 @@
           <div><i class="fa-sharp fa-solid fa-share" style="color: #defa00;"></i> followers </div>
         </div>
       </div>
+
+      <!-- Display comments -->
+      <div class="comments">
+        <h6>Comments:</h6>
+        <ul>
+          {% for comment in post.comments.all %}
+            <li>{{ comment.comment }} - {{ comment.user_id.username }} ({{ comment.created_at }})</li>
+          {% empty %}
+            <li>No comments yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Comment form -->
+      <form method="post" action="{% url 'posts:create_comment' post.id %}">
+        {% csrf_token %}
+        <div class="comment-form">
+        {{ comment_form.as_p }}
+        </div>
+        <button class="add-comment-btn" type="submit">Add Comment</button>
+      </form>
 
 
     </div>

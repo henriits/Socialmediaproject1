@@ -1,0 +1,23 @@
+<!-- need to add styling to this form!!! -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container comment-feed">
+
+  <div class="row justify-content-center comment-box">
+
+    <div class="col-md-8">
+      <div class="add-comment">Add Comment</div>
+
+      <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+        <div class="comment-button">
+        <button class="add-comment-btn" type="submit">Add Comment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

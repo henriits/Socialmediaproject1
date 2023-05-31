@@ -250,7 +250,8 @@ body {
 
 .activity-icons div i {
     margin-right: 10px;
-
+    color: #FFFFFF;
+    padding: 10px 20px;
 }
 
 .post-profile-icon {
@@ -264,6 +265,44 @@ body {
     margin-right: 5px;
 }
 
+.add-comment-btn {
+    background-color: #defa00;
+    color: #201b1b;
+    font-weight: bold;
+    width: 130px;
+    height: 40px;
+    padding: 3px 3px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-feed {
+    background-color: #201b1b;
+    box-shadow: 6px 6px 60px #defa00;
+}
+
+
+.comment-box {
+    padding: 15px 15px;
+    margin: 20px;
+}
+
+
+.add-comment {
+    box-shadow: #defa00;
+    color: #defa00;
+    font-size: 20px;
+}
+
+.comment-form {
+    text: #FFFFFF8C;
+    font-size: 20px;
+    padding: 9px;
+}
+
+=======
 /* Messages styles */
 
 .empty-text {
@@ -287,3 +326,4 @@ body {
     width: 25%;
     float:right;
 }
+

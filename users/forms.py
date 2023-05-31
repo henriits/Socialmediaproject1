@@ -72,3 +72,4 @@ class UserRegisterForm(UserCreationForm):
             'max': datetime.now().date()
         }
     ))
+

@@ -115,7 +115,7 @@
                 >
                     <!-- In here we add a profile image later with django !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                     <img
-                            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                            src="{{ user.profile.image.url }}"
                             class="rounded-circle"
                             height="25"
                             alt="Black and White Portrait of a Man"
@@ -127,7 +127,7 @@
                         aria-labelledby="navbarDropdownMenuAvatar"
                 >
                     <li>
-                        <a class="dropdown-item" href="">My profile</a>
+                        <a class="dropdown-item" href="{% url 'profile' %}">My profile</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="#">Settings</a>

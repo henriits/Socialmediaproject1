@@ -32,6 +32,7 @@ urlpatterns = [
     path('logout/', user_views.logout, name='logout'),
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
+    path('profile/edit/', user_views.edit_profile, name='edit_profile'),
     path("", include("posts.urls")),
     path("notifications", include("notifications.urls")),
     path('messaging/', include('messaging.urls')),

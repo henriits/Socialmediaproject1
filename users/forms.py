@@ -76,6 +76,10 @@ class UserRegisterForm(UserCreationForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    date_of_birth = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+
     class Meta:
         model = Profile
-        fields = ['image', 'first_name', 'last_name', 'date_of_birth', 'bio', 'email']
+        fields = ['image', 'first_name', 'last_name', 'bio', 'email']
+
+

@@ -15,14 +15,14 @@
       <div class="user-profile">
         <img src="{{ post.user.profile.profile_pic.url }}">
         <div>
-          <p>{{ post.author.username }}</p>
+          <p>{{ user.username }}</p>
           <small>Public <i class="fa-solid fa-caret-down"></i></small>
         </div>
       </div>
 
 
       <div class="post-input-container">
-        <textarea rows="3" placeholder="What's on Your mind {{ post.author.username }}?"></textarea>
+        <textarea rows="3" placeholder="What's on Your mind {{ user.username }}?"></textarea>
         <div class="add-post-links">
           <a href="#"><i class="fa-solid fa-image" style="color: #defa00;"></i>Add image</a>
           <a href="#"><i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>Upload the post</a>

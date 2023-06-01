@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
@@ -55,30 +55,33 @@ class CreatePostView(CreateView):
 
         return super().form_valid(form)
 
-def create_comment(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
 
-    if request.method == 'POST':
-        form = CreateCommentForm(request.POST)
 
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post_id = post
-            comment.user_id = request.user
-            comment.save()
-            # get the updated list of comments for the post
-            comments = post.comments_set.all()
-            context = {
-                'post': post,
-                'comments': comments,
-            }
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'feed/posts.html'
+    context_object_name = 'post'
 
-            return redirect('posts:allposts')
-    else:
-        form = CreateCommentForm()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.object
+        context['comments'] = post.comments_set.all()
+        context['form'] = CreateCommentForm()
+        return context
 
-    context = {
-        'form': form,
-        'post': post,
-    }
-    return render(request, 'feed/create_comment.html', context)
+
+class CreateCommentView(CreateView):
+    model = Comments
+    form_class = CreateCommentForm
+    template_name = 'feed/create_comment.html'
+
+    def form_valid(self, form):
+        post = get_object_or_404(Post, id=self.kwargs['post_id'])
+        comment = form.save(commit=False)
+        comment.post_id = post
+        comment.user_id = self.request.user
+        comment.save()
+        return super().form_valid(form)
+
+    success_url = reverse_lazy('posts:allposts')
+

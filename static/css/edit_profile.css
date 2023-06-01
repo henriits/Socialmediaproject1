@@ -1,6 +1,9 @@
 .img-account-profile {
-  height: 10rem;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
+
 
 .rounded-circle {
   border-radius: 50% !important;
@@ -20,3 +23,4 @@
     font-size: 1.2rem;
     font-weight: bold;
 }
+

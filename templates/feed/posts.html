@@ -22,11 +22,16 @@
 
 
       <div class="post-input-container">
-        <textarea rows="3" placeholder="What's on Your mind {{ user.username }}?"></textarea>
-        <div class="add-post-links">
-          <a href="#"><i class="fa-solid fa-image" style="color: #defa00;"></i>Add image</a>
-          <a href="#"><i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>Upload the post</a>
-        </div>
+        <form method="post" action="{% url 'posts:create_post' %}">
+          {% csrf_token %}
+          <input type="text" name="title" placeholder="Post Title">
+          <textarea name="content" rows="3" placeholder="What's on your mind, {{ user.username }}?"></textarea>
+          <div class="add-post-links">
+            <label for="image-upload"><i class="fa-solid fa-image" style="color: #defa00;"></i>Add image</label>
+            <input type="file" id="image-upload" name="image" accept="image/*">
+            <button type="submit"><i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>Upload the post</button>
+          </div>
+        </form>
       </div>
 
     </div>
@@ -72,7 +77,6 @@
 
       <br>
 
-      <br>
 
       <!-- Display comments -->
       <div class="comments">

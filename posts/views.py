@@ -38,7 +38,7 @@ class AllPostView(LoginRequiredMixin, ListView):
 class CreatePostView(CreateView):
     model = Post
     form_class = CreateNewPost
-    template_name = "feed/create_post.html"
+    template_name = "feed/post.html"
     success_url = reverse_lazy("posts:allposts")
 
     def form_valid(self, form):
@@ -55,6 +55,9 @@ class CreatePostView(CreateView):
 
 
         return super().form_valid(form)
+
+    def get_template_names(self):
+        return [self.template_name]
 
 
 

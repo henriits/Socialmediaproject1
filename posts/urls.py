@@ -16,5 +16,6 @@ urlpatterns = [
     path('posts/<int:pk>/create_comment/', CreateCommentView.as_view(), name='create_comment'),
     #path("comment/<int:post_id>/", CreateCommentView.as_view(), name="create_comment"),
     path("like/<int:pk>/", LikeView, name="like_post"),
+    path('create_post/', CreatePostView.as_view(), name='create_post'),
 ]
 

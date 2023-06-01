@@ -10,4 +10,4 @@ class CreateNewPost(forms.ModelForm):
 class CreateCommentForm(forms.ModelForm):
     class Meta:
         model = Comments
-        fields = ['user_id', 'comment']
+        fields = ['comment']

@@ -325,3 +325,14 @@ width: 25%;
   font-size: 1.5rem;
   text-align: center;
 }
+
+.like-btn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.like-btn:focus {
+  outline: none;
+}

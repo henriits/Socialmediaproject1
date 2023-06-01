@@ -15,18 +15,23 @@
       <div class="user-profile">
         <img src="{{ post.user.profile.profile_pic.url }}">
         <div>
-          <p>{{ post.author.username }}</p>
+          <p>{{ user.username }}</p>
           <small>Public <i class="fa-solid fa-caret-down"></i></small>
         </div>
       </div>
 
 
       <div class="post-input-container">
-        <textarea rows="3" placeholder="What's on Your mind {{ post.author.username }}?"></textarea>
-        <div class="add-post-links">
-          <a href="#"><i class="fa-solid fa-image" style="color: #defa00;"></i>Add image</a>
-          <a href="#"><i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>Upload the post</a>
-        </div>
+        <form method="post" action="{% url 'posts:create_post' %}">
+          {% csrf_token %}
+          <input type="text" name="title" placeholder="Post Title">
+          <textarea name="content" rows="3" placeholder="What's on your mind, {{ user.username }}?"></textarea>
+          <div class="add-post-links">
+            <label for="image-upload"><i class="fa-solid fa-image" style="color: #defa00;"></i>Add image</label>
+            <input type="file" id="image-upload" name="image" accept="image/*">
+            <button type="submit"><i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>Upload the post</button>
+          </div>
+        </form>
       </div>
 
     </div>
@@ -54,11 +59,24 @@
 
       <div class="post-row">
         <div class="activity-icons">
-          <div><i class="fa-solid fa-thumbs-up" style="color: #defa00;"></i> likes </div>
+          <div>
+            <!-- Like section -->
+            <form method="post" action="{% url 'posts:like_post' post.pk %}">
+              {% csrf_token %}
+              <button class="like-btn" type="submit" name="post_id" value="{{post.id}}">
+                <i class="fa-solid fa-thumbs-up {% if request.user in post.likes.all %}active{% endif %}" style="color: #defa00;"></i>
+              {{ post.total_likes }}
+              </button>
+            </form>
+          </div>
+
           <div><i class="fa-solid fa-comments" style="color: #defa00;"></i> comments </div>
           <div><i class="fa-sharp fa-solid fa-share" style="color: #defa00;"></i> followers </div>
         </div>
       </div>
+
+      <br>
+
 
       <!-- Display comments -->
       <div class="comments">

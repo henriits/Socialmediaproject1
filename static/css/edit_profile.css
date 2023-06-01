@@ -1,0 +1,26 @@
+.img-account-profile {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.readonly-input {
+  background-color: #f8f9fa;
+  pointer-events: none;
+}
+
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+    color: #defa01;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+

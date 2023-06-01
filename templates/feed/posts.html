@@ -54,11 +54,25 @@
 
       <div class="post-row">
         <div class="activity-icons">
-          <div><i class="fa-solid fa-thumbs-up" style="color: #defa00;"></i> likes </div>
+          <div>
+            <!-- Like section -->
+            <form method="post" action="{% url 'posts:like_post' post.pk %}">
+              {% csrf_token %}
+              <button class="like-btn" type="submit" name="post_id" value="{{post.id}}">
+                <i class="fa-solid fa-thumbs-up {% if request.user in post.likes.all %}active{% endif %}" style="color: #defa00;"></i>
+              {{ post.total_likes }}
+              </button>
+            </form>
+          </div>
+
           <div><i class="fa-solid fa-comments" style="color: #defa00;"></i> comments </div>
           <div><i class="fa-sharp fa-solid fa-share" style="color: #defa00;"></i> followers </div>
         </div>
       </div>
+
+      <br>
+
+      <br>
 
       <!-- Display comments -->
       <div class="comments">

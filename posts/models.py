@@ -14,6 +14,10 @@ class Post(models.Model):
     image = models.ImageField(upload_to='img', blank=True, null=True)
     text = models.CharField(max_length=250)
     created_date = models.DateTimeField(default=timezone.now)
+    likes = models.ManyToManyField(User, related_name='liked_posts')
+
+    def total_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.title
@@ -29,18 +33,3 @@ class Comments(models.Model):
     def __str__(self):
         return f'{self.post_id.title} - {self.user_id.username}'
 
-
-class Like(models.Model):
-    like_id = models.AutoField(primary_key=True)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment_id = models.ForeignKey(Comments, on_delete=models.CASCADE, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        if self.post:
-            return f"{self.user.username} likes post: {self.post}"
-        elif self.comment:
-            return f"{self.user.username} likes comment: {self.comment}"
-        else:
-            return "Invalid like"

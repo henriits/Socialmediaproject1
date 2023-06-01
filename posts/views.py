@@ -1,13 +1,14 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
 from .models import Post, Comments
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 
 
 # Create your views here.
@@ -65,8 +66,11 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = self.object
+        stuff = get_object_or_404(Post, id=self.kwargs['pk'])
+        total_likes = stuff.total_likes()
         context['comments'] = post.comments_set.all()
         context['form'] = CreateCommentForm()
+        context['total_likes'] = total_likes
         return context
 
 
@@ -84,4 +88,9 @@ class CreateCommentView(CreateView):
         return super().form_valid(form)
 
     success_url = reverse_lazy('posts:allposts')
+
+def LikeView(request, pk):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('posts:allposts'))
 

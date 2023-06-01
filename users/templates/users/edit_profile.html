@@ -6,22 +6,19 @@
     <div class="row">
         <div class="col-xl-4">
             <!-- Profile picture card -->
-<div class="card mb-4 mb-xl-0">
-  <div class="card-header">Profile Picture</div>
-  <div class="card-body d-flex flex-column align-items-center">
-    <div class="img-container rounded mb-2" style="width: 150px; height: 150px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-      <!-- Profile picture image -->
-      <img class="img-account-profile" src="{{ form.instance.image.url }}" alt="Profile Picture" style="max-width: 100%; max-height: 100%; object-fit: cover;">
-    </div>
-    <!-- Profile picture help block -->
-    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-    <!-- Profile picture upload button -->
-    <button class="btn btn-primary" type="button">Upload new image</button>
-  </div>
-</div>
-
-
-
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="img-container rounded mb-2" style="width: 150px; height: 150px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                        <!-- Profile picture image -->
+                        <img class="img-account-profile" src="{{ form.instance.image.url }}" alt="Profile Picture" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                    </div>
+                    <!-- Profile picture help block -->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button -->
+                    <button class="btn btn-primary" type="button">Upload new image</button>
+                </div>
+            </div>
         </div>
         <div class="col-xl-8">
             <!-- Account details card -->
@@ -94,7 +91,7 @@
                         <div class="mb-3">
                             <label class="small mb-1" for="inputBio">Bio</label>
                             <div class="input-group">
-                                {{ form.bio }}
+                                <textarea class="form-control" id="inputBio" name="{{ form.bio.html_name }}" rows="3">{{ form.bio.value }}</textarea>
                             </div>
                         </div>
                         <!-- Save changes button -->

@@ -9,15 +9,18 @@
                     <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                         <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
                             <img src="{{ user.profile.image.url }}"
-                                alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
-                                style="width: 150px; z-index: 1">
-                            <a href="{% url 'edit_profile' %}" class="btn btn-light" data-mdb-ripple-color="dark" type="button" style="z-index: 1;">
-                            Edit profile
-                            </a>
+                                 alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                                 style="width: 150px; z-index: 1">
+                            <div class="position-relative">
+                                <a href="{% url 'edit_profile' %}" class="btn btn-dark" data-mdb-ripple-color="dark"
+                                   type="button" style="z-index: 1;">
+                                    Edit profile
+                                </a>
+                            </div>
                         </div>
                         <div class="ms-3" style="margin-top: 130px;">
                             <h5>{{ user.username }}</h5>
-                            <p>{{ user.profile.first_name }}  {{ user.profile.last_name }}</p>
+                            <p>{{ user.profile.first_name }} {{ user.profile.last_name }}</p>
                         </div>
                     </div>
                     <div class="p-4 text-black" style="background-color: #f8f9fa;">
@@ -50,21 +53,21 @@
                         <div class="row g-2">
                             <div class="col mb-2">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
-                                    alt="image 1" class="w-100 rounded-3">
+                                     alt="image 1" class="w-100 rounded-3">
                             </div>
                             <div class="col mb-2">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp"
-                                    alt="image 1" class="w-100 rounded-3">
+                                     alt="image 1" class="w-100 rounded-3">
                             </div>
                         </div>
                         <div class="row g-2">
                             <div class="col">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp"
-                                    alt="image 1" class="w-100 rounded-3">
+                                     alt="image 1" class="w-100 rounded-3">
                             </div>
                             <div class="col">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp"
-                                    alt="image 1" class="w-100 rounded-3">
+                                     alt="image 1" class="w-100 rounded-3">
                             </div>
                         </div>
                     </div>

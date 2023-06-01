@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block content %}
-
 <head>
   <title>Register Page</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/edit_profile.css' %}">
@@ -33,59 +31,70 @@
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <!-- Form Group (username)-->
+                        <!-- Form Group (username) grayed out, not editable-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
-                            {{ form.username }}
-                        </div>
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputFirstName">First name</label>
-                                {{ form.first_name }}
-                            </div>
-                            <!-- Form Group (last name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputLastName">Last name</label>
-                                {{ form.last_name }}
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputUsername" value="{{ user.username }}" readonly>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
                             </div>
                         </div>
-                        <!-- Form Row        -->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (organization name)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputOrgName">Organization name</label>
-                                {{ form.organization_name }}
+                        <!-- Form Group (first name)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputFirstName">First name</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputFirstName" value="{{ form.first_name.value }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
                             </div>
-                            <!-- Form Group (location)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputLocation">Location</label>
-                                {{ form.location }}
+                        </div>
+                        <!-- Form Group (last name)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputLastName">Last name</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputLastName" value="{{ form.last_name.value }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Form Group (location)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputLocation">Location</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputLocation" value="{{ form.location.value }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                </div>
                             </div>
                         </div>
                         <!-- Form Group (email address)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                            {{ form.email }}
-                        </div>
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (phone number)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputPhone">Phone number</label>
-                                {{ form.phone_number }}
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="inputEmailAddress" value="{{ form.email.value }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                </div>
                             </div>
-                            <!-- Form Group (birthday)-->
-                            <div class="col-md-6">
-                                <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                {{ form.date_of_birth }}
+                        </div>
+                        <!-- Form Group (birthday)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputBirthday">Birthday</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" id="inputBirthday" value="{{ form.date_of_birth.value }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                </div>
                             </div>
                         </div>
                         <!-- Form Group (bio)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputBio">Bio</label>
-                            {{ form.bio }}
+                            <textarea class="form-control" id="inputBio" rows="4">{{ form.bio.value }}</textarea>
                         </div>
                         <!-- Save changes button-->
                         <button class="btn btn-primary" type="submit">Save changes</button>
@@ -95,6 +104,5 @@
         </div>
     </div>
 </div>
-
 
 {% endblock %}

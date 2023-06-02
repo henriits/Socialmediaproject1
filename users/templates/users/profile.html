@@ -11,12 +11,32 @@
                             <img src="{{ user.profile.image.url }}"
                                  alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                                  style="width: 150px; z-index: 1">
+                            {% if user.is_authenticated %}
+                                {% if user == profile.user %}
+                                <div class="position-relative">
+                                    <a href="{% url 'edit_profile' %}" class="btn btn-dark" data-mdb-ripple-color="dark"
+                                       type="button" style="z-index: 1;">
+                                        Edit profile
+                                    </a>
+                                </div>
+                                {% else %}
+                                <div class="position-relative">
+                                    <a href="" class="btn btn-dark" data-mdb-ripple-color="dark" type="button"
+                                       style="z-index: 1;">
+                                        Follow
+                                    </a>
+                                </div>
+                                {% endif %}
+                            {% else %}
                             <div class="position-relative">
-                                <a href="{% url 'edit_profile' %}" class="btn btn-dark" data-mdb-ripple-color="dark"
-                                   type="button" style="z-index: 1;">
-                                    Edit profile
+                                <a href="" class="btn btn-dark" data-mdb-ripple-color="dark" type="button"
+                                   style="z-index: 1;">
+                                    LOG IN
                                 </a>
                             </div>
+                            {% endif %}
+
+
                         </div>
                         <div class="ms-3" style="margin-top: 130px;">
                             <h5>{{ user.username }}</h5>

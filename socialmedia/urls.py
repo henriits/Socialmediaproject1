@@ -23,6 +23,7 @@ from django.conf import settings
 from users import views as user_views
 from django.contrib.auth import views as auth_views
 
+from users.views import UserSearch
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,8 +32,9 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', user_views.logout, name='logout'),
     path('register/', user_views.register, name='register'),
-    path('profile/', user_views.profile, name='profile'),
+    path('profile/<int:pk>', user_views.ProfileView.as_view(), name='profile'),
     path('profile/edit/', user_views.edit_profile, name='edit_profile'),
+    path('search/', UserSearch.as_view(), name='profile-search'),
     path("", include("posts.urls")),
     path("notifications", include("notifications.urls")),
     path('messaging/', include('messaging.urls')),

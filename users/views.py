@@ -1,5 +1,10 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.urls import reverse
+from django.views import View
+
+from posts.models import Post
 from .forms import UserRegisterForm, UserLoginForm, ProfileUpdateForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -47,11 +52,26 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 
-@login_required
-def profile(request):
-    # form = UserUpdateForm(instance=request.user)
-    # context = {'form': form}
-    return render(request, 'users/profile.html')
+# @login_required
+# def profile(request):
+#     # form = UserUpdateForm(instance=request.user)
+#     # context = {'form': form}
+#     return render(request, 'users/profile.html')
+#
+
+class ProfileView(View):
+    def get(self, request, pk, *args, **kwargs):
+        profile = Profile.objects.get(pk=pk)
+        user = profile.user
+        posts = Post.objects.filter(author=user).order_by('-created_date')
+
+        context = {
+            'user': user,
+            'profile': profile,
+            'posts': posts,
+        }
+
+        return render(request, 'users/profile.html', context)
 
 
 def logout(request):
@@ -64,9 +84,23 @@ def edit_profile(request):
         form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect(reverse('profile', kwargs={'pk': request.user.profile.pk}))
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {'form': form}
     return render(request, 'users/edit_profile.html', context)
+
+
+class UserSearch(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('query')
+        profile_list = Profile.objects.filter(
+            Q(user__username__icontains=query)
+        )
+
+        context = {
+            'profile_list': profile_list,
+        }
+
+        return render(request, 'users/search.html', context)

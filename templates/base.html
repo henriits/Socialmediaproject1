@@ -53,7 +53,7 @@
             <a class="navbar-brand mt-2 mt-lg-0" href="/">
                 <!-- Logo image here!  -->
 
-                <p>Hello {{ user.username }}</p>
+                <p>Hello {{ request.user }}</p>
 
 
             </a>
@@ -69,10 +69,11 @@
 
 
             </ul>
-            <form method="get">
-                <div class="input-group my-3">
-                    <input type="text" class="form-control" name="q" placeholder="Search for User">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <form class='d-flex' method="get" action="{% url 'profile-search' %}">%
+                <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}">
+
+                    <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
 
@@ -137,7 +138,7 @@
                         aria-labelledby="navbarDropdownMenuAvatar"
                 >
                     <li>
-                        <a class="dropdown-item" href="{% url 'profile' %}">My profile</a>
+                        <a class="dropdown-item" href="{% url 'profile' user.profile.pk %}">My profile</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="#">Settings</a>

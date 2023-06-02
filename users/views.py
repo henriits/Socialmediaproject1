@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.urls import reverse
 from django.views import View
 
 from posts.models import Post
@@ -68,7 +69,6 @@ class ProfileView(View):
             'user': user,
             'profile': profile,
             'posts': posts,
-
         }
 
         return render(request, 'users/profile.html', context)
@@ -84,7 +84,7 @@ def edit_profile(request):
         form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect(reverse('profile', kwargs={'pk': request.user.profile.pk}))
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
 

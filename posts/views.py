@@ -27,13 +27,13 @@ class AllPostView(LoginRequiredMixin, ListView):
         return context
 
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        query = self.request.GET.get('q')
-        if query:
-            queryset = queryset.filter(Q(title__icontains=query) | Q(text__icontains=query))  # this currently finds post text, need to fix so finds user instead
-        return queryset
-
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     query = self.request.GET.get('q')
+    #     if query:
+    #         queryset = queryset.filter(Q(title__icontains=query) | Q(text__icontains=query))  # this currently finds post text, need to fix so finds user instead
+    #     return queryset
+    #
 
 class CreatePostView(CreateView):
     model = Post

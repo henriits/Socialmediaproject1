@@ -1,5 +1,9 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views import View
+
+
 from .forms import UserRegisterForm, UserLoginForm, ProfileUpdateForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -47,11 +51,13 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 
-@login_required
-def profile(request):
-    # form = UserUpdateForm(instance=request.user)
-    # context = {'form': form}
-    return render(request, 'users/profile.html')
+# @login_required
+# def profile(request):
+#     # form = UserUpdateForm(instance=request.user)
+#     # context = {'form': form}
+#     return render(request, 'users/profile.html')
+#
+
 
 
 def logout(request):
@@ -70,3 +76,17 @@ def edit_profile(request):
 
     context = {'form': form}
     return render(request, 'users/edit_profile.html', context)
+
+
+class UserSearch(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('query')
+        profile_list = Profile.objects.filter(
+            Q(user__username__icontains=query)
+        )
+
+        context = {
+            'profile_list': profile_list,
+        }
+
+        return render(request, 'users/search.html', context)

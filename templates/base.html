@@ -69,10 +69,11 @@
 
 
             </ul>
-            <form method="get">
-                <div class="input-group my-3">
-                    <input type="text" class="form-control" name="q" placeholder="Search for User">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <form class='d-flex' method="get" action="{% url 'profile-search' %}">%
+                <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}">
+
+                    <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
 

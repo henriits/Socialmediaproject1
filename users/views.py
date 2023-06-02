@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
 
-
+from posts.models import Post
 from .forms import UserRegisterForm, UserLoginForm, ProfileUpdateForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -58,6 +58,20 @@ def register(request):
 #     return render(request, 'users/profile.html')
 #
 
+class ProfileView(View):
+    def get(self, request, pk, *args, **kwargs):
+        profile = Profile.objects.get(pk=pk)
+        user = profile.user
+        posts = Post.objects.filter(author=user).order_by('-created_date')
+
+        context = {
+            'user': user,
+            'profile': profile,
+            'posts': posts,
+
+        }
+
+        return render(request, 'users/profile.html', context)
 
 
 def logout(request):

@@ -27,12 +27,30 @@
           <input type="text" name="title" placeholder="Post Title">
           <textarea name="content" rows="3" placeholder="What's on your mind, {{ user.username }}?"></textarea>
           <div class="add-post-links">
-            <label for="image-upload"><i class="fa-solid fa-image" style="color: #defa00;"></i>Add image</label>
-            <input type="file" id="image-upload" name="image" accept="image/*">
-            <button type="submit"><i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>Upload the post</button>
+            <label for="image-upload" class="label-image-upload">
+              <i class="fa-solid fa-image" style="color: #defa00;"></i>
+              Add image
+            </label>
+            <input type="file" id="image-upload" name="image" accept="image/*" style="display: none;">
+
+            <button type="submit" class="post-upload-button">
+              <i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>
+              <span>Upload the post</span>
+            </button>
+
           </div>
         </form>
       </div>
+
+<!--      {% if post.image %}-->
+<!--        <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">-->
+<!--      {% else %}-->
+<!--        {% if post.author.profile.profile_pic %}-->
+<!--          <img src="{{ post.author.profile.profile_pic.url }}" class="post-img" alt="Default Image">-->
+<!--        {% else %}-->
+<!--          <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">-->
+<!--        {% endif %}-->
+<!--      {% endif %}-->
 
     </div>
     {% endif %}

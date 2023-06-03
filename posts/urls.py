@@ -18,4 +18,4 @@ urlpatterns = [
     #path("comment/<int:post_id>/", CreateCommentView.as_view(), name="create_comment"),
     path("like/<int:pk>/", LikeView, name="like_post"),
    # path('create_post/', PostView.as_view(), name='create_post'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

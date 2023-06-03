@@ -21,17 +21,25 @@
                 </div>
 
 
-                <div class="post-input-container">
-                    <textarea class="form-control" id="textAreaExample" rows="2"></textarea>
-                    <label class="form-label" for="textAreaExample">Create a post</label>
-                    <form method="POST" action="{% url 'posts:posts' %}">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit"><i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>Upload
-                            the post
-                        </button>
+                <div class="d-flex mb-3">
+                    <a href="">
+                        <img src="{{ user.profile.image.url }}"
+                             class="border rounded-circle me-2"
+                             alt="Avatar" style="height: 40px"/>
+                    </a>
+                    <div class="form-outline w-100">
+                        <form method="post" enctype="multipart/form-data" action="{% url 'posts:posts' %}">
+                            {% csrf_token %}
+                            {{ form.text }}
+                            {{ form.image }}
+                            <button class="add-comment-btn" type="submit"><i class="fa-solid fa-circle-arrow-up"
+                                                                             style="color: #defa00;"></i>Upload the post
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                </form>
+
+
             </div>
 
         </div>

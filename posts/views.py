@@ -34,7 +34,8 @@ def post_view(request):
     comments = Comments.objects.all().order_by("-created_at")
 
     if request.method == 'POST':
-        form = CreateNewPost(request.POST)
+        form = CreateNewPost(request.POST, request.FILES)
+
         if form.is_valid():
             form.instance.author = request.user
             form.instance.created_date = timezone.now()

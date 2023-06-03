@@ -5,102 +5,163 @@
 {% block content %}
 <div class="container post-feed">
 
-  <div class="row justify-content-center">
-    <div class="col-md-10">
-      {% for post in posts %}
-      {% if forloop.first %}
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            {% for post in posts %}
+            {% if forloop.first %}
 
-    <!-- First field to add new post -->
-    <div class="write-post-container">
-      <div class="user-profile">
-        <img src="{{ post.user.profile.profile_pic.url }}">
-        <div>
-          <p>{{ user.username }}</p>
-          <small>Public <i class="fa-solid fa-caret-down"></i></small>
+            <!--CREATE POST SECTION-->
+            <div class="write-post-container">
+                <div class="user-profile">
+                    <img src="{{ post.user.profile.profile_pic.url }}">
+                    <div>
+                        <p>{{ user.username }}</p>
+                        <small>Public <i class="fa-solid fa-caret-down"></i></small>
+                    </div>
+                </div>
+
+
+                <div class="post-input-container">
+                    <textarea class="form-control" id="textAreaExample" rows="2"></textarea>
+                    <label class="form-label" for="textAreaExample">Create a post</label>
+                    <form method="POST" action="{% url 'posts:posts' %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit"><i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>Upload
+                            the post
+                        </button>
+                </div>
+                </form>
+            </div>
+
         </div>
-      </div>
+        {% endif %}
 
 
-      <div class="post-input-container">
-        <form method="post" action="{% url 'posts:posts' %}">
-          {% csrf_token %}
-          {{ form.as_p }}
-            <button type="submit"><i class="fa-solid fa-circle-arrow-up" style="color: #defa00;"></i>Upload the post</button>
-          </div>
-        </form>
-      </div>
+        <div class="card" style="max-width: 42rem">
+            <div class="card-body">
+                <!-- Data -->
+                <div class="d-flex mb-3">
+                    <a href="">
+                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.webp"
+                             class="border rounded-circle me-2"
+                             alt="Avatar" style="height: 40px"/>
+                    </a>
+                    <div>
+                        <a href="" class="text-dark mb-0">
+                            <strong>{{ post.author.username }}</strong>
+                        </a>
+                        <a href="" class="text-muted d-block" style="margin-top: -6px">
+                            <small>{{ post.created_date }}</small>
+                        </a>
+                    </div>
+                </div>
+                <!-- Description -->
+                <div>
+                    <p>
+                        {{ post.text }}
+                    </p>
+                </div>
+            </div>
+            <!-- Media -->
+            <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
+                {% else %}
+                <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
+                {% endif %}
+            </div>
+            <!-- Media -->
+            <!-- Interactions -->
+            <div class="card-body">
+                <!-- Reactions -->
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        <a href="{% url 'posts:like_post' post.pk %}">
+                            <i class="fas fa-heart text-danger"></i>
+                            <span>{{ post.total_likes }}</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="" class="text-muted">{{ comments|length }} comments</a>
+                    </div>
+                </div>
+                <!-- Reactions -->
 
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
+                    <form method="post" action="{% url 'posts:like_post' post.pk %}">
+                        {% csrf_token %}
+                        <button name="post_id" value="{{post.id}}" type="submit" class="btn btn-link btn-lg"
+                                data-mdb-ripple-color="dark">
+                            <i class="fas fa-thumbs-up me-2 {% if request.user in post.likes.all %}active{% endif %}"></i>Like
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
+                        <i class="fas fa-comment-alt me-2"></i>Comment
+                    </button>
+                    <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
+                        <i class="fas fa-share me-2"></i>Share
+                    </button>
+                </div>
+            </div>
+
+
+            <!--WRITE COMMENT SECTION -->
+
+            <div class="d-flex mb-3">
+                <a href="">
+                    <img src="{{ user.profile.image.url }}"
+                         class="border rounded-circle me-2"
+                         alt="Avatar" style="height: 40px"/>
+                </a>
+                <div class="form-outline w-100">
+                    <textarea class="form-control" id="textAreaExample" rows="2"></textarea>
+                    <label class="form-label" for="textAreaExample">Write a comment</label>
+                    <form method="post" action="{% url 'posts:posts' %}">
+                        {% csrf_token %}
+                        <div class="comment-form">
+                            {{ comment_form.as_p }}
+                        </div>
+                        <button class="add-comment-btn" type="submit">Add Comment</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- COMMENT DISPLAY SECTION -->
+
+            {% for comment in comments %}
+            <div class="d-flex mb-3">
+                <a href="">
+                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+                         class="border rounded-circle me-2"
+                         alt="Avatar" style="height: 40px"/>
+                </a>
+                <div>
+                    <div class="bg-light rounded-3 px-3 py-1">
+                        <a href="" class="text-dark mb-0">
+                            <strong>{{ comment.user_id.username }}</strong>
+                        </a>
+                        <p>
+                            <small>{{ comment.comment }}</small>
+                        </p>
+                        <p><small>{{ comment.created_at }}</small></p>
+                    </div>
+                    <a href="" class="text-muted small ms-3 me-2"><strong>Like</strong></a>
+                    <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
+                </div>
+            </div>
+            {% empty %}
+            <p>No comments available.</p>
+            {% endfor %}
+
+
+        </div>
+
+
+        {% endfor %}
     </div>
-    {% endif %}
-
-    <!-- Display posts -->
-    <div class="post-container">
-      <div class="user-profile">
-        <img src="{{ post.user.profile.profile_pic.url }}">
-        <div>
-          <p>{{ post.author.username }}</p>
-          <span class="text-muted">Created Date:</span> <span class="text-dark">{{ post.created_date }}</span>
-          <br>
-          <br>
-        </div>
-      </div>
-
-      <h5 class="post-title">{{ post.title }}</h5>
-      {% if post.image %}
-      <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
-      {% else %}
-      <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
-      {% endif %}
-      <p class="post-text">{{ post.text }}</p>
-
-      <div class="post-row">
-        <div class="activity-icons">
-          <div>
-            <!-- Like section -->
-            <form method="post" action="{% url 'posts:like_post' post.pk %}">
-              {% csrf_token %}
-              <button class="like-btn" type="submit" name="post_id" value="{{post.id}}">
-                <i class="fa-solid fa-thumbs-up {% if request.user in post.likes.all %}active{% endif %}" style="color: #defa00;"></i>
-              {{ post.total_likes }}
-              </button>
-            </form>
-          </div>
-
-          <div><i class="fa-solid fa-comments" style="color: #defa00;"></i> comments </div>
-          <div><i class="fa-sharp fa-solid fa-share" style="color: #defa00;"></i> followers </div>
-        </div>
-      </div>
-
-      <br>
-
-
-      <!-- Display comments -->
-      <div class="comments">
-        <h6>Comments:</h6>
-        <ul>
-          {% for comment in comments %}
-            <li>{{ comment.comment }} - {{ comment.user_id.username }} ({{ comment.created_at }})</li>
-          {% empty %}
-            <li>No comments yet.</li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <!-- Comment form -->
-      <form method="post" action="{% url 'posts:posts' %}">
-        {% csrf_token %}
-        <div class="comment-form">
-        {{ comment_form.as_p }}
-        </div>
-        <button class="add-comment-btn" type="submit">Add Comment</button>
-      </form>
-
-
-    </div>
-
-
-    {% endfor %}
-    </div>
-  </div>
+</div>
 </div>
 {% endblock %}

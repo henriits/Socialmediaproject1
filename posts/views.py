@@ -115,6 +115,11 @@ class CreateCommentView(CreateView):
 
 def LikeView(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
-    post.likes.add(request.user)
+
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+
     return HttpResponseRedirect(reverse('posts:posts'))
 

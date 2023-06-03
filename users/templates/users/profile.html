@@ -14,7 +14,7 @@
                             {% if user.is_authenticated %}
                                 {% if request.user == user %}
                                 <div class="position-relative">
-                                    <a href="{% url 'edit_profile' %}" class="btn btn-dark" data-mdb-ripple-color="dark"
+                                    <a href="{% url 'users:edit_profile' %}" class="btn btn-dark" data-mdb-ripple-color="dark"
                                        type="button" style="z-index: 1;">
                                         Edit profile
                                     </a>

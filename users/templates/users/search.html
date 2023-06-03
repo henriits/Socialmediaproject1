@@ -6,7 +6,7 @@
     {% for profile in profile_list %}
     <div class="row justify-content-center mt-3">
         <div class="col-md-5 col-sm-12 border-bottom position-relative">
-            <p><a style="text-decoration:none;" class='text-primary' href="{% url 'profile' profile.pk %}">
+            <p><a style="text-decoration:none;" class='text-primary' href="{% url 'users:profile' profile.pk %}">
               {{ profile.user }}</a></p>
 
 

@@ -84,7 +84,7 @@ def edit_profile(request):
         form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect(reverse('profile', kwargs={'pk': request.user.profile.pk}))
+            return redirect(reverse('users:profile', kwargs={'pk': request.user.profile.pk}))
     else:
         form = ProfileUpdateForm(instance=request.user.profile)
 

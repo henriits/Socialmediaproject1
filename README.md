@@ -1,4 +1,4 @@
-# Social Media Project 
+# Social Media Project
 
 This Python-based social media platform aims to provide users with a range of functionalities. It includes applications for user authentication, post creation and display, comment management, likes, followers connections, notifications, messages, and search. The project covers both backend and frontend development.
 

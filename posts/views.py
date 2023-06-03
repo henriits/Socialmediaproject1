@@ -30,10 +30,12 @@ class AllPostView(LoginRequiredMixin, ListView):
 def post_view(request):
     template_name = "feed/posts.html"
     form = CreateNewPost()
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by("-created_date")
+    comments = Comments.objects.all().order_by("-created_at")
 
     if request.method == 'POST':
-        form = CreateNewPost(request.POST)
+        form = CreateNewPost(request.POST, request.FILES)
+
         if form.is_valid():
             form.instance.author = request.user
             form.instance.created_date = timezone.now()
@@ -42,14 +44,14 @@ def post_view(request):
             Notification.objects.create(
                 user_id=request.user,
                 notification_type='new_post',
-                content=f'A new post "{form.cleaned_data["title"]}" has been created.'
+                content=f'A new post "{form.cleaned_data["text"]}" has been created.'
             )
             return redirect('posts:posts')
 
     context = {
         'form': form,
         'posts': posts,
-        'comments': Comments.objects.filter(post_id__in=posts)
+        'comments': comments
     }
     return render(request, template_name, context)
 
@@ -77,9 +79,9 @@ def post_view(request):
 #
 #         return super().form_valid(form)
 
-    def get_template_names(self):
-        return [self.template_name]
-
+    # def get_template_names(self):
+    #     return [self.template_name]
+    #
 
 
 class PostDetailView(DetailView):

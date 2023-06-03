@@ -1,4 +1,4 @@
-from django.db.models import Q
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse_lazy, reverse
@@ -27,34 +27,55 @@ class AllPostView(LoginRequiredMixin, ListView):
         return context
 
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     query = self.request.GET.get('q')
-    #     if query:
-    #         queryset = queryset.filter(Q(title__icontains=query) | Q(text__icontains=query))  # this currently finds post text, need to fix so finds user instead
-    #     return queryset
-    #
-
-class CreatePostView(CreateView):
-    model = Post
-    form_class = CreateNewPost
+def post_view(request):
     template_name = "feed/posts.html"
-    success_url = reverse_lazy("posts:allposts")
+    form = CreateNewPost()
+    posts = Post.objects.all()
 
-    def form_valid(self, form):
-        post = form.save(commit=False)
-        post.author = self.request.user
-        post.created_date = timezone.now()
-        post.save()
+    if request.method == 'POST':
+        form = CreateNewPost(request.POST)
+        if form.is_valid():
+            form.instance.author = request.user
+            form.instance.created_date = timezone.now()
+            form.save()
 
-        Notification.objects.create(
-            user_id=self.request.user,
-            notification_type='new_post',
-            content=f'A new post "{post.title}" has been created.'
-        )
+            Notification.objects.create(
+                user_id=request.user,
+                notification_type='new_post',
+                content=f'A new post "{form.cleaned_data["title"]}" has been created.'
+            )
+            return redirect('posts:posts')
+
+    context = {
+        'form': form,
+        'posts': posts,
+        'comments': Comments.objects.filter(post_id__in=posts)
+    }
+    return render(request, template_name, context)
 
 
-        return super().form_valid(form)
+
+
+# class CreatePostView(CreateView):
+#     model = Post
+#     form_class = CreateNewPost
+#     template_name = "feed/posts.html"
+#     success_url = reverse_lazy("posts:allposts")
+#
+#     def form_valid(self, form):
+#         post = form.save(commit=False)
+#         post.author = self.request.user
+#         post.created_date = timezone.now()
+#         post.save()
+#
+#         Notification.objects.create(
+#             user_id=self.request.user,
+#             notification_type='new_post',
+#             content=f'A new post "{post.title}" has been created.'
+#         )
+#
+#
+#         return super().form_valid(form)
 
     def get_template_names(self):
         return [self.template_name]
@@ -95,5 +116,5 @@ class CreateCommentView(CreateView):
 def LikeView(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
     post.likes.add(request.user)
-    return HttpResponseRedirect(reverse('posts:allposts'))
+    return HttpResponseRedirect(reverse('posts:posts'))
 

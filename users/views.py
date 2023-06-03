@@ -80,13 +80,14 @@ def logout(request):
 
 
 def edit_profile(request):
+    profile = request.user.profile
     if request.method == 'POST':
-        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect(reverse('users:profile', kwargs={'pk': request.user.profile.pk}))
+            return redirect(reverse('users:profile', kwargs={'pk': profile.pk}))
     else:
-        form = ProfileUpdateForm(instance=request.user.profile)
+        form = ProfileUpdateForm(instance=profile)
 
     context = {'form': form}
     return render(request, 'users/edit_profile.html', context)

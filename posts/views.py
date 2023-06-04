@@ -9,7 +9,7 @@ from .forms import CreateNewPost, CreateCommentForm
 from .models import Post, Comments
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-
+import pdb
 
 # Create your views here.
 class AllPostView(LoginRequiredMixin, ListView):
@@ -32,43 +32,43 @@ def post_view(request):
     form = CreateNewPost()
     comment_form = CreateCommentForm()
     posts = Post.objects.all().order_by("-created_date")
-    comments = Comments.objects.filter(post=post_id).order_by("-created_at")
-
     if request.method == 'POST':
-        form = CreateNewPost(request.POST, request.FILES)
+        if 'post_id' not in request.POST:
+            form = CreateNewPost(request.POST, request.FILES)
+            if form.is_valid():
+                form.instance.author = request.user
+                form.instance.created_date = timezone.now()
+                form.save()
 
-        if form.is_valid():
-            form.instance.author = request.user
-            form.instance.created_date = timezone.now()
-            form.save()
+                Notification.objects.create(
+                    user_id=request.user,
+                    notification_type='new_post',
+                    content=f'A new post "{form.cleaned_data["text"]}" has been created.'
+                )
+                return redirect('posts:posts')
 
-            Notification.objects.create(
-                user_id=request.user,
-                notification_type='new_post',
-                content=f'A new post "{form.cleaned_data["text"]}" has been created.'
-            )
-            return redirect('posts:posts')
-
-        if comment_form.is_valid():
-            # comments saving
-            comment = comment_form.save(commit=False)
-            comment.post_id = posts
-            comment.user_id = request.user
-            comment.created_at = timezone.now()
-            comment.save()
-
-            Notification.objects.create(
-                user_id=request.user,
-                notification_type='new_comment',
-                content=f'A new comment "{comment.comment}" has been posted.'
-            )
-            return redirect('posts:posts')
+        else:
+            comment_form = CreateCommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                post_id = request.POST.get('post_id')  # Assuming 'post_id' is the name of the input field in the form
+                post = Post.objects.get(pk=post_id)
+                comment.post = post
+                comment.user = request.user
+                comment.created_at = timezone.now()
+                comment.save()
+                pdb.set_trace()
+                Notification.objects.create(
+                    user_id=request.user,
+                    notification_type='new_comment',
+                    content=f'A new comment "{comment.comment}" has been posted.'
+                )
+                return redirect('posts:posts')
 
     context = {
         'form': form,
         'posts': posts,
-        'comments': comments,
-        'comment_form':comment_form
+        'comment_form': comment_form
     }
     return render(request, template_name, context)
 

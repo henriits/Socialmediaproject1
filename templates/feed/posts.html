@@ -136,6 +136,7 @@
                     <label class="form-label" for="textAreaExample">Write a comment</label>
                     <form method="post" action="{% url 'posts:posts' %}">
                         {% csrf_token %}
+                        <input type="hidden" name="post_id" value="{{ post.pk }}">
                         <div class="comment-form">
                             {{ comment_form.as_p }}
                         </div>
@@ -147,7 +148,7 @@
 
             <!-- COMMENT DISPLAY SECTION -->
 
-            {% for comment in comments %}
+            {% for comment in post.comments.all %}
             <div class="d-flex mb-3">
                 <a href="">
                     <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"

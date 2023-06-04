@@ -12,7 +12,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE) # here is a many to one relationship, need to explain is here "auth.User" or User?
     title = models.CharField(max_length=250)
     image = models.ImageField(upload_to='img', blank=True, null=True)
-    text = models.CharField(max_length=250)
+    text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     likes = models.ManyToManyField(User, related_name='liked_posts')
 

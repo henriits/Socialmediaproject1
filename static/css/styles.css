@@ -276,6 +276,7 @@ body {
     font-size: 12px;
     border-radius: 5px;
     cursor: pointer;
+    margin: 6px;
 }
 
 .comment-feed {

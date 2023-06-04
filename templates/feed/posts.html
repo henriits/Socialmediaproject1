@@ -30,8 +30,18 @@
                     <div class="form-outline w-100">
                         <form method="post" enctype="multipart/form-data" action="{% url 'posts:posts' %}">
                             {% csrf_token %}
-                            {{ form.text }}
-                            {{ form.image }}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.text }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                    {{ form.image }}
+                                    </div>
+                                </div>
+                            </div>
                             <button class="add-comment-btn" type="submit"><i class="fa-solid fa-circle-arrow-up"
                                                                              style="color: #defa00;"></i>Upload the post
                             </button>

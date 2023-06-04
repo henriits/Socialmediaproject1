@@ -7,8 +7,7 @@
 
     <div class="row justify-content-center">
         <div class="col-md-10">
-            {% for post in posts %}
-            {% if forloop.first %}
+
 
             <!--CREATE POST SECTION-->
             <div class="write-post-container">
@@ -53,9 +52,8 @@
             </div>
 
         </div>
-        {% endif %}
 
-
+        {% for post in posts %}
         <div class="card" style="max-width: 42rem">
             <div class="card-body">
                 <!-- Data -->
@@ -134,7 +132,7 @@
                          alt="Avatar" style="height: 40px"/>
                 </a>
                 <div class="form-outline w-100">
-                    <textarea class="form-control" id="textAreaExample" rows="2"></textarea>
+                    <!-- <textarea class="form-control" id="textAreaExample" rows="2"></textarea> -->
                     <label class="form-label" for="textAreaExample">Write a comment</label>
                     <form method="post" action="{% url 'posts:posts' %}">
                         {% csrf_token %}

@@ -30,6 +30,7 @@ class AllPostView(LoginRequiredMixin, ListView):
 def post_view(request):
     template_name = "feed/posts.html"
     form = CreateNewPost()
+    comment_form = CreateCommentForm()
     posts = Post.objects.all().order_by("-created_date")
     comments = Comments.objects.all().order_by("-created_at")
 
@@ -48,10 +49,15 @@ def post_view(request):
             )
             return redirect('posts:posts')
 
+        if comment_form.is_valid():
+            # write logic to save comments
+            pass
+
     context = {
         'form': form,
         'posts': posts,
-        'comments': comments
+        'comments': comments,
+        'comment_form':comment_form
     }
     return render(request, template_name, context)
 

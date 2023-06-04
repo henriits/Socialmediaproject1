@@ -3,6 +3,8 @@
 {% block content %}
 <div class="container-xl px-4 mt-4">
     <hr class="mt-0 mb-4">
+    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
     <div class="row">
         <div class="col-xl-4">
             <!-- Profile picture card -->
@@ -14,9 +16,12 @@
                         <img class="img-account-profile" src="{{ form.instance.image.url }}" alt="Profile Picture" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                     </div>
                     <!-- Profile picture help block -->
-                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                    <!-- Profile picture upload button -->
-                    <button class="btn btn-primary" type="button">Upload new image</button>
+                    <div class="small font-italic text-muted mb-4">The picture will be resized to 300x300 px</div>
+                    <!-- Add the following input field for the image -->
+                          <div class="form-group">
+                            <label for="inputImage">Profile Image</label>
+                            <input type="file" class="form-control-file" id="inputImage" name="image">
+                          </div>
                 </div>
             </div>
         </div>
@@ -25,8 +30,6 @@
             <div class="card mb-4">
                 <div class="card-header">Account Details</div>
                 <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
                         <!-- Form Group (username) grayed out, not editable -->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
@@ -96,10 +99,11 @@
                         </div>
                         <!-- Save changes button -->
                         <button class="btn btn-primary" type="submit">Save changes</button>
-                    </form>
+<!--                    </form>-->
                 </div>
             </div>
         </div>
     </div>
+</form>
 </div>
 {% endblock %}

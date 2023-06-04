@@ -8,6 +8,7 @@ import os
 class Profile(models.Model):
     user = models.OneToOneField(User,primary_key="True", on_delete=models.CASCADE)
     image = models.ImageField(default='default_profile_pic.png', upload_to='profile_pics')
+    followers = models.ManyToManyField(User, blank=True, related_name='followers')
     first_name = models.CharField(max_length=30, null=False, default='John')
     last_name = models.CharField(max_length=36, null=False, default='Appleseed')
     date_of_birth = models.DateField(default='1900-01-01')

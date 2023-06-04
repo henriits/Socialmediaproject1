@@ -32,7 +32,7 @@ def post_view(request):
     form = CreateNewPost()
     comment_form = CreateCommentForm()
     posts = Post.objects.all().order_by("-created_date")
-    comments = Comments.objects.all().order_by("-created_at")
+    comments = Comments.objects.filter(post=post_id).order_by("-created_at")
 
     if request.method == 'POST':
         form = CreateNewPost(request.POST, request.FILES)
@@ -50,8 +50,19 @@ def post_view(request):
             return redirect('posts:posts')
 
         if comment_form.is_valid():
-            # write logic to save comments
-            pass
+            # comments saving
+            comment = comment_form.save(commit=False)
+            comment.post_id = posts
+            comment.user_id = request.user
+            comment.created_at = timezone.now()
+            comment.save()
+
+            Notification.objects.create(
+                user_id=request.user,
+                notification_type='new_comment',
+                content=f'A new comment "{comment.comment}" has been posted.'
+            )
+            return redirect('posts:posts')
 
     context = {
         'form': form,

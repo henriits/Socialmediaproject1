@@ -1,20 +1,27 @@
-
 <div class="dropdown">
-    <span class="badge bg-primary notification-badge">{{ notification.count }}</span>
-    <div class="dropdown-content " id="notification-container">
+    <span class="badge bg-primary notification-badge" onclick="showNotifications()"> {{ notifications.count }}</span>
+    <div class="dropdown-content d-none " id="notification-container">
         {% for notification in notifications %}
-            {% if notification.post %}
-                {% if notification.notification_type == 1 %}
-                <div class="dropdown-item-parent">
-                    <a href="">{{ notification.from_user }} liked your post</a>
-                    <span class="dropdown-item-close">&times;</span>
-                </div>
-                 {% elif notification.notification_type == 2 %}
-                 <div class="dropdown-item-parent">
-                    <a href="">{{ notification.from_user }} commented your post</a>
-                    <span class="dropdown-item-close"></span>
-                </div>
-                {% endif %}
+             {% if notification.post %}
+                    {% if notification.notification_type == 1 %}
+                    <div class="dropdown-item-parent">
+                        <a href="">{{ notification.from_user }} liked your post</a>
+                        <p>{{ notification.date }}</p>
+                        <span class="dropdown-item-close">&times;</span>
+                    </div>
+                    {% elif notification.notification_type == 2 %}
+                    <div class="dropdown-item-parent">
+                        <a href="">{{ notification.from_user }} commented your post</a>
+                        <p>{{ notification.date }}</p>
+                        <span class="dropdown-item-close"></span>
+                    </div>
+                    {% elif notification.notification_type == 3 %}
+                    <div class="dropdown-item-parent">
+                        <a href="">{{ notification.from_user }} followed you</a>
+                        <p>{{ notification.date }}</p>
+                        <span class="dropdown-item-close"></span>
+                    </div>
+                    {% endif %}
             {% endif %}
         {% endfor %}
     </div>

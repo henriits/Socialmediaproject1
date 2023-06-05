@@ -2,14 +2,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
 from .models import Post, Comments
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-
+#import pdb
 
 # Create your views here.
 class AllPostView(LoginRequiredMixin, ListView):
@@ -30,58 +30,46 @@ class AllPostView(LoginRequiredMixin, ListView):
 def post_view(request):
     template_name = "feed/posts.html"
     form = CreateNewPost()
+    comment_form = CreateCommentForm()
     posts = Post.objects.all().order_by("-created_date")
-    comments = Comments.objects.all().order_by("-created_at")
-
     if request.method == 'POST':
-        form = CreateNewPost(request.POST, request.FILES)
+        if 'post_id' not in request.POST:
+            form = CreateNewPost(request.POST, request.FILES)
+            if form.is_valid():
+                form.instance.author = request.user
+                form.instance.created_date = timezone.now()
+                form.save()
 
-        if form.is_valid():
-            form.instance.author = request.user
-            form.instance.created_date = timezone.now()
-            form.save()
+                Notification.objects.create(
+                    user_id=request.user,
+                    notification_type='new_post',
+                    content=f'A new post "{form.cleaned_data["text"]}" has been created.'
+                )
+                return redirect('posts:posts')
 
-            Notification.objects.create(
-                user_id=request.user,
-                notification_type='new_post',
-                content=f'A new post "{form.cleaned_data["text"]}" has been created.'
-            )
-            return redirect('posts:posts')
+        else:
+            comment_form = CreateCommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                post_id = request.POST.get('post_id')  # Assuming 'post_id' is the name of the input field in the form
+                post = Post.objects.get(pk=post_id)
+                comment.post = post
+                comment.user = request.user
+                comment.created_at = timezone.now()
+                comment.save()
+                Notification.objects.create(
+                    user_id=request.user,
+                    notification_type='new_comment',
+                    content=f'A new comment "{comment.comment}" has been posted.'
+                )
+                return redirect('posts:posts')
 
     context = {
         'form': form,
         'posts': posts,
-        'comments': comments
+        'comment_form': comment_form
     }
     return render(request, template_name, context)
-
-
-
-
-# class CreatePostView(CreateView):
-#     model = Post
-#     form_class = CreateNewPost
-#     template_name = "feed/posts.html"
-#     success_url = reverse_lazy("posts:allposts")
-#
-#     def form_valid(self, form):
-#         post = form.save(commit=False)
-#         post.author = self.request.user
-#         post.created_date = timezone.now()
-#         post.save()
-#
-#         Notification.objects.create(
-#             user_id=self.request.user,
-#             notification_type='new_post',
-#             content=f'A new post "{post.title}" has been created.'
-#         )
-#
-#
-#         return super().form_valid(form)
-
-    # def get_template_names(self):
-    #     return [self.template_name]
-    #
 
 
 class PostDetailView(DetailView):
@@ -125,3 +113,15 @@ def LikeView(request, pk):
 
     return HttpResponseRedirect(reverse('posts:posts'))
 
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'feed/post_delete.html'
+    success_url = reverse_lazy('posts:posts')
+
+
+class PostUpdateView(UpdateView):
+    model = Post
+    form_class = CreateNewPost
+    template_name = 'feed/update_post.html'
+    success_url = reverse_lazy('posts:posts')

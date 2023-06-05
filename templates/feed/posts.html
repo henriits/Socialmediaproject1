@@ -7,8 +7,7 @@
 
     <div class="row justify-content-center">
         <div class="col-md-10">
-            {% for post in posts %}
-            {% if forloop.first %}
+
 
             <!--CREATE POST SECTION-->
             <div class="write-post-container">
@@ -30,8 +29,18 @@
                     <div class="form-outline w-100">
                         <form method="post" enctype="multipart/form-data" action="{% url 'posts:posts' %}">
                             {% csrf_token %}
-                            {{ form.text }}
-                            {{ form.image }}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.text }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                    {{ form.image }}
+                                    </div>
+                                </div>
+                            </div>
                             <button class="add-comment-btn" type="submit"><i class="fa-solid fa-circle-arrow-up"
                                                                              style="color: #defa00;"></i>Upload the post
                             </button>
@@ -43,9 +52,8 @@
             </div>
 
         </div>
-        {% endif %}
 
-
+        {% for post in posts %}
         <div class="card" style="max-width: 42rem">
             <div class="card-body">
                 <!-- Data -->
@@ -91,10 +99,16 @@
                         </a>
                     </div>
                     <div>
-                        <a href="" class="text-muted">{{ comments|length }} comments</a>
+                        <a href="" class="text-muted">Total comments: {{ post.total_comments }}</a>
                     </div>
                 </div>
                 <!-- Reactions -->
+
+                <!-- Delete post -->
+                <a href="{% url 'posts:post_delete' post.pk %}">Delete</a>
+
+                <!-- Update post -->
+                <a href="{% url 'posts:post_update' post.pk %}">Update</a>
 
                 <!-- Buttons -->
                 <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
@@ -124,10 +138,11 @@
                          alt="Avatar" style="height: 40px"/>
                 </a>
                 <div class="form-outline w-100">
-                    <textarea class="form-control" id="textAreaExample" rows="2"></textarea>
+                    <!-- <textarea class="form-control" id="textAreaExample" rows="2"></textarea> -->
                     <label class="form-label" for="textAreaExample">Write a comment</label>
                     <form method="post" action="{% url 'posts:posts' %}">
                         {% csrf_token %}
+                        <input type="hidden" name="post_id" value="{{ post.pk }}">
                         <div class="comment-form">
                             {{ comment_form.as_p }}
                         </div>
@@ -139,7 +154,7 @@
 
             <!-- COMMENT DISPLAY SECTION -->
 
-            {% for comment in comments %}
+            {% for comment in post.comments.all %}
             <div class="d-flex mb-3">
                 <a href="">
                     <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"

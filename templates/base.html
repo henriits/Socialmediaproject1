@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load custom_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -68,7 +69,7 @@
             </ul>
             <form class='d-flex' method="get" action="{% url 'profile-search' %}">%
                 <div class="input-group">
-                     <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}">
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}">
 
                     <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                 </div>
@@ -95,13 +96,11 @@
         <div class="d-flex align-items-center">
             {% if request.user.is_authenticated %}
             <div>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'notifications:notifications' %}"><i class="fas fa-bell"></i></a>
-                    </li>
-
-
-                </ul>
+                <div>
+                    <a href="">
+                        <div class="nav-item"> {% show_notifications %}</div>
+                    </a>
+                </div>
             </div>
             <div>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">

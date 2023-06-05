@@ -1,9 +1,10 @@
 from django.urls import path
-from . import views
-
-app_name = 'notifications'
+from .views import PostNotification, FollowNotification, RemoveNotification
 
 urlpatterns = [
-    path('', views.notifications, name='notifications'),
-    # Add more URLs for additional notification functionality if needed
+    path('notification/<int:notification_pk>/post/<int:object_pk>', PostNotification.as_view(),
+         name='post-notification'),
+    path('notification/<int:notification_pk>/follow/<int:object_pk>', FollowNotification.as_view(),
+         name='follow-notification'),
+    path('notification/delete/<int:notification_pk>', RemoveNotification.as_view(), name='notification-delete')
 ]

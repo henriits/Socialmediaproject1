@@ -104,6 +104,9 @@
                 </div>
                 <!-- Reactions -->
 
+                <!-- Delete post -->
+                <a href="{% url 'posts:post_delete' post.pk %}">Delete</a>
+
                 <!-- Buttons -->
                 <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
                     <form method="post" action="{% url 'posts:like_post' post.pk %}">

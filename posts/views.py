@@ -72,34 +72,6 @@ def post_view(request):
     return render(request, template_name, context)
 
 
-
-
-# class CreatePostView(CreateView):
-#     model = Post
-#     form_class = CreateNewPost
-#     template_name = "feed/posts.html"
-#     success_url = reverse_lazy("posts:allposts")
-#
-#     def form_valid(self, form):
-#         post = form.save(commit=False)
-#         post.author = self.request.user
-#         post.created_date = timezone.now()
-#         post.save()
-#
-#         Notification.objects.create(
-#             user_id=self.request.user,
-#             notification_type='new_post',
-#             content=f'A new post "{post.title}" has been created.'
-#         )
-#
-#
-#         return super().form_valid(form)
-
-    # def get_template_names(self):
-    #     return [self.template_name]
-    #
-
-
 class PostDetailView(DetailView):
     model = Post
     template_name = 'feed/posts.html'

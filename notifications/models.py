@@ -5,11 +5,17 @@ from django.db import models
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+
+from posts.models import Post, Comments
+
 
 class Notification(models.Model):
-    notification_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    notification_type = models.CharField(max_length=255)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
+    # 1 = Like, 2 = Comment, 3 = Follow
+    notification_type = models.IntegerField(null=True, blank=True)
+    to_user = models.ForeignKey(User, related_name='notification_to', on_delete=models.CASCADE, null=True)
+    from_user = models.ForeignKey(User, related_name='notification_from', on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+', blank=True, null=True)
+    comment = models.ForeignKey(Comments, on_delete=models.CASCADE, related_name='+', blank=True, null=True)
+    date = models.DateTimeField(default=timezone.now)
+    user_has_seen = models.BooleanField(default=False)

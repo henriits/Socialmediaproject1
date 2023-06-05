@@ -9,7 +9,7 @@ from .forms import CreateNewPost, CreateCommentForm
 from .models import Post, Comments
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-import pdb
+#import pdb
 
 # Create your views here.
 class AllPostView(LoginRequiredMixin, ListView):
@@ -57,7 +57,6 @@ def post_view(request):
                 comment.user = request.user
                 comment.created_at = timezone.now()
                 comment.save()
-                pdb.set_trace()
                 Notification.objects.create(
                     user_id=request.user,
                     notification_type='new_comment',

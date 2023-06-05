@@ -1,11 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Confirm Deletion</h2>
-  <p>Are you sure you want to delete this post?</p>
-  <form method="post">
-    {% csrf_token %}
-    <input type="submit" value="Delete">
-    <a href="{% url 'posts:posts' %}">Cancel</a>
-  </form>
+  <div class="container py-5">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h2 class="card-title">Confirm Deletion</h2>
+        <p class="card-text">Are you sure you want to delete this post?</p>
+        <form method="post">
+          {% csrf_token %}
+          <button class="btn btn-danger" type="submit">
+            <i class="bi bi-trash"></i> Delete
+          </button>
+          <a class="btn btn-secondary" href="{% url 'posts:posts' %}">
+            <i class="bi bi-x"></i> Cancel
+          </a>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

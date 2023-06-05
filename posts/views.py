@@ -40,11 +40,7 @@ def post_view(request):
                 form.instance.created_date = timezone.now()
                 form.save()
 
-                Notification.objects.create(
-                    user_id=request.user,
-                    notification_type='new_post',
-                    content=f'A new post "{form.cleaned_data["text"]}" has been created.'
-                )
+
                 return redirect('posts:posts')
 
         else:
@@ -57,11 +53,7 @@ def post_view(request):
                 comment.user = request.user
                 comment.created_at = timezone.now()
                 comment.save()
-                Notification.objects.create(
-                    user_id=request.user,
-                    notification_type='new_comment',
-                    content=f'A new comment "{comment.comment}" has been posted.'
-                )
+
                 return redirect('posts:posts')
 
     context = {

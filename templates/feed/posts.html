@@ -107,6 +107,9 @@
                 <!-- Delete post -->
                 <a href="{% url 'posts:post_delete' post.pk %}">Delete</a>
 
+                <!-- Update post -->
+                <a href="{% url 'posts:post_update' post.pk %}">Update</a>
+
                 <!-- Buttons -->
                 <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
                     <form method="post" action="{% url 'posts:like_post' post.pk %}">

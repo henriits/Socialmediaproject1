@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, DetailView, DeleteView
+from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
@@ -145,4 +145,11 @@ def LikeView(request, pk):
 class PostDeleteView(DeleteView):
     model = Post
     template_name = 'feed/post_delete.html'
+    success_url = reverse_lazy('posts:posts')
+
+
+class PostUpdateView(UpdateView):
+    model = Post
+    form_class = CreateNewPost
+    template_name = 'feed/update_post.html'
     success_url = reverse_lazy('posts:posts')

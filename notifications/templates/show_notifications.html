@@ -1,0 +1,22 @@
+
+<div class="dropdown">
+    <span class="badge bg-primary notification-badge">{{ notification.count }}</span>
+    <div class="dropdown-content " id="notification-container">
+        {% for notification in notifications %}
+            {% if notification.post %}
+                {% if notification.notification_type == 1 %}
+                <div class="dropdown-item-parent">
+                    <a href="">{{ notification.from_user }} liked your post</a>
+                    <span class="dropdown-item-close">&times;</span>
+                </div>
+                 {% elif notification.notification_type == 2 %}
+                 <div class="dropdown-item-parent">
+                    <a href="">{{ notification.from_user }} commented your post</a>
+                    <span class="dropdown-item-close"></span>
+                </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+

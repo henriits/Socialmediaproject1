@@ -76,8 +76,12 @@
                     <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
                         {% if post.image %}
                         <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
-                       <!-- {% else %}
-                        <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">-->
+                        {% else %}
+
+                         <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
+
+
+                        <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
                         {% endif %}
                     </div>
                 </a>

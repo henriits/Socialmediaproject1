@@ -56,6 +56,7 @@ def post_view(request):
 
                 return redirect('posts:posts')
         else:
+
             comment_form = CreateCommentForm(request.POST)
             if comment_form.is_valid():
                 comment = comment_form.save(commit=False)
@@ -65,8 +66,16 @@ def post_view(request):
                 comment.user = request.user
                 comment.created_at = timezone.now()
                 comment.save()
-                return redirect('posts:posts')
 
+                # Create notifications for other users
+                users = User.objects.exclude(id=request.user.id)
+                for user in users:
+                    notification = Notification.objects.create(
+                        notification_type=2,
+                        from_user=request.user,
+                        to_user=user,
+                        post=post
+                    )
 
 
 

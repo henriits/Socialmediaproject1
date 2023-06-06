@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Update Post</h2>
-  <form method="post" ENCTYPE="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-  </form>
+  <div class="container py-5">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h2 class="card-title">Update Post</h2>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ form.as_p }}
+          </div>
+          <button class="btn btn-primary" type="submit">
+            <i class="bi bi-save"></i> Save
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

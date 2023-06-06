@@ -1,190 +1,180 @@
 {% extends 'base.html' %}
 
 {% load static %}
-
 {% block content %}
-<div class="container post-feed">
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-md-2">
+        {% include 'sidebar.html' %}
 
-    <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col">
+            <!-- Create Post -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="user-profile d-flex align-items-center mb-3">
+                        <img src="{{ user.profile.image.url }}" class="rounded-circle me-2" alt="Avatar"
+                             style="height: 40px">
+                        <div>
+                            <h5 class="card-title">{{ user.username }}</h5>
+                        </div>
+                    </div>
 
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data" action="{% url 'posts:posts' %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <div class="input-group my-3">
+                                        {{ form.text }}
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3 my-3">
+                                                <button class="btn btn-primary w-100" type="submit">
+                                                    <i class="fas fa-upload me-2" style="color: #defa00;"></i>
+                                                    Upload the post
+                                                </button>
+                                            </div>
+                                            <div class="col-md-6 mb-3 my-3">
+                                                {{ form.image }}
+                                            </div>
+                                        </div>
 
-            <!--CREATE POST SECTION-->
-            <div class="write-post-container">
-                <div class="user-profile">
-                    <img src="{{ post.user.profile.profile_pic.url }}">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Posts -->
+            {% for post in posts %}
+            <div class="card mb-4">
+                <div class="card-body mb-4">
+                    <!-- Data -->
+                    <div class="d-flex mb-4">
+                        <a href="">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.webp"
+                                 class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
+                        </a>
+                        <div>
+                            <a href="" class="text-dark mb-0">
+                                <strong>{{ post.author.username }}</strong>
+                            </a>
+                            <a href="" class="text-muted d-block" style="margin-top: -6px">
+                                <small>{{ post.created_date }}</small>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Description -->
                     <div>
-                        <p>{{ user.username }}</p>
-                        <small>Public <i class="fa-solid fa-caret-down"></i></small>
+                        <p>{{ post.text }}</p>
                     </div>
                 </div>
+                <!-- Media -->
+                <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
+                    {% else %}
+                    <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
+                    {% endif %}
+                </div>
+                <!-- Media -->
+                <!-- Interactions -->
+                <div class="card-body">
+                    <!-- Reactions -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <div>
+                            <p href="{% url 'posts:like_post' post.pk %}">
+                                <i class="fas fa-heart text-danger fa-2x"></i>
+                                <span>{{ post.total_likes }}</span>
+                            </p>
+                        </div>
+                        <div>
+                            <p href="" class="text-muted">Total comments: {{ post.total_comments }}</p>
+                        </div>
+                    </div>
 
+                    <div class="d-flex justify-content-evenly align-items-center text-center border-top border-bottom mb-4">
+
+                        <!-- Update post -->
+                        <a href="{% url 'posts:post_update' post.pk %}" class="custom-link">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+
+
+                        <!-- Buttons -->
+                        <form method="post" action="{% url 'posts:like_post' post.pk %}"
+                              class="d-flex justify-content-center">
+                            {% csrf_token %}
+                            <button name="post_id" value="{{post.id}}" type="submit" class="btn btn-lg"
+                                    data-mdb-ripple-color="dark">
+                                <i class="fas fa-heart me-2 {% if request.user in post.likes.all %}active{% endif %}"></i>
+                                Give a Like
+                            </button>
+                        </form>
+                        <!-- Delete post -->
+                        <a href="{% url 'posts:post_delete' post.pk %}" class="custom-link">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!--WRITE COMMENT SECTION -->
 
                 <div class="d-flex mb-3">
                     <a href="">
-                        <img src="{{ user.profile.image.url }}"
-                             class="border rounded-circle me-2"
+                        <img src="{{ user.profile.image.url }}" class="border rounded-circle me-2"
                              alt="Avatar" style="height: 40px"/>
                     </a>
-                    <div class="form-outline w-100">
-                        <form method="post" enctype="multipart/form-data" action="{% url 'posts:posts' %}">
+                    <div class="form-outline">
+                        <form class="d-flex" method="post" action="{% url 'posts:posts' %}">
                             {% csrf_token %}
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {{ form.text }}
-                                </div>
+                            <input type="hidden" name="post_id" value="{{ post.pk }}">
+                            <div class="comment-form">
+                                {{ comment_form.as_p }}
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                    {{ form.image }}
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="add-comment-btn" type="submit"><i class="fa-solid fa-circle-arrow-up"
-                                                                             style="color: #defa00;"></i>Upload the post
-                            </button>
+                            <button class="add-comment-btn" type="submit">Add Comment</button>
                         </form>
                     </div>
                 </div>
 
+                <!-- COMMENT DISPLAY SECTION -->
 
-            </div>
-
-        </div>
-
-        {% for post in posts %}
-        <div class="card" style="max-width: 42rem">
-            <div class="card-body">
-                <!-- Data -->
+                {% for comment in post.comments.all %}
                 <div class="d-flex mb-3">
                     <a href="">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.webp"
-                             class="border rounded-circle me-2"
-                             alt="Avatar" style="height: 40px"/>
+                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
+                             class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
                     </a>
                     <div>
-                        <a href="" class="text-dark mb-0">
-                            <strong>{{ post.author.username }}</strong>
-                        </a>
-                        <a href="" class="text-muted d-block" style="margin-top: -6px">
-                            <small>{{ post.created_date }}</small>
-                        </a>
-                    </div>
-                </div>
-                <!-- Description -->
-                <div>
-                    <p>
-                        {{ post.text }}
-                    </p>
-                </div>
-            </div>
-            <!-- Media -->
-            <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
-                {% if post.image %}
-                <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
-                {% else %}
-                <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
-                {% endif %}
-            </div>
-            <!-- Media -->
-            <!-- Interactions -->
-            <div class="card-body">
-                <!-- Reactions -->
-                <div class="d-flex justify-content-between mb-3">
-                    <div>
-                        <a href="{% url 'posts:like_post' post.pk %}">
-                            <i class="fas fa-heart text-danger"></i>
-                            <span>{{ post.total_likes }}</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="" class="text-muted">Total comments: {{ post.total_comments }}</a>
-                    </div>
-                </div>
-                <!-- Reactions -->
-
-                <!-- Delete post -->
-                <a href="{% url 'posts:post_delete' post.pk %}">Delete</a>
-
-                <!-- Update post -->
-                <a href="{% url 'posts:post_update' post.pk %}">Update</a>
-
-                <!-- Buttons -->
-                <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
-                    <form method="post" action="{% url 'posts:like_post' post.pk %}">
-                        {% csrf_token %}
-                        <button name="post_id" value="{{post.id}}" type="submit" class="btn btn-link btn-lg"
-                                data-mdb-ripple-color="dark">
-                            <i class="fas fa-thumbs-up me-2 {% if request.user in post.likes.all %}active{% endif %}"></i>Like
-                        </button>
-                    </form>
-                    <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
-                        <i class="fas fa-comment-alt me-2"></i>Comment
-                    </button>
-                    <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
-                        <i class="fas fa-share me-2"></i>Share
-                    </button>
-                </div>
-            </div>
-
-
-            <!--WRITE COMMENT SECTION -->
-
-            <div class="d-flex mb-3">
-                <a href="">
-                    <img src="{{ user.profile.image.url }}"
-                         class="border rounded-circle me-2"
-                         alt="Avatar" style="height: 40px"/>
-                </a>
-                <div class="form-outline w-100">
-                    <!-- <textarea class="form-control" id="textAreaExample" rows="2"></textarea> -->
-                    <label class="form-label" for="textAreaExample">Write a comment</label>
-                    <form method="post" action="{% url 'posts:posts' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="post_id" value="{{ post.pk }}">
-                        <div class="comment-form">
-                            {{ comment_form.as_p }}
+                        <div class="bg-light rounded-3 px-3 py-1" style="border: 1px solid #000;">
+                            <a href="" class="text-dark mb-0">
+                                <strong>{{ comment.user_id.username }}</strong>
+                            </a>
+                            <p>
+                                <small>{{ comment.comment }}</small>
+                            </p>
+                            <p><small>{{ comment.created_at }}</small></p>
                         </div>
-                        <button class="add-comment-btn" type="submit">Add Comment</button>
-                    </form>
-                </div>
-            </div>
-
-
-            <!-- COMMENT DISPLAY SECTION -->
-
-            {% for comment in post.comments.all %}
-            <div class="d-flex mb-3">
-                <a href="">
-                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
-                         class="border rounded-circle me-2"
-                         alt="Avatar" style="height: 40px"/>
-                </a>
-                <div>
-                    <div class="bg-light rounded-3 px-3 py-1">
-                        <a href="" class="text-dark mb-0">
-                            <strong>{{ comment.user_id.username }}</strong>
-                        </a>
-                        <p>
-                            <small>{{ comment.comment }}</small>
-                        </p>
-                        <p><small>{{ comment.created_at }}</small></p>
+                        <a href="" class="text-muted small ms-3 me-2"><strong>Like</strong></a>
+                        <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
                     </div>
-                    <a href="" class="text-muted small ms-3 me-2"><strong>Like</strong></a>
-                    <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
                 </div>
+                {% empty %}
+                <p>No comments available.</p>
+                {% endfor %}
             </div>
-            {% empty %}
-            <p>No comments available.</p>
             {% endfor %}
-
-
         </div>
 
+        <div class="col-md-3">
+            <!-- content in here will be displayd on right side of the feed-->
+        </div>
 
-        {% endfor %}
     </div>
 </div>
-</div>
+
 {% endblock %}

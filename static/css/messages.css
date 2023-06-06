@@ -1,0 +1,18 @@
+/* Messages styles */
+
+.sent-message {
+background-color: #3dcd08;
+color: #fff;
+border-radius: 30px;
+padding: 10px 25px;
+width: 25%;
+
+}
+.received-message {
+  background-color: rgb(53, 96, 255);
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 25px;
+  width: 30%;
+  float: right;
+}

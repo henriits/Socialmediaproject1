@@ -1,18 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container">
-    {% for profile in profile_list %}
-    <div class="row justify-content-center mt-3">
-        <div class="col-md-5 col-sm-12 border-bottom position-relative">
-            <p><a style="text-decoration:none;" class='text-primary' href="{% url 'users:profile' profile.pk %}">
-              {{ profile.user }}</a></p>
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-md-2">
+        {% include 'sidebar.html' %}
 
 
+        <div class="container" style="background-color: ;">
+            {% for profile in profile_list %}
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-5 col-sm-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="{{ user.profile.image.url }}" alt="Profile Picture" class="rounded-circle"
+                                     style="width: 50px; height: 50px; object-fit: cover;">
+                                <h5 class="ml-3">{{ profile.user }}</h5>
+                            </div>
+                            <p><strong>Likes:</strong> {{ user.likes.count }}</p>
+                            <p><strong>Location:</strong> {{ profile.location }}</p>
+                            <p><strong>Followers:</strong> {{ profile.followers }}</p>
+                            <a href="{% url 'users:profile' profile.pk %}" class="btn btn-primary">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor%}
         </div>
+
+
     </div>
-    {% endfor%}
 </div>
+
 
 {% endblock content %}

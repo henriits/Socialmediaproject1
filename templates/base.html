@@ -21,6 +21,11 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Core CSS-->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/feedpage.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/landingpage.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/register.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/edit_profile.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/messages.css' %}" rel="stylesheet"/>
     <title>HumbleBee</title>
 </head>
 <!-- Navbar -->
@@ -53,7 +58,7 @@
             <a class="navbar-brand mt-2 mt-lg-0" href="/">
                 <!-- Logo image here!  -->
 
-                <p>Hello {{ request.user }}</p>
+
 
 
             </a>
@@ -95,7 +100,7 @@
         <div class="d-flex align-items-center">
             {% if request.user.is_authenticated %}
             <div>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-3 ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'notifications:notifications' %}"><i class="fas fa-bell"></i></a>
                     </li>
@@ -104,7 +109,7 @@
                 </ul>
             </div>
             <div>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-3 ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'inbox' %}"><i class="fas fa-envelope"></i></a>
                     </li>
@@ -112,7 +117,7 @@
             </div>
 
             <!-- Avatar -->
-            <div class="dropdown navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="dropdown navbar-nav ms-3 ml-auto mb-2 mb-lg-0">
                 <a
                         class="dropdown-toggle d-flex align-items-center hidden-arrow"
                         href="#"

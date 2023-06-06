@@ -1,0 +1,48 @@
+label[for="id_comment"] {
+  display: none;
+}
+
+.custom-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+#id_text {
+  width: 100%; /* Adjust the width as needed */
+  height: 35px; /* Adjust the height as needed */
+  resize: vertical; /* Allow vertical resizing */
+  border: 1px solid rounded #ccc; /* Add a border */
+  padding: 5px; /* Add padding */
+  font-family: Arial, sans-serif; /* Specify a font family */
+  font-size: 14px; /* Specify a font size */
+  color: #333; /* Specify a text color */
+  /* Add any other styles you want to apply */
+}
+
+
+@media (max-width: 1920px) {
+    .header-title {
+        font-size: 6rem;
+    }
+
+}
+
+
+@media (max-width: 1020px) {
+    .header-title {
+        font-size: 3rem;
+    }
+    .modern-textarea {
+    width: 25rem;
+}
+
+
+@media (max-width: 520px) {
+    .header-title {
+        font-size: 2rem;
+    }
+    .modern-textarea {
+  width: 15rem;
+
+}

@@ -1,142 +1,10 @@
-.large-section {
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    text-align: center;
-}
 
-.yellow-background {
-    background-color:#defa00;
-}
-
-.gray-background {
-     background-color: #201b1b;
-}
-
-.yellow-text {
-
-    color:#defa00;
-}
-.navbar-dark .navbar-brand {
-   color:#defa00;
-
-}
-
-.example-section {
-    height: 160vh;
-    padding-top:8rem;
-
-}
-
-.example-images {
-    display: flex;
-    justify-content: center;
-    border-radius:5%;
-    height: 450px;
-    border:3px solid #000;
-    box-shadow: 6px 6px 60px #defa00;
-
-}
-
-.landing-register-section {
-    color:#defa00;
-    height: 30vh;
-    text-align: center;
-    padding-top: 5rem;
-}
-
-.login-page-section {
-    color: #defa00;
-    background-color: #201b1b;
-    height: 100vh;
-    padding-top: 10rem;
-}
-
-.sticky-footer {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    font-size: 24px; /* Increase the font size as desired */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-    width: 40px; /* Adjust the width as desired */
-    height: 40px;
-
-
-}
-
-@media (max-width: 1920px) {
-    .header-title {
-        font-size: 6rem;
-    }
-
-}
-
-
-@media (max-width: 1020px) {
-    .header-title {
-        font-size: 3rem;
-    }
-
-}
-
-
-@media (max-width: 520px) {
-    .header-title {
-        font-size: 2rem;
-    }
-
-
-}
-
-
-
-.bee-heading {
-  color: #000000;
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-
-.bee-form {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 5px;
-  border: 1px solid #dbdbdb;
-}
-
-.bee-button {
-  background-color: #3897f0;
-  color: #ffffff;
-  border: none;
-  padding: 8px 16px;
-  font-size: 14px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.post-feed {
-    background-color: #201b1b;
-    box-shadow: 6px 6px 60px #defa00;
-}
 
 body {
     background-color: #201b1b;
 }
 
 
-.write-post-container {
-    width: 80%;
-    justify-content: center;
-    background: #D3D3D3;
-    border-radius: 6px;
-    margin: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-    color: #626262;
-}
 
 .user-profile {
     display: flex;
@@ -303,24 +171,8 @@ body {
     padding: 9px;
 }
 
-/* Messages styles */
 
-.sent-message {
-background-color: #3dcd08;
-color: #fff;
-border-radius: 30px;
-padding: 10px 25px;
-width: 25%;
 
-}
-.received-message {
-  background-color: rgb(53, 96, 255);
-  color: #fff;
-  border-radius: 30px;
-  padding: 10px 25px;
-  width: 30%;
-  float: right;
-}
 .empty-text {
   color: #777;
   font-size: 1.5rem;

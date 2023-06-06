@@ -53,9 +53,11 @@ def post_view(request):
                 comment.user = request.user
                 comment.created_at = timezone.now()
                 comment.save()
+
                 notification = Notification.objects.create(notification_type=2, from_user=request.user,
                                                            to_user=posts.author,
                                                            post=posts)
+
 
                 return redirect('posts:posts')
 

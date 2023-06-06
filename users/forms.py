@@ -21,42 +21,46 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegisterForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'].label = 'Password'
+        self.fields['password2'].label = 'Repeat Password'
+
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
+        widgets = {
+            'password1': forms.PasswordInput(attrs={'placeholder': 'Password'}),
+            'password2': forms.PasswordInput(attrs={'placeholder': 'Repeat Password'}),
+        }
 
     username = forms.CharField(widget=forms.TextInput(
         attrs={
             'name': 'Username',
-            'type': 'username',
             'placeholder': 'Username'
         }
     ))
     first_name = forms.CharField(widget=forms.TextInput(
         attrs={
-            'name': 'first_name',  # Corrected attribute name
-            'type': 'first_name',
+            'name': 'first_name',
             'placeholder': 'First Name'
         }
     ))
     last_name = forms.CharField(widget=forms.TextInput(
         attrs={
-            'name': 'last_name',  # Corrected attribute name
-            'type': 'last_name',
+            'name': 'last_name',
             'placeholder': 'Last Name'
         }
     ))
     email = forms.EmailField(widget=forms.TextInput(
         attrs={
             'name': 'Email',
-            'type': 'email',
             'placeholder': 'Email'
         }
     ))
     password1 = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'name': 'Password',
-            'type': 'password',
             'placeholder': 'Password'
         }
     ))

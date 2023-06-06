@@ -11,12 +11,13 @@ class Profile(models.Model):
     #followers = models.ManyToManyField(User, blank=True, related_name='followers')
     first_name = models.CharField(max_length=30, null=False, default='John')
     last_name = models.CharField(max_length=36, null=False, default='Appleseed')
-    date_of_birth = models.DateField(default='1900-01-01')
+    date_of_birth = models.DateField(null=True, blank=True, default=None)
     bio = models.TextField(blank=True)
     email = models.EmailField(default='johnappleseed@example.com')
 
     def __str__(self):
         return f'{self.user.username} Profile'
+
 
     # to resize uploading images
     def save(self, *args, **kwargs):

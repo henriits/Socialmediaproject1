@@ -89,15 +89,14 @@ def post_view(request):
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'feed/posts.html'
+    template_name = 'feed/post_detail.html'
     context_object_name = 'post'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = self.object
-        stuff = get_object_or_404(Post, id=self.kwargs['pk'])
-        total_likes = stuff.total_likes()
-        context['comments'] = post.comments_set.all()
+        total_likes = post.total_likes()
+        context['comments'] = post.comments.all()
         context['form'] = CreateCommentForm()
         context['total_likes'] = total_likes
         return context

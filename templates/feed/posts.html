@@ -72,13 +72,15 @@
                     </div>
                 </div>
                 <!-- Media -->
-                <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
-                    {% if post.image %}
-                    <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
-                    {% else %}
-                    <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
-                    {% endif %}
-                </div>
+                <a href="{% url 'post_detail' post.pk %}">
+                    <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
+                        {% else %}
+                        <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
+                        {% endif %}
+                    </div>
+                </a>
                 <!-- Media -->
                 <!-- Interactions -->
                 <div class="card-body">

@@ -38,6 +38,7 @@ urlpatterns = [
     path("", include("posts.urls")),
     path("notifications", include("notifications.urls")),
     path('messaging/', include('messaging.urls')),
+    path('post/<int:pk>/', posts_urls.PostDetailView.as_view(), name='post_detail'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

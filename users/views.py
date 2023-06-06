@@ -63,7 +63,7 @@ class ProfileView(View):
     def get(self, request, pk, *args, **kwargs):
         profile = Profile.objects.get(pk=pk)
         user = profile.user
-        posts = Post.objects.filter(author=user).order_by('-created_date')
+        posts = user.post_set.all().order_by('-created_date')
 
         context = {
             'user': user,
@@ -109,4 +109,4 @@ class UserSearch(View):
 def user_profile(request, user_id):
     user = User.objects.get(id=user_id)
     posts = Post.objects.filter(author=user)
-    return render(request, 'profile.html', {'user': user, 'posts': posts})
+    return render(request, 'users/profile.html', {'user': user, 'posts': posts})

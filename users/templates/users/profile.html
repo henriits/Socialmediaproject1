@@ -12,21 +12,22 @@
                                  alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                                  style="width: 150px; z-index: 1">
                             {% if user.is_authenticated %}
-                                {% if request.user == user %}
-                                <div class="position-relative">
-                                    <a href="{% url 'users:edit_profile' %}" class="btn btn-dark" data-mdb-ripple-color="dark"
-                                       type="button" style="z-index: 1;">
-                                        Edit profile
-                                    </a>
-                                </div>
-                                {% else %}
-                                <div class="position-relative">
-                                    <a href="" class="btn btn-dark" data-mdb-ripple-color="dark" type="button"
-                                       style="z-index: 1;">
-                                        Follow
-                                    </a>
-                                </div>
-                                {% endif %}
+                            {% if request.user == user %}
+                            <div class="position-relative">
+                                <a href="{% url 'users:edit_profile' %}" class="btn btn-dark"
+                                   data-mdb-ripple-color="dark"
+                                   type="button" style="z-index: 1;">
+                                    Edit profile
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="position-relative">
+<!--                                <a href="" class="btn btn-dark" data-mdb-ripple-color="dark" type="button"
+                                   style="z-index: 1;">
+                                    Follow
+                                </a>-->
+                            </div>
+                            {% endif %}
                             {% else %}
                             <div class="position-relative">
                                 <a href="" class="btn btn-dark" data-mdb-ripple-color="dark" type="button"
@@ -72,13 +73,22 @@
                         </div>
                         <div class="row g-2">
                             {% for post in posts %}
-                                <div class="col mb-2">
-                                    <a href="{% url 'post_detail' post.pk %}">
-                                        <img src="{{ post.image.url }}" alt="Post Image" class="w-100 rounded-3">
-                                    </a>
-                                </div>
+                            <div class="col mb-2">
+                                {% if post.image %}
+                                <a href="{% url 'post_detail' post.pk %}">
+                                    <img src="{{ post.image.url }}" alt="Post Image" class="w-100 rounded-3">
+                                </a>
+                                {% else %}
+                                <a href="{% url 'post_detail' post.pk %}">
+                                    {{ post.text }}
+                                </a>
+
+                                {% endif %}
+                            </div>
                             {% endfor %}
                         </div>
+
+
                     </div>
                 </div>
             </div>

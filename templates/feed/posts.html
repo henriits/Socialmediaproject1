@@ -54,16 +54,16 @@
                     <!-- Data -->
                     <div class="d-flex mb-4">
                         <a href="">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/18.webp"
+                            <img src="{{ post.author.profile.image.url }}"
                                  class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
                         </a>
                         <div>
                             <a href="" class="text-dark mb-0">
                                 <strong>{{ post.author.username }}</strong>
                             </a>
-                            <a href="" class="text-muted d-block" style="margin-top: -6px">
+                            <p>
                                 <small>{{ post.created_date }}</small>
-                            </a>
+                            </p>
                         </div>
                     </div>
                     <!-- Description -->
@@ -77,6 +77,10 @@
                         {% if post.image %}
                         <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
                         {% else %}
+
+                         <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
+
+
                         <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
                         {% endif %}
                     </div>
@@ -148,13 +152,18 @@
                 {% for comment in post.comments.all %}
                 <div class="d-flex mb-3">
                     <a href="">
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp"
-                             class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
+                        {% if comment.user.profile.image %}
+                        <img src="{{ comment.user.profile.image.url }}" class="border rounded-circle me-2"
+                             alt="Avatar" style="height: 40px"/>
+                        {% else %}
+                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp" class="border rounded-circle me-2"
+                             alt="Avatar" style="height: 40px"/>
+                        {% endif %}
                     </a>
                     <div>
                         <div class="bg-light rounded-3 px-3 py-1" style="border: 1px solid #000;">
                             <a href="" class="text-dark mb-0">
-                                <strong>{{ comment.user_id.username }}</strong>
+                                <strong>{{ comment.user.username }}</strong>
                             </a>
                             <p>
                                 <small>{{ comment.comment }}</small>
@@ -165,6 +174,7 @@
                         <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
                     </div>
                 </div>
+
                 {% empty %}
                 <p>No comments available.</p>
                 {% endfor %}

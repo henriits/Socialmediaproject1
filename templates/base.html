@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load custom_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,6 +22,9 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Core CSS-->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+
+    <link href="{% static 'css/notifications.css' %}" rel="stylesheet"/>
+
     <link href="{% static 'css/feedpage.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/landingpage.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/register.css' %}" rel="stylesheet"/>
@@ -70,10 +74,16 @@
                 </li>
 
 
+                <li class="nav-item">
+                    {% show_notifications %}
+                </li>
+
+
             </ul>
             <form class='d-flex' method="get" action="{% url 'profile-search' %}">%
                 <div class="input-group">
-                     <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}">
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                           aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}">
 
                     <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                 </div>
@@ -99,6 +109,7 @@
         <!-- Right elements -->
         <div class="d-flex align-items-center">
             {% if request.user.is_authenticated %}
+
             <div>
                 <ul class="navbar-nav ms-3 ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -106,8 +117,7 @@
                     </li>
 
 
-                </ul>
-            </div>
+
             <div>
                 <ul class="navbar-nav ms-3 ml-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -184,5 +194,6 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
 <!-- Core theme JS-->
 <script src="{% static 'js/scripts.js' %}"></script>
+<script src="{% static 'js/notifications.js' %}"></script>
 </body>
 </html>

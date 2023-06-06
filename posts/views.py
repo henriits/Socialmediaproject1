@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
 from .models import Post, Comments
@@ -40,7 +41,6 @@ def post_view(request):
                 form.instance.created_date = timezone.now()
                 form.save()
 
-
                 return redirect('posts:posts')
 
         else:
@@ -54,7 +54,14 @@ def post_view(request):
                 comment.created_at = timezone.now()
                 comment.save()
 
+                notification = Notification.objects.create(notification_type=2, from_user=request.user,
+                                                           to_user=posts.author,
+                                                           post=posts)
+
+
                 return redirect('posts:posts')
+
+
 
     context = {
         'form': form,
@@ -102,7 +109,9 @@ def LikeView(request, pk):
         post.likes.remove(request.user)
     else:
         post.likes.add(request.user)
-
+    # notification = Notification.objects.create(notification_type=1, from_user=request.user,
+    #                                            to_user=posts.author,
+    #                                            post=posts)
     return HttpResponseRedirect(reverse('posts:posts'))
 
 

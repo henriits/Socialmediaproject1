@@ -125,10 +125,17 @@ def LikeView(request, pk):
         post.likes.remove(request.user)
     else:
         post.likes.add(request.user)
-    # notification = Notification.objects.create(notification_type=1, from_user=request.user,
-    #                                            to_user=posts.author,
-    #                                            post=posts)
+
+        # Create notification for the post author
+        notification = Notification.objects.create(
+            notification_type=3,
+            from_user=request.user,
+            to_user=post.author,
+            post=post
+        )
+
     return HttpResponseRedirect(reverse('posts:posts'))
+
 
 
 class PostDeleteView(DeleteView):

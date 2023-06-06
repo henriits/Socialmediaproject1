@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from django.views import View
-
-from posts.models import Post
+from django.contrib.auth.models import User
+from posts.models import Post  # why this gives error?
 from .forms import UserRegisterForm, UserLoginForm, ProfileUpdateForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -105,3 +105,8 @@ class UserSearch(View):
         }
 
         return render(request, 'users/search.html', context)
+
+def user_profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    posts = Post.objects.filter(author=user)
+    return render(request, 'profile.html', {'user': user, 'posts': posts})

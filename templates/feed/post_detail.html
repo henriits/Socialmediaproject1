@@ -6,7 +6,11 @@
   <div class="row">
     <div class="col-md-8">
       <h2>{{ post.title }}</h2>
-      <img src="{{ post.image.url }}" alt="Post Image" class="img-fluid">
+      {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post Image" class="img-fluid">
+      {% else %}
+        <p>No image available</p>
+      {% endif %}
       <p>{{ post.text }}</p>
       <p>Likes: {{ post.total_likes }}</p>
       <h3>Comments:</h3>

@@ -28,7 +28,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
+        fields = ['username', 'password1', 'password2']
         widgets = {
             'password1': forms.PasswordInput(attrs={'placeholder': 'Password'}),
             'password2': forms.PasswordInput(attrs={'placeholder': 'Repeat Password'}),
@@ -38,24 +38,6 @@ class UserRegisterForm(UserCreationForm):
         attrs={
             'name': 'Username',
             'placeholder': 'Username'
-        }
-    ))
-    first_name = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'name': 'first_name',
-            'placeholder': 'First Name'
-        }
-    ))
-    last_name = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'name': 'last_name',
-            'placeholder': 'Last Name'
-        }
-    ))
-    email = forms.EmailField(widget=forms.TextInput(
-        attrs={
-            'name': 'Email',
-            'placeholder': 'Email'
         }
     ))
     password1 = forms.CharField(widget=forms.PasswordInput(
@@ -68,13 +50,6 @@ class UserRegisterForm(UserCreationForm):
         attrs={
             'name': 'Repeat password',
             'placeholder': 'Repeat Password'
-        }
-    ))
-    date_of_birth = forms.DateField(widget=forms.DateInput(
-        attrs={
-            'name': 'Date of birth',
-            'type': 'date',
-            'max': datetime.now().date()
         }
     ))
 

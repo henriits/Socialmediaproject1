@@ -28,6 +28,8 @@ class AllPostView(LoginRequiredMixin, ListView):
         return context
 
 
+from django.contrib.auth.models import User
+
 def post_view(request):
     template_name = "feed/posts.html"
     form = CreateNewPost()
@@ -37,29 +39,43 @@ def post_view(request):
         if 'post_id' not in request.POST:
             form = CreateNewPost(request.POST, request.FILES)
             if form.is_valid():
-                form.instance.author = request.user
-                form.instance.created_date = timezone.now()
-                form.save()
+                post = form.save(commit=False)
+                post.author = request.user
+                post.created_date = timezone.now()
+                post.save()
+
+                # Create notifications for other users
+                users = User.objects.exclude(id=request.user.id)
+                for user in users:
+                    notification = Notification.objects.create(
+                        notification_type=1,
+                        from_user=request.user,
+                        to_user=user,
+                        post=post
+                    )
 
                 return redirect('posts:posts')
-
         else:
+
             comment_form = CreateCommentForm(request.POST)
             if comment_form.is_valid():
                 comment = comment_form.save(commit=False)
-                post_id = request.POST.get('post_id')  # Assuming 'post_id' is the name of the input field in the form
+                post_id = request.POST.get('post_id')
                 post = Post.objects.get(pk=post_id)
                 comment.post = post
                 comment.user = request.user
                 comment.created_at = timezone.now()
                 comment.save()
 
-                notification = Notification.objects.create(notification_type=2, from_user=request.user,
-                                                           to_user=posts.author,
-                                                           post=posts)
-
-
-                return redirect('posts:posts')
+                # Create notifications for other users
+                users = User.objects.exclude(id=request.user.id)
+                for user in users:
+                    notification = Notification.objects.create(
+                        notification_type=2,
+                        from_user=request.user,
+                        to_user=user,
+                        post=post
+                    )
 
 
 
@@ -109,10 +125,17 @@ def LikeView(request, pk):
         post.likes.remove(request.user)
     else:
         post.likes.add(request.user)
-    # notification = Notification.objects.create(notification_type=1, from_user=request.user,
-    #                                            to_user=posts.author,
-    #                                            post=posts)
+
+        # Create notification for the post author
+        notification = Notification.objects.create(
+            notification_type=3,
+            from_user=request.user,
+            to_user=post.author,
+            post=post
+        )
+
     return HttpResponseRedirect(reverse('posts:posts'))
+
 
 
 class PostDeleteView(DeleteView):

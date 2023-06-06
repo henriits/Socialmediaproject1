@@ -3,23 +3,66 @@
 
 {% block content %}
 <div class="container">
-  <div class="row">
+  <div class="row justify-content-center">
     <div class="col-md-8">
-      <h2>{{ post.title }}</h2>
-      {% if post.image %}
-        <img src="{{ post.image.url }}" alt="Post Image" class="img-fluid">
-      {% else %}
-        <p>No image available</p>
-      {% endif %}
-      <p>{{ post.text }}</p>
-      <p>Likes: {{ post.total_likes }}</p>
-      <h3>Comments:</h3>
-      {% for comment in post.comments.all %}
-        <p>{{ comment.content }}</p>
-      {% empty %}
-        <p>No comments yet.</p>
-      {% endfor %}
+      <div class="card bg-light">
+        <div class="card-body">
+          <h2>{{ post.title }}</h2>
+          {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post Image" class="img-fluid">
+          {% endif %}
+          {% if not post.image %}
+            <p>No image available</p>
+          {% endif %}
+          {% if post.text %}
+            <p>{{ post.text }}</p>
+          {% endif %}
+          <p>Likes: {{ post.total_likes }}</p>
+          <h3>Comments:</h3>
+          {% for comment in post.comments.all %}
+            <div class="d-flex mb-3">
+              <a href="">
+                <img src="{{ comment.user.profile.image.url }}" class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
+              </a>
+              <div>
+                <div class="bg-light rounded-3 px-3 py-1" style="border: 1px solid #000">
+                  <a href="" class="text-dark mb-0">
+                    <strong>{{ comment.user.username }}</strong>
+                  </a>
+                  <p>
+                    <small>{{ comment.comment }}</small>
+                  </p>
+                  <p><small>{{ comment.created_at }}</small></p>
+                </div>
+                <a href="" class="text-muted small ms-3 me-2"><strong>Like</strong></a>
+                <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
+              </div>
+            </div>
+          {% empty %}
+            <p>No comments yet.</p>
+          {% endfor %}
+          <div class="d-flex mb-3">
+            <a href="">
+              <img src="{{ user.profile.image.url }}" class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
+            </a>
+            <div class="form-outline">
+              <form class="d-flex" method="post" action="{% url 'posts:posts' %}">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value="{{ post.pk }}">
+                <div class="comment-form">
+                  <div class="form-group">
+                    {{ comment_form.content.label_tag }}
+                    {{ comment_form.content }}
+                  </div>
+                </div>
+                <button class="add-comment-btn" type="submit">Add Comment</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
 {% endblock content %}>

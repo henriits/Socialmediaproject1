@@ -34,16 +34,14 @@ The backend development will focus on creating the following applications:
 **Posts**: 
 - creating
 - editing
-- displaying user-generated posts, including text, images, or multimedia content
+- displaying user-generated posts, including text, images
 
 **Comments**: 
 - leave comments
 - reply to comments
-- moderate discussions
 
 **Likes**: 
 - liking posts
-- tracking likes
 - displaying the number of likes on each post
 
 **Notifications**: 
@@ -52,17 +50,14 @@ Receiving notification regarding:
 - new followers
 - comments on their posts
 - likes
-- mentions
+
 
 **Messages**: 
-- send private messages between users, facilitating direct communication
+- send private messages between users
 
 **Search**:
-
-Allows users to:
 - search for other users
-- posts
-- specific content within the social media platform
+
 
 ## Frontend Development
 

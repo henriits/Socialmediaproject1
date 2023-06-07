@@ -166,12 +166,26 @@
                                 <strong>{{ comment.user.username }}</strong>
                             </a>
                             <p>
-                                <small>{{ comment.comment }}</small>
+                                <small>{{ comment.created_at }}</small>
                             </p>
-                            <p><small>{{ comment.created_at }}</small></p>
+                            <p><small>{{ comment.comment }}</small></p>
                         </div>
-                        <a href="" class="text-muted small ms-3 me-2"><strong>Like</strong></a>
-                        <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
+
+                         <div class="d-flex align-items-center mt-2">
+                            <form action="{% url 'posts:comment_like' comment_id=comment.pk %}" method="POST" class="mr-2">
+                                {% csrf_token %}
+                                {% if request.user in comment.likes.all %}
+                                    <button type="submit" class="btn btn-primary btn-sm">Unlike</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">Like</button>
+                                {% endif %}
+                            </form>
+                            <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
+                            <a href="" class="text-muted small me-2"><strong>{{ comment.total_likes }} Likes</strong></a>
+                         </div>
+
+<!--                        <a href="" class="text-muted small ms-3 me-2"><strong>Like</strong></a>-->
+<!--                        <a href="" class="text-muted small me-2"><strong>Reply</strong></a>-->
                     </div>
                 </div>
 

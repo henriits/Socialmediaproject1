@@ -20,4 +20,5 @@ urlpatterns = [
    # path('create_post/', PostView.as_view(), name='create_post'),
     path('<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
     path('<int:pk>/update', PostUpdateView.as_view(), name='post_update'),
+    path('reply_comment/<int:post_id>', CreateCommentView.as_view(), name='reply_comment')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

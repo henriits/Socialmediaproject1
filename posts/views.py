@@ -106,17 +106,15 @@ class CreateCommentView(CreateView, LoginRequiredMixin):
     model = Comments
     form_class = CreateCommentForm
     template_name = 'feed/create_comment.html'
-    success_url = reverse_lazy('posts:allposts')
+    success_url = reverse_lazy('posts:posts')
 
     def form_valid(self, form):
         post = get_object_or_404(Post, id=self.kwargs['post_id'])
         comment = form.save(commit=False)
-        #comment.post_id = post
-        comment.post = post
-        #comment.user_id = self.request.user
-        comment.user_profile = self.request.user.profile
+        comment.post_id = post
+        comment.user = self.request.user
         comment.save()
-        #return super().form_valid(form)
+        return super().form_valid(form)
 
     success_url = reverse_lazy('posts:allposts')
 

@@ -12,7 +12,9 @@
 .card-text {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .card-img-top.center-cropped {
@@ -37,5 +39,3 @@
     color: black !important; /* Set the text color to black */
     text-decoration: none; /* Remove underline */
 }
-
-

@@ -81,15 +81,17 @@
                             </div>
                         </div>
                         <!-- Form Group (birthday) -->
-                        <div class="mb-3">
-                            <label class="small mb-1" for="inputBirthday">Birthday</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                                </div>
-                                <input type="date" class="form-control" id="inputBirthday" name="{{ form.date_of_birth.html_name }}" value="{{ form.date_of_birth.value }}" readonly>
-                            </div>
-                        </div>
+                        <!-- Form Group (birthday) -->
+<div class="mb-3">
+    <label class="small mb-1" for="inputBirthday">Birthday</label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+        </div>
+        <input type="date" class="form-control" id="inputBirthday" name="{{ form.date_of_birth.html_name }}" value="{{ form.instance.date_of_birth|date:'Y-m-d' }}">
+    </div>
+</div>
+
                         <!-- Form Group (bio) -->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputBio">Bio</label>

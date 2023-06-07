@@ -86,11 +86,14 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             return redirect(reverse('users:profile', kwargs={'pk': profile.pk}))
+        else:
+            print(form.errors)  # Print the form errors for debugging
     else:
         form = ProfileUpdateForm(instance=profile)
 
     context = {'form': form}
     return render(request, 'users/edit_profile.html', context)
+
 
 
 class UserSearch(View):

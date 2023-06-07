@@ -1,3 +1,5 @@
+{% load user_filters %}
+
 <div class="col-md-3">
     <div class="card bg-light">
         <div class="card-body text-center">
@@ -8,6 +10,7 @@
             <div class="follower-post-count">
                 <p class="followers">Total Followers:</p>
                 <p class="posts">Total Posts:</p>
+                <p class="registration-time">{{ user|time_since_registration }}</p>
             </div>
         </div>
 

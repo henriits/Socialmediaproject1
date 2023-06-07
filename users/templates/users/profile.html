@@ -67,26 +67,96 @@
                                 <p class="font-italic mb-1">{{ user.profile.bio }}</p>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <p class="lead fw-normal mb-0">Recent posts</p>
-                            <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
-                        </div>
-                        <div class="row g-2">
-                            {% for post in posts %}
-                            <div class="col mb-2">
-                                {% if post.image %}
-                                <a href="{% url 'post_detail' post.pk %}">
-                                    <img src="{{ post.image.url }}" alt="Post Image" class="w-100 rounded-3">
-                                </a>
-                                {% else %}
-                                <a href="{% url 'post_detail' post.pk %}">
-                                    {{ post.text }}
-                                </a>
 
-                                {% endif %}
-                            </div>
-                            {% endfor %}
+ <style>
+    .custom-card {
+        position: relative;
+        height: 150px; /* Adjust the height as needed */
+    }
+
+    .custom-card .card-img-top {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .card-img-top.center-cropped {
+        object-position: center;
+    }
+
+    .additional-posts {
+        display: none;
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <p class="lead fw-normal mb-0">Recent posts</p>
+    <p class="mb-0 show-all-btn"><a href="#!" class="text-muted">Show all</a></p>
+</div>
+<div class="row g-2">
+    {% for post in posts|slice:":6" %}
+        <div class="col-md-6 mb-2">
+            <div class="card bg-secondary custom-card">
+                {% if post.image %}
+                    <a href="{% url 'post_detail' post.pk %}">
+                        <div class="custom-card">
+                            <img src="{{ post.image.url }}" alt="Post Image" class="card-img-top center-cropped">
                         </div>
+                    </a>
+                {% else %}
+                    <div class="card-body d-flex justify-content-center align-items-center">
+                        <a href="{% url 'post_detail' post.pk %}" class="card-text text-dark text-center">{{ post.text }}</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="additional-posts">
+    <div class="row g-2">
+        {% for post in posts|slice:"6:" %}
+            <div class="col-md-6 mb-2">
+                <div class="card bg-secondary custom-card">
+                    {% if post.image %}
+                        <a href="{% url 'post_detail' post.pk %}">
+                            <div class="custom-card">
+                                <img src="{{ post.image.url }}" alt="Post Image" class="card-img-top center-cropped">
+                            </div>
+                        </a>
+                    {% else %}
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <a href="{% url 'post_detail' post.pk %}" class="card-text text-dark text-center">{{ post.text }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.show-all-btn').click(function(e) {
+            e.preventDefault();
+            $('.additional-posts').slideToggle();
+        });
+    });
+</script>
+
+
+
+
+
+
+
 
 
                     </div>

@@ -171,10 +171,13 @@
                             <a href="" class="text-dark mb-0">
                                 <strong>{{ comment.user.username }}</strong>
                             </a>
-                            <p>
-                                <small>{{ comment.created_at }}</small>
-                            </p>
+                            <p><small>{{ comment.created_at }}</small></p>
                             <p><small>{{ comment.comment }}</small></p>
+                            <p>{{ comment.content }}</p>
+                            <!-- Delete button (visible only to comment owner) -->
+                            {% if comment.user == request.user %}
+                                <a href="{% url 'posts:delete_comment' comment.pk %}">Delete</a>
+                            {% endif %}
                         </div>
 
                          <div class="d-flex align-items-center mt-2">

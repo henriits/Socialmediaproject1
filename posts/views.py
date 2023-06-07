@@ -8,7 +8,7 @@ from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comments, CommentLike
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 #import pdb
@@ -175,6 +175,18 @@ class PostDeleteView(DeleteView, LoginRequiredMixin):
             raise PermissionDenied
 
         return super().dispatch(request, *args, **kwargs)
+
+
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comments
+    template_name = 'feed/delete_comment.html'
+    success_url = reverse_lazy('posts:posts')
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.user
+
+
 
 
 class PostUpdateView(UpdateView):

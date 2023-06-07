@@ -47,10 +47,9 @@ The backend development will focus on creating the following applications:
 **Notifications**: 
 
 Receiving notification regarding:
-- new followers
+- messages
 - comments on their posts
 - likes
-
 
 **Messages**: 
 - send private messages between users
@@ -58,20 +57,15 @@ Receiving notification regarding:
 **Search**:
 - search for other users
 
-
-## Frontend Development
-
-The frontend development will include the following features:
-
 **Homepage**: Users will see a preview of the platform, including information about the app. They will be prompted to login or register. The page will include the app logo and name.
 
-**Logged-in User Features**: Once logged in, users can create posts, like and follow other users, edit or delete their own posts, and view large images. The number of likes and followers will be displayed for posts and users respectively.
+**Logged-in User Features**: Once logged in, users can create posts, like, comment, chat with and search for other user, edit or delete their own posts, and view large images. The number of likes and comments will be displayed for posts.
 
 **User Search**: Users can search for other users within the platform.
 
 **Feed Page**: The feed page will display posts from all users, with the latest post appearing first.
 
-**Profile Page**: Users can edit their name, change their password, upload a profile image, and potentially delete their account.
+**Profile Page**: Users can edit their name, change their password, upload a profile image.
 
 **Responsive Design**: The platform will be compatible with different devices, ensuring a seamless experience on both mobile and desktop.
 

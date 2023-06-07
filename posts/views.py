@@ -3,13 +3,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comments, CommentLike
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 #import pdb
 
@@ -153,11 +153,28 @@ def comment_like_view(request, comment_id):
     return redirect('posts:posts')
 
 
+class LikeListView(ListView):
+    model = Post
+    template_name = 'feed/likes.html'
+    context_object_name = 'post'
 
-class PostDeleteView(DeleteView):
+    def get_queryset(self):
+        return super().get_queryset().filter(pk=self.kwargs['pk'])
+
+
+class PostDeleteView(DeleteView, LoginRequiredMixin):
     model = Post
     template_name = 'feed/post_delete.html'
     success_url = reverse_lazy('posts:posts')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        # Check if the user is the owner of the post
+        if self.object.author != self.request.user:
+            raise PermissionDenied
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class PostUpdateView(UpdateView):

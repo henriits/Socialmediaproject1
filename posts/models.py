@@ -16,11 +16,15 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     likes = models.ManyToManyField(User, related_name='liked_posts')
 
+
     def total_likes(self):
         return self.likes.count()
 
     def total_comments(self):
         return self.comments.count()
+
+    def get_likes_count(self):
+        return self.likes.count()
 
     def __str__(self):
         return self.text

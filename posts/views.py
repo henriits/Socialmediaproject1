@@ -7,7 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
-from .models import Post, Comments
+from django.contrib.auth.decorators import login_required
+from .models import Post, Comments, CommentLike
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 #import pdb
@@ -102,22 +103,24 @@ class PostDetailView(DetailView):
         return context
 
 
-class CreateCommentView(CreateView):
+class CreateCommentView(CreateView, LoginRequiredMixin):
     model = Comments
     form_class = CreateCommentForm
     template_name = 'feed/create_comment.html'
+    success_url = reverse_lazy('posts:posts')
 
     def form_valid(self, form):
         post = get_object_or_404(Post, id=self.kwargs['post_id'])
         comment = form.save(commit=False)
         comment.post_id = post
-        comment.user_id = self.request.user
+        comment.user = self.request.user
         comment.save()
         return super().form_valid(form)
 
     success_url = reverse_lazy('posts:allposts')
 
-def LikeView(request, pk):
+
+def like_view(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
 
     if request.user in post.likes.all():
@@ -134,6 +137,20 @@ def LikeView(request, pk):
         )
 
     return HttpResponseRedirect(reverse('posts:posts'))
+
+@login_required
+def comment_like_view(request, comment_id):
+    comment = get_object_or_404(Comments, id=comment_id)
+    user = request.user
+
+    if CommentLike.objects.filter(comment=comment, user=user).exists():
+        # If user already liked the comment, then remove the like
+        CommentLike.objects.filter(comment=comment, user=user).delete()
+    else:
+        # If user hasn't liked the comment, add like
+        CommentLike.objects.create(comment=comment, user=user)
+
+    return redirect('posts:posts')
 
 
 

@@ -80,7 +80,6 @@
 
                          <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
 
-
                         <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
                         {% endif %}
                     </div>
@@ -113,11 +112,18 @@
                         <form method="post" action="{% url 'posts:like_post' post.pk %}"
                               class="d-flex justify-content-center">
                             {% csrf_token %}
-                            <button name="post_id" value="{{post.id}}" type="submit" class="btn btn-lg"
+                            {% if request.user in post.likes.all %}
+                                <button name="post_id" value="{{post.id}}" type="submit" class="btn btn-lg"
                                     data-mdb-ripple-color="dark">
-                                <i class="fas fa-heart me-2 {% if request.user in post.likes.all %}active{% endif %}"></i>
-                                Give a Like
-                            </button>
+                                    <i class="far fa-thumbs-down me-2"></i>
+                                    Unlike
+                                </button>
+                            {% else %}
+                                <button name="post_id" value="{{ post.id }}" type="submit" class="btn btn-lg" data-mdb-ripple-color="dark">
+                                    <i class="fas fa-heart me-2"></i>
+                                    Like
+                                </button>
+                            {% endif %}
                         </form>
                         <!-- Delete post -->
                         <a href="{% url 'posts:post_delete' post.pk %}" class="custom-link">
@@ -166,12 +172,23 @@
                                 <strong>{{ comment.user.username }}</strong>
                             </a>
                             <p>
-                                <small>{{ comment.comment }}</small>
+                                <small>{{ comment.created_at }}</small>
                             </p>
-                            <p><small>{{ comment.created_at }}</small></p>
+                            <p><small>{{ comment.comment }}</small></p>
                         </div>
-                        <a href="" class="text-muted small ms-3 me-2"><strong>Like</strong></a>
-                        <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
+
+                         <div class="d-flex align-items-center mt-2">
+                            <form action="{% url 'posts:comment_like' comment_id=comment.pk %}" method="POST" class="mr-2">
+                                {% csrf_token %}
+                                {% if request.user in comment.likes.all %}
+                                    <button type="submit" class="btn btn-primary btn-sm">Unlike</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">Like</button>
+                                {% endif %}
+                            </form>
+                            <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
+                            <a href="" class="text-muted small me-2"><strong>{{ comment.total_likes }} Likes</strong></a>
+                         </div>
                     </div>
                 </div>
 

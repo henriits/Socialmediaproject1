@@ -64,11 +64,14 @@ class ProfileView(View):
         profile = Profile.objects.get(pk=pk)
         user = profile.user
         posts = user.post_set.all().order_by('-created_date')
+        post_count = Post.objects.filter(author=user).count()
+
 
         context = {
             'user': user,
             'profile': profile,
             'posts': posts,
+            'post_count': post_count
         }
 
         return render(request, 'users/profile.html', context)

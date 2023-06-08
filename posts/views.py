@@ -1,16 +1,19 @@
+import profile
 
+from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comments, CommentLike
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 #import pdb
 
 # Create your views here.
@@ -29,13 +32,14 @@ class AllPostView(LoginRequiredMixin, ListView):
         return context
 
 
-from django.contrib.auth.models import User
-
 def post_view(request):
     template_name = "feed/posts.html"
     form = CreateNewPost()
     comment_form = CreateCommentForm()
+    user = request.user
     posts = Post.objects.all().order_by("-created_date")
+    post_count = Post.objects.filter(author=user).count()
+    like_count = Post.objects.filter(author=user).aggregate(total_likes=Count('likes')).get('total_likes', 0)
     if request.method == 'POST':
         if 'post_id' not in request.POST:
             form = CreateNewPost(request.POST, request.FILES)
@@ -83,7 +87,9 @@ def post_view(request):
     context = {
         'form': form,
         'posts': posts,
-        'comment_form': comment_form
+        'comment_form': comment_form,
+        'post_count': post_count,
+        'like_count': like_count,
     }
     return render(request, template_name, context)
 
@@ -120,6 +126,12 @@ class CreateCommentView(CreateView, LoginRequiredMixin):
     success_url = reverse_lazy('posts:allposts')
 
 
+def total_posts(request):
+    count_posts = Post.objects.count()
+    context = {'total_posts': count_posts}
+    return render(request, 'sidebar.html', context)
+
+
 def like_view(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
 
@@ -153,11 +165,38 @@ def comment_like_view(request, comment_id):
     return redirect('posts:posts')
 
 
+class LikeListView(ListView):
+    model = Post
+    template_name = 'feed/likes.html'
+    context_object_name = 'post'
 
-class PostDeleteView(DeleteView):
+    def get_queryset(self):
+        return super().get_queryset().filter(pk=self.kwargs['pk'])
+
+
+class PostDeleteView(DeleteView, LoginRequiredMixin):
     model = Post
     template_name = 'feed/post_delete.html'
     success_url = reverse_lazy('posts:posts')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        # Check if the user is the owner of the post
+        if self.object.author != self.request.user:
+            raise PermissionDenied
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comments
+    template_name = 'feed/delete_comment.html'
+    success_url = reverse_lazy('posts:posts')
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.user
 
 
 class PostUpdateView(UpdateView):

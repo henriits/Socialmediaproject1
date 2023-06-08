@@ -16,11 +16,16 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     likes = models.ManyToManyField(User, related_name='liked_posts')
 
+
     def total_likes(self):
         return self.likes.count()
 
     def total_comments(self):
         return self.comments.count()
+
+    def get_likes_count(self):
+        return self.likes.count()
+
 
     def __str__(self):
         return self.text
@@ -31,7 +36,6 @@ class Comments(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.CharField(max_length=300)
-    parent_comment = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, through='CommentLike', related_name='liked_comments')
     created_at = models.DateTimeField(auto_now_add=True)
 

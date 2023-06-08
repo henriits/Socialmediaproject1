@@ -1,4 +1,6 @@
+import profile
 
+from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.urls import reverse_lazy, reverse
@@ -34,7 +36,10 @@ def post_view(request):
     template_name = "feed/posts.html"
     form = CreateNewPost()
     comment_form = CreateCommentForm()
+    user = request.user
     posts = Post.objects.all().order_by("-created_date")
+    post_count = Post.objects.filter(author=user).count()
+    like_count = Post.objects.filter(author=user).aggregate(total_likes=Count('likes')).get('total_likes', 0)
     if request.method == 'POST':
         if 'post_id' not in request.POST:
             form = CreateNewPost(request.POST, request.FILES)
@@ -82,7 +87,9 @@ def post_view(request):
     context = {
         'form': form,
         'posts': posts,
-        'comment_form': comment_form
+        'comment_form': comment_form,
+        'post_count': post_count,
+        'like_count': like_count,
     }
     return render(request, template_name, context)
 

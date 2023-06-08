@@ -5,8 +5,17 @@
         <h2 class="card-title">New Users</h2>
         <ul class="list-group">
             {% get_new_users 5 as new_users %}
-            {% for user in new_users %}
-                <li class="list-group-item">{{ user.username }} (Registered at {{ user.date_joined|date:"Y-m-d H:i:s" }})</li>
+            {% for user, profile in new_users %}
+                <li class="list-group-item">
+                    <img src="{{ profile.image.url }}" alt="Profile Picture" class="rounded-circle"
+                         style="width: 20px; height: 20px; object-fit: cover;">
+                    <a href="{% url 'users:profile' profile.pk %}" class="text-decoration-none">{{ user.username }}</a>
+                    (Registered at {{ user.date_joined|date:"Y-m-d H:i:s" }})
+                    <br>
+                    Profile: {{ profile }}
+
+                    <!-- Display other profile fields as needed -->
+                </li>
             {% endfor %}
         </ul>
     </div>

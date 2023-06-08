@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 
-from .views import AllPostView,  CreateCommentView, PostDetailView, like_view, post_view, PostDeleteView, PostUpdateView, comment_like_view, LikeListView, DeleteCommentView
+from .views import AllPostView,  CreateCommentView, PostDetailView, like_view, post_view, PostDeleteView, PostUpdateView, comment_like_view, LikeListView, DeleteCommentView, total_posts
 from socialmedia.views import HomeView
 
 
@@ -24,4 +24,5 @@ urlpatterns = [
     path('like/comment/<int:comment_id>/', comment_like_view, name='comment_like'),
     path('likes/<int:pk', LikeListView.as_view(), name='likes'),
     path('comment/<int:pk>/delete/', DeleteCommentView.as_view(), name='delete_comment'),
+    #path('total_posts', total_posts, name='total_posts'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

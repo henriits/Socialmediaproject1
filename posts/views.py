@@ -11,6 +11,7 @@ from .models import Post, Comments, CommentLike
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 #import pdb
 
 # Create your views here.
@@ -28,8 +29,6 @@ class AllPostView(LoginRequiredMixin, ListView):
         context["comments"] = Comments.objects.filter(post_id__in=posts)
         return context
 
-
-from django.contrib.auth.models import User
 
 def post_view(request):
     template_name = "feed/posts.html"
@@ -120,6 +119,12 @@ class CreateCommentView(CreateView, LoginRequiredMixin):
     success_url = reverse_lazy('posts:allposts')
 
 
+def total_posts(request):
+    count_posts = Post.objects.count()
+    context = {'total_posts': count_posts}
+    return render(request, 'sidebar.html', context)
+
+
 def like_view(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
 
@@ -185,8 +190,6 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.user
-
-
 
 
 class PostUpdateView(UpdateView):

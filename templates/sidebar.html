@@ -8,8 +8,8 @@
                 <img src="{{ user.profile.image.url }}" class="rounded" alt="Avatar" style="height: 140px">
             </div>
             <div class="follower-post-count">
-                <p class="followers">Total Followers:</p>
-                <p class="posts">Total Posts:</p>
+                <p class="followers">Total Likes: :</p>
+                <p class="posts">Total Posts: {{ total_posts }}</p>
                 <p class="registration-time">{{ user|time_since_registration }}</p>
             </div>
         </div>

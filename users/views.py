@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
@@ -65,13 +65,15 @@ class ProfileView(View):
         user = profile.user
         posts = user.post_set.all().order_by('-created_date')
         post_count = Post.objects.filter(author=user).count()
+        like_count = Post.objects.aggregate(total_likes=Count('likes')).get('total_likes', 0)
 
 
         context = {
             'user': user,
             'profile': profile,
             'posts': posts,
-            'post_count': post_count
+            'post_count': post_count,
+            'like_count': like_count,
         }
 
         return render(request, 'users/profile.html', context)

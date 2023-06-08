@@ -65,7 +65,7 @@ class ProfileView(View):
         user = profile.user
         posts = user.post_set.all().order_by('-created_date')
         post_count = Post.objects.filter(author=user).count()
-        like_count = Post.objects.aggregate(total_likes=Count('likes')).get('total_likes', 0)
+        like_count = Post.objects.filter(author=user).aggregate(total_likes=Count('likes')).get('total_likes', 0)
 
 
         context = {

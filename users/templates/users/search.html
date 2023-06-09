@@ -17,9 +17,9 @@
                                      style="width: 50px; height: 50px; object-fit: cover;">
                                 <h5 class="ml-3">{{ profile.user }}</h5>
                             </div>
-                            <p><strong>Likes:</strong> {{ user.likes.count }}</p>
+                            <p><strong>Posts:</strong> </p>
                             <p><strong>Location:</strong> {{ profile.location }}</p>
-                            <p><strong>Followers:</strong> {{ profile.followers }}</p>
+
                             <a href="{% url 'users:profile' profile.pk %}" class="btn btn-primary">View Profile</a>
                         </div>
                     </div>

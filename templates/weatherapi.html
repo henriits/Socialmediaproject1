@@ -1,11 +1,13 @@
 {% load user_filters %}
+{% load static %}
+<link href="{% static 'css/stickyside.css' %}" rel="stylesheet"/>
 
-<div class="col-md-3">
+<div class="col-md-3 sticky-weather">
 
 
 
             <div class="card mx-auto mt-4" style="width: 18rem;">
-                <div class="card-body">
+                <div class="card-body ">
 
                     <h5 class="card-subtitle mb-2 text-muted">{{ weather_data.name }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Temperature: {{ weather_data.main.temp }}°C</h6>

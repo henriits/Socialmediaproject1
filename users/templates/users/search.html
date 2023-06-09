@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-
+{% load static %}
+<link href="{% static 'css/stickyside.css' %}" rel="stylesheet"/>
 {% block content %}
 <div class="container-fluid">
     <div class="row row-cols-1 row-cols-md-2">
@@ -29,7 +30,7 @@
             </div>
         </div>
 
-        <div class="col-md-3 rightscreensection">
+        <div class="col-md-3 offset-md-9 sticky-page">
             <div class="mb-4">
                 {% include 'users/newusers.html' %}
             </div>

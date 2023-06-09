@@ -1,3 +1,4 @@
+import requests
 from django.db.models import Q, Count
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -111,10 +112,19 @@ class UserSearch(View):
             Q(user__username__icontains=query)
         )
 
+        response = requests.get('https://zenquotes.io/api/random')
+        quote_data = response.json()
+        quote = quote_data[0]['q']
+        author = quote_data[0]['a']
+
+
+
         context = {
             'profile_list': profile_list,
             'post_count': post_count,
             'like_count': like_count,
+            'quote': quote,
+            'author': author,
         }
 
         return render(request, 'users/search.html', context)

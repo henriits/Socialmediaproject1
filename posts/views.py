@@ -1,5 +1,6 @@
 import profile
 
+import requests
 from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
@@ -37,6 +38,13 @@ def post_view(request):
     form = CreateNewPost()
     comment_form = CreateCommentForm()
     user = request.user
+
+    response = requests.get('https://zenquotes.io/api/random')
+    quote_data = response.json()
+    quote = quote_data[0]['q']
+    author = quote_data[0]['a']
+
+
     posts = Post.objects.all().order_by("-created_date")
     post_count = Post.objects.filter(author=user).count()
     like_count = Post.objects.filter(author=user).aggregate(total_likes=Count('likes')).get('total_likes', 0)
@@ -90,6 +98,8 @@ def post_view(request):
         'comment_form': comment_form,
         'post_count': post_count,
         'like_count': like_count,
+        'quote': quote,
+        'author': author,
     }
     return render(request, template_name, context)
 

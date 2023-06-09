@@ -27,7 +27,7 @@
                                         {{ form.text }}
                                         <div class="row">
                                             <div class="col-md-6 mb-3 my-3">
-                                                <button class="btn btn-primary w-100" type="submit">
+                                                <button class="btn btn-success w-100" type="submit">
                                                     <i class="fas fa-upload me-2" style="color: #defa00;"></i>
                                                     Upload the post
                                                 </button>
@@ -142,14 +142,14 @@
                         <img src="{{ user.profile.image.url }}" class="border rounded-circle me-2"
                              alt="Avatar" style="height: 40px"/>
                     </a>
-                    <div class="form-outline">
+                    <div class="e">
                         <form class="d-flex" method="post" action="{% url 'posts:posts' %}">
                             {% csrf_token %}
                             <input type="hidden" name="post_id" value="{{ post.pk }}">
                             <div class="comment-form">
                                 {{ comment_form.as_p }}
                             </div>
-                            <button class="add-comment-btn" type="submit">Add Comment</button>
+                            <button class="btn btn-success" type="submit">Add Comment</button>
                         </form>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                             <p>{{ comment.content }}</p>
                             <!-- Delete button (visible only to comment owner) -->
                             {% if comment.user == request.user %}
-                            <a href="{% url 'posts:delete_comment' comment.pk %}">Delete</a>
+                            <a href="{% url 'posts:delete_comment' comment.pk %}" style="color: green; ">Delete</a>
                             {% endif %}
                         </div>
 
@@ -186,9 +186,9 @@
                                   class="mr-2">
                                 {% csrf_token %}
                                 {% if request.user in comment.likes.all %}
-                                <button type="submit" class="btn btn-primary btn-sm">Unlike</button>
+                                <button type="submit" class="btn btn-success btn-sm">Unlike</button>
                                 {% else %}
-                                <button type="submit" class="btn btn-outline-primary btn-sm">Like</button>
+                                <button type="submit" class="btn btn-outline-success btn-sm">Like</button>
                                 {% endif %}
                             </form>
                             <a href="" class="text-muted small me-2"><strong>Reply</strong></a>

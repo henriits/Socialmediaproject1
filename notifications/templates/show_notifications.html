@@ -1,5 +1,5 @@
 <div class="dropdown">
-    <span class="badge bg-primary notification-badge" onclick="showNotifications()"> {{ notifications.count }}</span>
+    <span class="badge bg-success notification-badge" onclick="showNotifications()"> {{ notifications.count }}</span>
     <div class="dropdown-content d-none " id="notification-container">
         {% for notification in notifications %}
              {% if notification.post %}

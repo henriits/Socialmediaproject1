@@ -1,223 +1,205 @@
 {% extends 'base.html' %}
-
 {% load static %}
 {% block content %}
+<head>
+   <link rel="stylesheet" href="{% static 'css/posts.css' %}">
+</head>
 <div class="container-fluid">
-    <div class="row row-cols-1 row-cols-md-2">
-        {% include 'sidebar.html' %}
-
-        <div class="col">
-            <!-- Create Post -->
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="user-profile d-flex align-items-center mb-3">
-                        <img src="{{ user.profile.image.url }}" class="rounded-circle me-2" alt="Avatar"
-                             style="height: 40px">
-                        <div>
-                            <h5 class="card-title">{{ user.username }}</h5>
+   <div class="row row-cols-1 row-cols-md-2">
+      {% include 'sidebar.html' %}
+      <div class="col">
+         <!-- Create Post -->
+         <div class="card mb-4">
+            <div class="card-body">
+               <div class="user-profile d-flex align-items-center mb-3">
+                  <img src="{{ user.profile.image.url }}" class="rounded-circle me-2" alt="Avatar"
+                     style="height: 40px">
+                  <div>
+                     <h5 class="card-title">{{ user.username }}</h5>
+                  </div>
+               </div>
+               <div class="card">
+                  <div class="card-body">
+                     <form method="post" enctype="multipart/form-data" action="{% url 'posts:posts' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                           <div class="input-group my-3">
+                              {{ form.text }}
+                              <div class="row">
+                                 <div class="col-md-6 mb-3 my-3">
+                                    <button class="btn btn-success w-100" type="submit">
+                                    <i class="fas fa-upload me-2" style="color: #defa00;"></i>
+                                    Upload the post
+                                    </button>
+                                 </div>
+                                 <div class="col-md-6 mb-3 my-3">
+                                    {{ form.image }}
+                                 </div>
+                              </div>
+                           </div>
                         </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-body">
-                            <form method="post" enctype="multipart/form-data" action="{% url 'posts:posts' %}">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <div class="input-group my-3">
-                                        {{ form.text }}
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3 my-3">
-                                                <button class="btn btn-success w-100" type="submit">
-                                                    <i class="fas fa-upload me-2" style="color: #defa00;"></i>
-                                                    Upload the post
-                                                </button>
-                                            </div>
-                                            <div class="col-md-6 mb-3 my-3">
-                                                {{ form.image }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
+                     </form>
+                  </div>
+               </div>
             </div>
-
-            <!-- Posts -->
-            {% for post in posts %}
-            <div class="card mb-4">
-                <div class="card-body mb-4">
-                    <!-- Data -->
-                    <div class="d-flex mb-4">
-                        <a href="">
-                            <img src="{{ post.author.profile.image.url }}"
-                                 class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
-                        </a>
-                        <div>
-                            <a href="" class="text-dark mb-0">
-                                <strong>{{ post.author.username }}</strong>
-                            </a>
-                            <p>
-                                <small>{{ post.created_date }}</small>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Description -->
-                    <div>
-                        <p>{{ post.text }}</p>
-                    </div>
-                </div>
-                <!-- Media -->
-                <a href="{% url 'post_detail' post.pk %}">
-                    <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
-                        {% if post.image %}
-                        <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
-                        {% else %}
-
-                        <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
-
-                        <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
-                        {% endif %}
-                    </div>
-                </a>
-                <!-- Media -->
-                <!-- Interactions -->
-                <div class="card-body">
-                    <!-- Reactions -->
-                    <div class="d-flex justify-content-between mb-3">
-                        <div>
-                            <p href="{% url 'posts:like_post' post.pk %}">
-                                <i class="fas fa-heart text-danger fa-2x"></i>
-                                <span>{{ post.total_likes }}</span>
-                            </p>
-                        </div>
-                        <div>
-                            <p href="" class="text-muted">Total comments: {{ post.total_comments }}</p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex justify-content-evenly align-items-center text-center border-top border-bottom mb-4">
-
-                        <!-- Update post -->
-                        <a href="{% url 'posts:post_update' post.pk %}" class="custom-link">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
-
-
-                        <!-- Buttons -->
-                        <form method="post" action="{% url 'posts:like_post' post.pk %}"
-                              class="d-flex justify-content-center">
-                            {% csrf_token %}
-                            {% if request.user in post.likes.all %}
-                            <button name="post_id" value="{{post.id}}" type="submit" class="btn btn-lg"
-                                    data-mdb-ripple-color="dark">
-                                <i class="far fa-thumbs-down me-2"></i>
-                                Unlike
-                            </button>
-                            {% else %}
-                            <button name="post_id" value="{{ post.id }}" type="submit" class="btn btn-lg"
-                                    data-mdb-ripple-color="dark">
-                                <i class="fas fa-heart me-2"></i>
-                                Like
-                            </button>
-                            {% endif %}
-                        </form>
-                        <!-- Delete post -->
-                        <a href="{% url 'posts:post_delete' post.pk %}" class="custom-link">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-
-                    </div>
-
-                </div>
-
-                <!--WRITE COMMENT SECTION -->
-
-                <div class="d-flex mb-3">
-                    <a href="">
-                        <img src="{{ user.profile.image.url }}" class="border rounded-circle me-2"
-                             alt="Avatar" style="height: 40px"/>
-                    </a>
-                    <div class="e">
-                        <form class="d-flex" method="post" action="{% url 'posts:posts' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="post_id" value="{{ post.pk }}">
-                            <div class="comment-form">
-                                {{ comment_form.as_p }}
-                            </div>
-                            <button class="btn btn-success" type="submit">Add Comment</button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- COMMENT DISPLAY SECTION -->
-
-                {% for comment in post.comments.all %}
-                <div class="d-flex mb-3">
-                    <a href="">
-                        {% if comment.user.profile.image %}
-                        <img src="{{ comment.user.profile.image.url }}" class="border rounded-circle me-2"
-                             alt="Avatar" style="height: 40px"/>
-                        {% else %}
-                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp" class="border rounded-circle me-2"
-                             alt="Avatar" style="height: 40px"/>
-                        {% endif %}
-                    </a>
-                    <div>
-                        <div class="bg-light rounded-3 px-3 py-1" style="border: 1px solid #000;">
-                            <a href="" class="text-dark mb-0">
-                                <strong>{{ comment.user.username }}</strong>
-                            </a>
-                            <p><small>{{ comment.created_at }}</small></p>
-                            <p><small>{{ comment.comment }}</small></p>
-                            <p>{{ comment.content }}</p>
-                            <!-- Delete button (visible only to comment owner) -->
-                            {% if comment.user == request.user %}
-                            <a href="{% url 'posts:delete_comment' comment.pk %}" style="color: green; ">Delete</a>
-                            {% endif %}
-                        </div>
-
-                        <div class="d-flex align-items-center mt-2">
-                            <form action="{% url 'posts:comment_like' comment_id=comment.pk %}" method="POST"
-                                  class="mr-2">
-                                {% csrf_token %}
-                                {% if request.user in comment.likes.all %}
-                                <button type="submit" class="btn btn-success btn-sm">Unlike</button>
-                                {% else %}
-                                <button type="submit" class="btn btn-outline-success btn-sm">Like</button>
-                                {% endif %}
-                            </form>
-                            <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
-                            <a href="" class="text-muted small me-2"><strong>{{ comment.total_likes }}
-                                Likes</strong></a>
-                        </div>
-                    </div>
-                </div>
-
-                {% empty %}
-                <p>No comments available.</p>
-                {% endfor %}
+         </div>
+         <!-- Posts -->
+         {% for post in posts %}
+         <div class="card mb-4">
+            <div class="card-body mb-4">
+               <!-- Data -->
+               <div class="d-flex mb-4">
+                  <a href="">
+                  <img src="{{ post.author.profile.image.url }}"
+                     class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
+                  </a>
+                  <div>
+                     <a href="" class="text-dark mb-0">
+                     <strong>{{ post.author.username }}</strong>
+                     </a>
+                     <p>
+                        <small>{{ post.created_date }}</small>
+                     </p>
+                  </div>
+               </div>
+               <!-- Description -->
+               <div>
+                  <p>{{ post.text }}</p>
+               </div>
             </div>
+            <!-- Media -->
+            <a href="{% url 'post_detail' post.pk %}">
+               <div class="bg-image hover-overlay ripple rounded-0">
+                  <div class="resized-img">
+                     {% if post.image %}
+                     <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
+                     {% else %}
+
+                     <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
+
+                     <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
+                     {% endif %}
+                  </div>
+               </div>
+            </a>
+            <!-- Media -->
+            <!-- Interactions -->
+            <div class="card-body">
+               <!-- Reactions -->
+               <div class="d-flex justify-content-between mb-3">
+                  <div>
+                     <p href="{% url 'posts:like_post' post.pk %}">
+                        <i class="fas fa-heart text-danger fa-2x"></i>
+                        <span>{{ post.total_likes }}</span>
+                     </p>
+                  </div>
+                  <div>
+                     <p href="" class="text-muted">Total comments: {{ post.total_comments }}</p>
+                  </div>
+               </div>
+               <div class="d-flex justify-content-evenly align-items-center text-center border-top border-bottom mb-4">
+                  <!-- Update post -->
+                  <a href="{% url 'posts:post_update' post.pk %}" class="custom-link">
+                  <i class="fas fa-pencil-alt"></i>
+                  </a>
+                  <!-- Buttons -->
+                  <form method="post" action="{% url 'posts:like_post' post.pk %}"
+                     class="d-flex justify-content-center">
+                     {% csrf_token %}
+                     {% if request.user in post.likes.all %}
+                     <button name="post_id" value="{{post.id}}" type="submit" class="btn btn-lg"
+                        data-mdb-ripple-color="dark">
+                     <i class="far fa-thumbs-down me-2"></i>
+                     Unlike
+                     </button>
+                     {% else %}
+                     <button name="post_id" value="{{ post.id }}" type="submit" class="btn btn-lg"
+                        data-mdb-ripple-color="dark">
+                     <i class="fas fa-heart me-2"></i>
+                     Like
+                     </button>
+                     {% endif %}
+                  </form>
+                  <!-- Delete post -->
+                  <a href="{% url 'posts:post_delete' post.pk %}" class="custom-link">
+                  <i class="fas fa-trash-alt"></i>
+                  </a>
+               </div>
+            </div>
+            <!--WRITE COMMENT SECTION -->
+            <div class="d-flex mb-3">
+               <a href="">
+               <img src="{{ user.profile.image.url }}" class="border rounded-circle me-2"
+                  alt="Avatar" style="height: 40px"/>
+               </a>
+               <div class="e">
+                  <form class="d-flex" method="post" action="{% url 'posts:posts' %}">
+                     {% csrf_token %}
+                     <input type="hidden" name="post_id" value="{{ post.pk }}">
+                     <div class="comment-form">
+                        {{ comment_form.as_p }}
+                     </div>
+                     <button class="btn btn-success" type="submit">Add Comment</button>
+                  </form>
+               </div>
+            </div>
+            <!-- COMMENT DISPLAY SECTION -->
+            {% for comment in post.comments.all %}
+            <div class="d-flex mb-3">
+               <a href="">
+               {% if comment.user.profile.image %}
+               <img src="{{ comment.user.profile.image.url }}" class="border rounded-circle me-2"
+                  alt="Avatar" style="height: 40px"/>
+               {% else %}
+               <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp" class="border rounded-circle me-2"
+                  alt="Avatar" style="height: 40px"/>
+               {% endif %}
+               </a>
+               <div>
+                  <div class="bg-light rounded-3 px-3 py-1" style="border: 1px solid #000;">
+                     <a href="" class="text-dark mb-0">
+                     <strong>{{ comment.user.username }}</strong>
+                     </a>
+                     <p><small>{{ comment.created_at }}</small></p>
+                     <p><small>{{ comment.comment }}</small></p>
+                     <p>{{ comment.content }}</p>
+                     <!-- Delete button (visible only to comment owner) -->
+                     {% if comment.user == request.user %}
+                     <a href="{% url 'posts:delete_comment' comment.pk %}" style="color: green; ">Delete</a>
+                     {% endif %}
+                  </div>
+                  <div class="d-flex align-items-center mt-2">
+                     <form action="{% url 'posts:comment_like' comment_id=comment.pk %}" method="POST"
+                        class="mr-2">
+                        {% csrf_token %}
+                        {% if request.user in comment.likes.all %}
+                        <button type="submit" class="btn btn-success btn-sm">Unlike</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-outline-success btn-sm">Like</button>
+                        {% endif %}
+                     </form>
+                     <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
+                     <a href="" class="text-muted small me-2"><strong>{{ comment.total_likes }}
+                     Likes</strong></a>
+                  </div>
+               </div>
+            </div>
+            {% empty %}
+            <p>No comments available.</p>
             {% endfor %}
-        </div>
-
-        <div class="col-md-3 offset-md-9 sticky-page">
+         </div>
+         {% endfor %}
+      </div>
+      <div class="col-md-3 offset-md-9 sticky-page">
+         <!-- content in here will be displayed on the right side of the feed-->
+         <div class="mb-4">
+            {% include 'users/newusers.html' %}
+         </div>
+         <div class="mb-4">
             <!-- content in here will be displayed on the right side of the feed-->
-            <div class="mb-4">
-                {% include 'users/newusers.html' %}
-            </div>
-            <div class="mb-4">
-                <!-- content in here will be displayed on the right side of the feed-->
-                {% include 'weatherapi.html' %}
-            </div>
-        </div>
-
-
-    </div>
+            {% include 'weatherapi.html' %}
+         </div>
+      </div>
+   </div>
 </div>
-
 {% endblock %}

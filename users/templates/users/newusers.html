@@ -11,10 +11,6 @@
                          style="width: 20px; height: 20px; object-fit: cover;">
                     <a href="{% url 'users:profile' profile.pk %}" class="text-decoration-none">{{ user.username }}</a>
                     (Registered at {{ user.date_joined|date:"Y-m-d H:i:s" }})
-                    <br>
-                    Profile: {{ profile }}
-
-                    <!-- Display other profile fields as needed -->
                 </li>
             {% endfor %}
         </ul>

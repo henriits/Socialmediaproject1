@@ -103,6 +103,9 @@ def edit_profile(request):
 
 class UserSearch(View):
     def get(self, request, *args, **kwargs):
+        user = request.user
+        post_count = Post.objects.filter(author=user).count()
+        like_count = Post.objects.filter(author=user).aggregate(total_likes=Count('likes')).get('total_likes', 0)
         query = self.request.GET.get('query')
         profile_list = Profile.objects.filter(
             Q(user__username__icontains=query)
@@ -110,6 +113,8 @@ class UserSearch(View):
 
         context = {
             'profile_list': profile_list,
+            'post_count': post_count,
+            'like_count': like_count,
         }
 
         return render(request, 'users/search.html', context)

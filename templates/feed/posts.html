@@ -90,9 +90,11 @@
                     <!-- Reactions -->
                     <div class="d-flex justify-content-between mb-3">
                         <div>
-                            <p href="{% url 'posts:like_post' post.pk %}">
-                                <i class="fas fa-heart text-danger fa-2x"></i>
-                                <span>{{ post.total_likes }}</span>
+                            <p>
+                                <a href="{% url 'posts:liked_users' post.pk %}">
+                                    <i class="fas fa-heart text-danger fa-2x"></i>
+                                    <span>{{ post.total_likes }}</span>
+                                </a>
                             </p>
                         </div>
                         <div>

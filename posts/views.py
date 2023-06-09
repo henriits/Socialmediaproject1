@@ -231,3 +231,14 @@ class PostUpdateView(UpdateView):
     form_class = CreateNewPost
     template_name = 'feed/update_post.html'
     success_url = reverse_lazy('posts:posts')
+
+def liked_users_view(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    liked_users = post.likes.all()
+
+    context = {
+        'post': post,
+        'liked_users': liked_users
+    }
+
+    return render(request, 'feed/liked_users.html', context)

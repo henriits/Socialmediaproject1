@@ -110,6 +110,8 @@ def post_view(request):
 
 def get_weather(location):
     api_key = '19ff05d2e9ea1a4230560400f04409ff'  # Replace with your OpenWeatherMap API key
+    if location is None:
+        location = 'Tallinn'  # Default location is set to Tallinn
     url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric'
     response = requests.get(url)
     if response.status_code == 200:

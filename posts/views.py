@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-#import pdb
+# import pdb
 
 # Create your views here.
 class AllPostView(LoginRequiredMixin, ListView):
@@ -24,7 +24,7 @@ class AllPostView(LoginRequiredMixin, ListView):
     success_url = reverse_lazy("posts")
     context_object_name = "posts"
     ordering = ["-created_date"]  # ordering posts in descending order
-    paginate_by = 10 # shows 10 posts per page
+    paginate_by = 10  # shows 10 posts per page
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -43,6 +43,10 @@ def post_view(request):
     quote_data = response.json()
     quote = quote_data[0]['q']
     author = quote_data[0]['a']
+
+    # Fetch weather data based on the user's location
+    location = user.profile.location
+    weather_data = get_weather(location)
 
 
     posts = Post.objects.all().order_by("-created_date")
@@ -90,8 +94,6 @@ def post_view(request):
                         post=post
                     )
 
-
-
     context = {
         'form': form,
         'posts': posts,
@@ -100,8 +102,23 @@ def post_view(request):
         'like_count': like_count,
         'quote': quote,
         'author': author,
+        'weather_data': weather_data,
+
     }
     return render(request, template_name, context)
+
+
+def get_weather(location):
+    api_key = '19ff05d2e9ea1a4230560400f04409ff'  # Replace with your OpenWeatherMap API key
+    if location is None:
+        location = 'Tallinn'  # Default location is set to Tallinn
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric'
+    response = requests.get(url)
+    if response.status_code == 200:
+        weather_data = response.json()
+        return weather_data
+    else:
+        return None
 
 
 class PostDetailView(DetailView):

@@ -1,0 +1,20 @@
+{% load user_filters %}
+
+<div class="col-md-3">
+
+
+
+            <div class="card mx-auto mt-4" style="width: 18rem;">
+                <div class="card-body">
+
+                    <h5 class="card-subtitle mb-2 text-muted">{{ weather_data.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Temperature: {{ weather_data.main.temp }}°C</h6>
+                    <p class="card-text">Humidity: {{ weather_data.main.humidity }}%</p>
+                    <p class="card-text">Wind Speed: {{ weather_data.wind.speed }} m/s</p>
+
+                </div>
+
+            </div>
+        </div>
+
+

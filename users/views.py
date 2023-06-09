@@ -68,7 +68,6 @@ class ProfileView(View):
         post_count = Post.objects.filter(author=user).count()
         like_count = Post.objects.filter(author=user).aggregate(total_likes=Count('likes')).get('total_likes', 0)
 
-
         context = {
             'user': user,
             'profile': profile,
@@ -101,6 +100,18 @@ def edit_profile(request):
     return render(request, 'users/edit_profile.html', context)
 
 
+def get_weather(location):
+    api_key = '19ff05d2e9ea1a4230560400f04409ff'  # Replace with your OpenWeatherMap API key
+    if location is None:
+        location = 'Tallinn'  # Default location is set to Tallinn
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric'
+    response = requests.get(url)
+    if response.status_code == 200:
+        weather_data = response.json()
+        return weather_data
+    else:
+        return None
+
 
 class UserSearch(View):
     def get(self, request, *args, **kwargs):
@@ -117,7 +128,8 @@ class UserSearch(View):
         quote = quote_data[0]['q']
         author = quote_data[0]['a']
 
-
+        location = user.profile.location
+        weather_data = get_weather(location)
 
         context = {
             'profile_list': profile_list,
@@ -125,9 +137,11 @@ class UserSearch(View):
             'like_count': like_count,
             'quote': quote,
             'author': author,
+            'weather_data': weather_data,
         }
 
         return render(request, 'users/search.html', context)
+
 
 def user_profile(request, user_id):
     user = User.objects.get(id=user_id)

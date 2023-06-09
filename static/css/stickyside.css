@@ -1,0 +1,10 @@
+
+.sticky-page {
+    position: static;
+}
+
+@media (min-width: 1000px) {
+.sticky-page {
+    position: fixed;
+    }
+}

@@ -1,4 +1,6 @@
 {% load newuser %}
+{% load static %}
+<link href="{% static 'css/stickyside.css' %}" rel="stylesheet"/>
 
 <div class="card bg-white">
     <div class="card-body">
@@ -9,7 +11,7 @@
                 <li class="list-group-item">
                     <img src="{{ profile.image.url }}" alt="Profile Picture" class="rounded-circle"
                          style="width: 20px; height: 20px; object-fit: cover;">
-                    <a href="{% url 'users:profile' profile.pk %}" class="text-decoration-none">{{ user.username }}</a>
+                    <a href="{% url 'users:profile' profile.pk %}"  style="color: green;" class="text-decoration-none">{{ user.username }}</a>
                     (Registered at {{ user.date_joined|date:"Y-m-d H:i:s" }})
                 </li>
             {% endfor %}

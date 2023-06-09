@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-
+{% load static %}
+<link href="{% static 'css/stickyside.css' %}" rel="stylesheet"/>
 {% block content %}
 <div class="container-fluid">
     <div class="row row-cols-1 row-cols-md-2">
@@ -9,18 +10,21 @@
             <div class="container" style="background-color: ;">
                 {% for profile in profile_list %}
                 <div class="row justify-content-center mt-3">
-                    <div class="col-md-5 col-sm-12">
-                        <div class="card border-0 shadow-sm">
+                    <div class="col ">
+                        <div class="card">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
+                                <div class="user-profile d-flex align-items-center mb-3">
                                     <img src="{{ profile.image.url }}" alt="Profile Picture" class="rounded-circle"
                                          style="width: 50px; height: 50px; object-fit: cover;">
-                                    <h5 class="ml-3">{{ profile.user }}</h5>
+                                    <div class="ml-3">
+                                        <h2>{{ profile.user }}</h2>
+                                    </div>
                                 </div>
+
                                 <p><strong>Posts:</strong> {{ profile.user.post_set.count }}</p>
                                 <p><strong>Location:</strong> {{ profile.location.capitalize }}</p>
 
-                                <a href="{% url 'users:profile' profile.pk %}" class="btn btn-primary">View Profile</a>
+                                <a href="{% url 'users:profile' profile.pk %}" class="btn btn-success">View Profile</a>
                             </div>
                         </div>
                     </div>
@@ -29,7 +33,7 @@
             </div>
         </div>
 
-        <div class="col-md-3 rightscreensection">
+        <div class="col-md-3 offset-md-9 sticky-page">
             <div class="mb-4">
                 {% include 'users/newusers.html' %}
             </div>

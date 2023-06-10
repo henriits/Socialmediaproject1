@@ -90,9 +90,36 @@
                     <!-- Reactions -->
                     <div class="d-flex justify-content-between mb-3">
                         <div>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                              <i class="fas fa-heart text-danger fa-2x"></i>
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Users who liked Your post:</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    {% for post in posts %}
+                                    {{ post.author.username }}
+                                    <br>
+                                    {% endfor %}
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                             <p>
                                 <a href="{% url 'posts:liked_users' post.pk %}">
-                                    <i class="fas fa-heart text-danger fa-2x"></i>
+
                                     <span>{{ post.total_likes }}</span>
                                 </a>
                             </p>

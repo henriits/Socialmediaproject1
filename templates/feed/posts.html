@@ -89,7 +89,7 @@
                 <div class="card-body">
                     <!-- Reactions -->
                     <div class="d-flex justify-content-between mb-3">
-                        <div>
+                        <div class="d-flex align-items-center">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                               <i class="fas fa-heart text-danger fa-2x"></i>
@@ -118,10 +118,7 @@
                             </div>
 
                             <p>
-                                <a href="{% url 'posts:liked_users' post.pk %}">
-
-                                    <span>{{ post.total_likes }}</span>
-                                </a>
+                                <span class="ms-3">{{ post.total_likes }}</span>
                             </p>
                         </div>
                         <div>

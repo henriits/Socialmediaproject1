@@ -106,7 +106,7 @@
                                   </div>
                                   <div class="modal-body">
                                     {% for post in posts %}
-                                    {{ post.author.username }}
+                                    <a href="{% url 'users:user_profile' user_id=post.author.pk %}">{{ post.author.username }}</a>
                                     <br>
                                     {% endfor %}
                                   </div>

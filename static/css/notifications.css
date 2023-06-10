@@ -31,7 +31,11 @@
 
         .dropdown-item-parent {
             position: relative;
-            display: block;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
         }
 
         .dropdown-item-close {
@@ -39,6 +43,7 @@
             padding: 5px;
             transition: 0.3s;
             cursor: pointer;
+            margin-left: 10px;
         }
 
         .notification-badge {
@@ -58,3 +63,7 @@
             display: inline-block;
             margin-left: 10px;
         }
+
+         .notification-link {
+        flex-grow: 1;
+    }

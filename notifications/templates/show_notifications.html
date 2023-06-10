@@ -1,11 +1,11 @@
 <div class="dropdown">
-    <span class="badge bg-success notification-badge" onclick="showNotifications()"> {{ notifications.count }}</span>
+    <span class="badge bg-success notification-badge" onclick="showNotifications()">{{ notifications.count }}</span>
     <div class="dropdown-content d-none" id="notification-container">
         {% for notification in notifications %}
         {% if notification.post %}
         {% if notification.notification_type == 1 %}
         <div class="dropdown-item-parent">
-            <a href="#" class="rounded">
+            <a href="{% url 'posts:post_detail' pk=notification.post.pk %}" class="rounded">
                 {{ notification.from_user }} created a new post
                 <span class="notification-time">{{ notification.date }}</span>
                 <span class="dropdown-item-close" onclick="removeNotification(this)">&times;</span>
@@ -13,7 +13,7 @@
         </div>
         {% elif notification.notification_type == 2 %}
         <div class="dropdown-item-parent">
-            <a href="#" class="rounded">
+            <a href="{% url 'posts:post_detail' pk=notification.post.pk %}" class="rounded">
                 {{ notification.from_user }} commented on your post
                 <span class="notification-time">{{ notification.date }}</span>
                 <span class="dropdown-item-close" onclick="removeNotification(this)">&times;</span>
@@ -21,7 +21,7 @@
         </div>
         {% elif notification.notification_type == 3 %}
         <div class="dropdown-item-parent">
-            <a href="#" class="rounded">
+            <a href="{% url 'posts:post_detail' pk=notification.post.pk %}" class="rounded">
                 {{ notification.from_user }} liked your post
                 <span class="notification-time">{{ notification.date }}</span>
                 <span class="dropdown-item-close" onclick="removeNotification(this)">&times;</span>

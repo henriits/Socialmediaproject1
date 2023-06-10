@@ -42,3 +42,8 @@ function removeNotification(removeNotificationURL, redirectURL) {
 	xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
 	xmlhttp.send();
 }
+
+function removeNotification(element) {
+        var parent = element.closest(".dropdown-item-parent");
+        parent.remove();
+    }

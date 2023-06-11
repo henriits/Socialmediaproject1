@@ -64,7 +64,7 @@
                                  class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
                         </a>
                         <div>
-                            <a href="" class="text-dark mb-0">
+                            <a href="{% url 'users:profile' post.author.profile.pk %}" class="text-dark mb-0">
                                 <strong>{{ post.author.username }}</strong>
                             </a>
                             <p>

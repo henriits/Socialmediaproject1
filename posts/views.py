@@ -33,6 +33,7 @@ class AllPostView(LoginRequiredMixin, ListView):
         return context
 
 
+@login_required(login_url='/login/')
 def post_view(request):
     template_name = "feed/posts.html"
     form = CreateNewPost()

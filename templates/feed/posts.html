@@ -196,7 +196,7 @@
                     </a>
                     <div>
                         <div class="bg-light rounded-3 px-3 py-1" style="border: 1px solid #000;">
-                            <a href="" class="text-dark mb-0">
+                            <a href="{% url 'users:profile' comment.user.profile.pk %}" class="text-dark mb-0">
                                 <strong>{{ comment.user.username }}</strong>
                             </a>
                             <p><small>{{ comment.created_at }}</small></p>

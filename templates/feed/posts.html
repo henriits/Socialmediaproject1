@@ -99,30 +99,37 @@
                     <div class="d-flex justify-content-between mb-3">
                         <div class="d-flex align-items-center">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                              <i class="fas fa-heart text-danger fa-2x"></i>
+                            <button type="button" class="btn btn" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">
+                                <i class="fas fa-heart text-danger fa-2x"></i>
                             </button>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                 data-bs-keyboard="false"
                                  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Users who liked Your post:</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-body">
-                                    {% for post in posts %}
-                                    <a href="{% url 'users:user_profile' user_id=post.author.pk %}">{{ post.author.username }}</a>
-                                    <br>
-                                    {% endfor %}
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                  </div>
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Users who liked Your
+                                                post:</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% for post in posts %}
+                                            <a href="{% url 'users:user_profile' user_id=post.author.pk %}">{{
+                                                post.author.username }}</a>
+                                            <br>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
                             </div>
 
                             <p>
@@ -136,10 +143,10 @@
 
                     <div class="d-flex justify-content-evenly align-items-center text-center border-top border-bottom mb-4">
                         {% if request.user == post.author %}
-                            <!-- Update post -->
-                            <a href="{% url 'posts:post_update' post.pk %}" class="custom-link">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
+                        <!-- Update post -->
+                        <a href="{% url 'posts:post_update' post.pk %}" class="custom-link">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
                         {% endif %}
 
                         <!-- Buttons -->
@@ -162,10 +169,10 @@
                         </form>
 
                         {% if request.user == post.author %}
-                            <!-- Delete post -->
-                            <a href="{% url 'posts:post_delete' post.pk %}" class="custom-link">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                        <!-- Delete post -->
+                        <a href="{% url 'posts:post_delete' post.pk %}" class="custom-link">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
                         {% endif %}
                     </div>
                 </div>
@@ -240,18 +247,22 @@
             {% endfor %}
         </div>
 
-        <div class="col-md-3 rightscreensection">
+        <div class="col-md-3 col-md-3 offset-md-9 sticky-page">
             <!-- content in here will be displayed on the right side of the feed-->
             <div class="mb-4">
-                {% include 'users/newusers.html' %}
+
+                <!-- Can add another box here-->
+                <div class="mb-4">
+                    {% include 'users/newusers.html' %}
+                </div>
+                <div class="mb-4">
+                    <!-- content in here will be displayed on the right side of the feed-->
+                    {% include 'weatherapi.html' %}
+                </div>
             </div>
-            <div class="mb-4">
-                <!-- content in here will be displayed on the right side of the feed-->
-                {% include 'weatherapi.html' %}
-            </div>
+
+
         </div>
-
-
     </div>
 </div>
 

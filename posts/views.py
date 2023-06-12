@@ -15,6 +15,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+
+
 # import pdb
 
 # Create your views here.
@@ -48,7 +51,6 @@ def post_view(request):
     # Fetch weather data based on the user's location
     location = user.profile.location
     weather_data = get_weather(location)
-
 
     posts = Post.objects.all().order_by("-created_date")
     post_count = Post.objects.filter(author=user).count()
@@ -160,23 +162,29 @@ def total_posts(request):
     return render(request, 'sidebar.html', context)
 
 
+@login_required
 def like_view(request, pk):
-    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    post = get_object_or_404(Post, pk=pk)
 
-    if request.user in post.likes.all():
-        post.likes.remove(request.user)
+    if request.method == 'POST' and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        if request.user.is_authenticated:
+            if post.likes.filter(id=request.user.id).exists():
+                # Unlike the post
+                post.likes.remove(request.user)
+                liked = False
+            else:
+                # Like the post
+                post.likes.add(request.user)
+                liked = True
+
+            like_count = post.likes.count()
+
+            return JsonResponse({'liked': liked, 'like_count': like_count})
+        else:
+            return JsonResponse({}, status=401)
     else:
-        post.likes.add(request.user)
+        return JsonResponse({}, status=400)
 
-        # Create notification for the post author
-        notification = Notification.objects.create(
-            notification_type=3,
-            from_user=request.user,
-            to_user=post.author,
-            post=post
-        )
-
-    return HttpResponseRedirect(reverse('posts:posts'))
 
 @login_required
 def comment_like_view(request, comment_id):
@@ -232,6 +240,7 @@ class PostUpdateView(UpdateView):
     form_class = CreateNewPost
     template_name = 'feed/update_post.html'
     success_url = reverse_lazy('posts:posts')
+
 
 def liked_users_view(request, post_id):
     post = get_object_or_404(Post, pk=post_id)

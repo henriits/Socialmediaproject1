@@ -116,14 +116,12 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
+
+
                                         <div class="modal-body">
-                                            {% for liked_user in liked_users %}
-                                            <a href="{% url 'users:user_profile' user_id=liked_user.user.pk %}">
-                                                {{ liked_user.user.username }}
-                                            </a>
-                                            <br>
-                                            {% endfor %}
+                                            {% include 'feed/liked_users.html' %}
                                         </div>
+
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                 Close
@@ -234,7 +232,6 @@
                                 <button type="submit" class="btn btn-outline-primary btn-sm">Like</button>
                                 {% endif %}
                             </form>
-                            <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
                             <a href="" class="text-muted small me-2"><strong>{{ comment.total_likes }}
                                 Likes</strong></a>
                         </div>

@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Liked Users</title>
-</head>
-<body>
-    <h1>Liked Users</h1>
+{% if post.total_likes %}
     <ul>
-        {% for user in liked_users %}
-        <li>{{ user.username }}</li>
+        {% for user in post.likes.all %}
+            <li>{{ user.username }}</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% else %}
+    <p>No users liked this post.</p>
+{% endif %}

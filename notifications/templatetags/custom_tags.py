@@ -8,5 +8,6 @@ register = template.Library()
 @register.inclusion_tag('show_notifications.html', takes_context=True)
 def show_notifications(context):
     request_user = context['request'].user
-    notifications = Notification.objects.filter(to_user=request_user).exclude(user_has_seen=True).order_by('-date')
-    return {'notifications': notifications}
+    unseen_notifications = Notification.objects.filter(to_user=request_user, user_has_seen=False).order_by('-date')
+    count = unseen_notifications.count()
+    return {'notifications': unseen_notifications, 'count': count}

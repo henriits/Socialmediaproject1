@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 
@@ -40,9 +40,14 @@ class ThreadNotification(View):
 
 class RemoveNotification(View):
     def delete(self, request, notification_pk, *args, **kwargs):
-        notification = Notification.objects.get(pk=notification_pk)
+        try:
+            notification = Notification.objects.get(pk=notification_pk)
+            notification.delete()  # Delete the notification from the database
+            return HttpResponse('Success', content_type='text/plain')
+        except Notification.DoesNotExist:
+            return HttpResponse('Notification not found', content_type='text/plain', status=404)
+        except Exception as e:
+            return HttpResponse(str(e), content_type='text/plain', status=500)
 
-        notification.user_has_seen = True
-        notification.save()
 
-        return HttpResponse('Success', content_type='text/plain')
+

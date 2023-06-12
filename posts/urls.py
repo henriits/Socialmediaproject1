@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 
-from .views import AllPostView,  CreateCommentView, PostDetailView, like_view, post_view, PostDeleteView, PostUpdateView, \
+from .views import AllPostView, CreateCommentView, PostDetailView, like_view, post_view, PostDeleteView, PostUpdateView, \
     comment_like_view, LikeListView, DeleteCommentView, total_posts, liked_users_view
 from socialmedia.views import HomeView
 

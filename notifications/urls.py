@@ -6,5 +6,5 @@ urlpatterns = [
          name='post-notification'),
     path('notification/<int:notification_pk>/follow/<int:object_pk>', FollowNotification.as_view(),
          name='follow-notification'),
-    path('notification/delete/<int:notification_pk>', RemoveNotification.as_view(), name='notification-delete')
+    path('notifications/remove/<int:notification_pk>/', RemoveNotification.as_view(), name='remove_notification'),
 ]

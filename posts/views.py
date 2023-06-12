@@ -165,6 +165,8 @@ def total_posts(request):
 from django.http import JsonResponse
 
 
+
+
 @login_required
 def like_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -180,7 +182,9 @@ def like_view(request, pk):
                 post.likes.add(request.user)
                 liked = True
 
-            return JsonResponse({'liked': liked})
+            like_count = post.likes.count()
+
+            return JsonResponse({'liked': liked, 'like_count': like_count})
         else:
             return JsonResponse({}, status=401)
     else:

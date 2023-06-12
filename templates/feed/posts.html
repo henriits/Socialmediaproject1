@@ -131,9 +131,9 @@
                                 </div>
                             </div>
 
-                            <p>
-                                <span class="ms-3">{{ post.total_likes }}</span>
-                            </p>
+<p>
+  <span id="like-count" class="ms-3">{{ post.total_likes }}</span>
+</p>
                         </div>
                         <div>
                             <p href="" class="text-muted">Total comments: {{ post.total_comments }}</p>
@@ -264,7 +264,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<<script>
+<script>
   $(document).ready(function() {
     // Get the CSRF token from the cookie
     function getCookie(name) {
@@ -288,6 +288,7 @@
 
       var postId = $(this).data('post-id');  // Get the post ID from the data attribute
       var button = $(this);  // Store the button element
+      var countElement = $('#like-count');
 
       // Get the CSRF token
       var csrftoken = getCookie('csrftoken');
@@ -306,10 +307,11 @@
           // Handle the successful response
           if (response.liked) {
             button.text('Unlike');  // Change the button text to Unlike
+            countElement.text(response.like_count); // Update the like count element
           } else {
             button.text('Like');  // Change the button text to Like
+            countElement.text(response.like_count); // Update the like count element
           }
-          // Update the like count or any other UI changes
         },
         error: function(xhr) {
           // Handle any errors that occur during the AJAX request
@@ -318,6 +320,9 @@
     });
   });
 </script>
+
+
+
 
 
 

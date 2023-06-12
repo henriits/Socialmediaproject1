@@ -162,11 +162,6 @@ def total_posts(request):
     return render(request, 'sidebar.html', context)
 
 
-from django.http import JsonResponse
-
-
-
-
 @login_required
 def like_view(request, pk):
     post = get_object_or_404(Post, pk=pk)

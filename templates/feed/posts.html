@@ -5,7 +5,7 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'css/posts.css' %}">
- </head>
+</head>
 
 
 <div class="container-fluid">
@@ -78,20 +78,20 @@
                     </div>
                 </div>
                 <!-- Media -->
-                     <a href="{% url 'post_detail' post.pk %}">
-               <div class="bg-image hover-overlay ripple rounded-0">
-                  <div class="resized-img">
-                     {% if post.image %}
-                     <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
-                     {% else %}
+                <a href="{% url 'post_detail' post.pk %}">
+                    <div class="bg-image hover-overlay ripple rounded-0">
+                        <div class="resized-img">
+                            {% if post.image %}
+                            <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
+                            {% else %}
 
-                     <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
+                            <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
 
-                     <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
-                     {% endif %}
-                  </div>
-               </div>
-            </a>
+                            <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
                 <!-- Media -->
                 <!-- Interactions -->
                 <div class="card-body">
@@ -117,9 +117,10 @@
                                                     aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            {% for post in posts %}
-                                            <a href="{% url 'users:user_profile' user_id=post.author.pk %}">{{
-                                                post.author.username }}</a>
+                                            {% for liked_user in liked_users %}
+                                            <a href="{% url 'users:user_profile' user_id=liked_user.user.pk %}">
+                                                {{ liked_user.user.username }}
+                                            </a>
                                             <br>
                                             {% endfor %}
                                         </div>

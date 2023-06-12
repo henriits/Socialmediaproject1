@@ -2,33 +2,41 @@
     <span class="badge bg-success notification-badge" onclick="showNotifications()">{{ notifications.count }}</span>
     <div class="dropdown-content d-none" id="notification-container">
         {% for notification in notifications %}
-        {% if notification.post %}
-        {% if notification.notification_type == 1 %}
-        <div class="dropdown-item-parent">
-            <a href="{% url 'posts:post_detail' pk=notification.post.pk %}" class="notification-link rounded">
-                {{ notification.from_user }} created a new post
-                <span class="notification-time">{{ notification.date }}</span>
-            </a>
-            <span class="dropdown-item-close" onclick="removeNotification(this)">&times;</span>
-        </div>
-        {% elif notification.notification_type == 2 %}
-        <div class="dropdown-item-parent">
-            <a href="{% url 'posts:post_detail' pk=notification.post.pk %}" class="notification-link rounded">
-                {{ notification.from_user }} commented on your post
-                <span class="notification-time">{{ notification.date }}</span>
-            </a>
-            <span class="dropdown-item-close" onclick="removeNotification(this)">&times;</span>
-        </div>
-        {% elif notification.notification_type == 3 %}
-        <div class="dropdown-item-parent">
-            <a href="{% url 'posts:post_detail' pk=notification.post.pk %}" class="notification-link rounded">
-                {{ notification.from_user }} liked your post
-                <span class="notification-time">{{ notification.date }}</span>
-            </a>
-            <span class="dropdown-item-close" onclick="removeNotification(this)">&times;</span>
-        </div>
-        {% endif %}
-        {% endif %}
+            {% if notification.post %}
+                {% if notification.notification_type == 1 %}
+                    <div class="dropdown-item-parent">
+                        <a href="{% url 'posts:post_detail' pk=notification.post.pk %}" class="notification-link rounded" onclick="removeNotification({{ notification.pk }}, this, '{% url 'posts:post_detail' pk=notification.post.pk %}')">
+                            {{ notification.from_user }} created a new post
+                            <span class="notification-time">{{ notification.date }}</span>
+                        </a>
+                        <span class="dropdown-item-close" onclick="removeNotification({{ notification.pk }}, this)">&times;</span> <!-- Add onclick event -->
+                    </div>
+                {% elif notification.notification_type == 2 and notification.from_user != notification.post.author %}
+                    <div class="dropdown-item-parent">
+                        <a href="{% url 'posts:post_detail' pk=notification.post.pk %}" class="notification-link rounded" onclick="removeNotification({{ notification.pk }}, this, '{% url 'posts:post_detail' pk=notification.post.pk %}')">
+                            {{ notification.from_user }} commented on your post
+                            <span class="notification-time">{{ notification.date }}</span>
+                        </a>
+                        <span class="dropdown-item-close" onclick="removeNotification({{ notification.pk }}, this)">&times;</span> <!-- Add onclick event -->
+                    </div>
+                {% elif notification.notification_type == 3 and notification.from_user != notification.post.author %}
+                    <div class="dropdown-item-parent">
+                        <a href="{% url 'posts:post_detail' pk=notification.post.pk %}" class="notification-link rounded" onclick="removeNotification({{ notification.pk }}, this, '{% url 'posts:post_detail' pk=notification.post.pk %}')">
+                            {{ notification.from_user }} liked your post
+                            <span class="notification-time">{{ notification.date }}</span>
+                        </a>
+                        <span class="dropdown-item-close" onclick="removeNotification({{ notification.pk }}, this)">&times;</span> <!-- Add onclick event -->
+                    </div>
+                {% elif notification.notification_type == 4 %}
+                    <div class="dropdown-item-parent">
+                        <a href="{% url 'messaging:inbox' %}" class="notification-link rounded" onclick="removeNotification({{ notification.pk }}, this, '{% url 'messaging:inbox' %}')">
+                            {{ notification.from_user }} sent you a message
+                            <span class="notification-time">{{ notification.date }}</span>
+                        </a>
+                        <span class="dropdown-item-close" onclick="removeNotification({{ notification.pk }}, this)">&times;</span> <!-- Add onclick event -->
+                    </div>
+                {% endif %}
+            {% endif %}
         {% endfor %}
     </div>
 </div>

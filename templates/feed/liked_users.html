@@ -1,9 +1,14 @@
 {% if post.total_likes %}
-    <ul>
+
         {% for user in post.likes.all %}
-            <li>{{ user.username }}</li>
+
+                <a href="{% url 'users:user_profile' user_id=user.pk %}">
+                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Image" style="border-radius: 50%; width: 20px; height: 20px;">
+                    {{ user.username }}
+                </a>
+<br>
         {% endfor %}
-    </ul>
+
 {% else %}
     <p>No users liked this post.</p>
 {% endif %}

@@ -5,7 +5,7 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'css/posts.css' %}">
- </head>
+</head>
 
 
 <div class="container-fluid">
@@ -78,20 +78,20 @@
                     </div>
                 </div>
                 <!-- Media -->
-                     <a href="{% url 'post_detail' post.pk %}">
-               <div class="bg-image hover-overlay ripple rounded-0">
-                  <div class="resized-img">
-                     {% if post.image %}
-                     <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
-                     {% else %}
+                <a href="{% url 'post_detail' post.pk %}">
+                    <div class="bg-image hover-overlay ripple rounded-0">
+                        <div class="resized-img">
+                            {% if post.image %}
+                            <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
+                            {% else %}
 
-                     <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
+                            <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
 
-                     <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
-                     {% endif %}
-                  </div>
-               </div>
-            </a>
+                            <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
                 <!-- Media -->
                 <!-- Interactions -->
                 <div class="card-body">
@@ -116,13 +116,12 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
+
+
                                         <div class="modal-body">
-                                            {% for post in posts %}
-                                            <a href="{% url 'users:user_profile' user_id=post.author.pk %}">{{
-                                                post.author.username }}</a>
-                                            <br>
-                                            {% endfor %}
+                                            {% include 'feed/liked_users.html' %}
                                         </div>
+
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                 Close
@@ -234,7 +233,6 @@
                                 <button type="submit" class="btn btn-outline-primary btn-sm">Like</button>
                                 {% endif %}
                             </form>
-                            <a href="" class="text-muted small me-2"><strong>Reply</strong></a>
                             <a href="" class="text-muted small me-2"><strong>{{ comment.total_likes }}
                                 Likes</strong></a>
                         </div>

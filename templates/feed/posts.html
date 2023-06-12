@@ -150,23 +150,24 @@
                         {% endif %}
 
                         <!-- Buttons -->
-                        <form method="post" action="{% url 'posts:like_post' post.pk %}"
-                              class="d-flex justify-content-center">
-                            {% csrf_token %}
-                            {% if request.user in post.likes.all %}
-                            <button name="post_id" value="{{post.id}}" type="submit" class="btn btn-lg"
-                                    data-mdb-ripple-color="dark">
-                                <i class="far fa-thumbs-down me-2"></i>
-                                Unlike
-                            </button>
-                            {% else %}
-                            <button name="post_id" value="{{ post.id }}" type="submit" class="btn btn-lg"
-                                    data-mdb-ripple-color="dark">
-                                <i class="fas fa-heart me-2"></i>
-                                Like
-                            </button>
-                            {% endif %}
-                        </form>
+                    <!-- Add this code within the section where you want to display the like button -->
+
+<!-- Like Button -->
+<form class="d-inline-block">
+  {% csrf_token %}
+  {% if request.user in post.likes.all %}
+    <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark">
+      <i class="far fa-thumbs-down me-2"></i>
+      Unlike
+    </button>
+  {% else %}
+    <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark">
+      <i class="fas fa-heart me-2"></i>
+      Like
+    </button>
+  {% endif %}
+</form>
+
 
                         {% if request.user == post.author %}
                         <!-- Delete post -->
@@ -260,10 +261,67 @@
                     {% include 'weatherapi.html' %}
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<<script>
+  $(document).ready(function() {
+    // Get the CSRF token from the cookie
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    $('.like-button').on('click', function(event) {
+      event.preventDefault();  // Prevent the default button behavior
+
+      var postId = $(this).data('post-id');  // Get the post ID from the data attribute
+      var button = $(this);  // Store the button element
+
+      // Get the CSRF token
+      var csrftoken = getCookie('csrftoken');
+
+      // Send an AJAX POST request to the server
+      $.ajax({
+        type: 'POST',
+        url: '/like/' + postId + '/',
+        data: {
+          'post_id': postId  // Pass the post ID in the data
+        },
+        headers: {
+          'X-CSRFToken': csrftoken  // Include the CSRF token in the request headers
+        },
+        success: function(response) {
+          // Handle the successful response
+          if (response.liked) {
+            button.text('Unlike');  // Change the button text to Unlike
+          } else {
+            button.text('Like');  // Change the button text to Like
+          }
+          // Update the like count or any other UI changes
+        },
+        error: function(xhr) {
+          // Handle any errors that occur during the AJAX request
+        }
+      });
+    });
+  });
+</script>
+
+
+
 
 {% endblock %}

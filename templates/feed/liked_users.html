@@ -2,8 +2,8 @@
 
         {% for user in post.likes.all %}
 
-                <a href="{% url 'users:user_profile' user_id=user.pk %}">
-                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }}'s Profile Image" style="border-radius: 50%; width: 20px; height: 20px;">
+                <a href="{% url 'users:user_profile' user_id=user.pk %}" style="color: green;">
+                    <img src="{{ user.profile.image.url }}"  alt="{{ user.username }}'s Profile Image" style="border-radius: 50%; width: 20px; height: 20px;">
                     {{ user.username }}
                 </a>
 <br>

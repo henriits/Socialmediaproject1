@@ -1,5 +1,4 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+
 $(document).ready(function() {
   // Get the CSRF token from the cookie
   function getCookie(name) {
@@ -57,4 +56,3 @@ $(document).ready(function() {
 });
 
 
-</script>

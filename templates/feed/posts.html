@@ -132,8 +132,9 @@
                             </div>
 
                             <p>
-                                <span id="like-count" class="ms-3">{{ post.total_likes }}</span>
+                              <span id="like-count-{{ post.id }}" class="ms-3">{{ post.total_likes }}</span>
                             </p>
+
                         </div>
                         <div>
                             <p href="" class="text-muted">Total comments: {{ post.total_comments }}</p>
@@ -155,17 +156,15 @@
                         <form class="d-inline-block">
                             {% csrf_token %}
                             {% if request.user in post.likes.all %}
-                            <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}"
-                                    data-mdb-ripple-color="dark">
+                              <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark" data-count-element="#like-count-{{ post.id }}">
                                 <i class="far fa-thumbs-down me-2"></i>
                                 Unlike
-                            </button>
+                              </button>
                             {% else %}
-                            <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}"
-                                    data-mdb-ripple-color="dark">
+                              <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark" data-count-element="#like-count-{{ post.id }}">
                                 <i class="fas fa-heart me-2"></i>
                                 Like
-                            </button>
+                              </button>
                             {% endif %}
                         </form>
 

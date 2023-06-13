@@ -74,6 +74,9 @@ def post_view(request):
                         post=post
                     )
 
+                # Clear the form fields
+                form = CreateNewPost()
+
                 return redirect('posts:posts')
         else:
 
@@ -96,6 +99,9 @@ def post_view(request):
                         to_user=user,
                         post=post
                     )
+
+                # Clear the form fields
+                comment_form = CreateCommentForm()
 
     context = {
         'form': form,
@@ -152,6 +158,7 @@ class CreateCommentView(CreateView, LoginRequiredMixin):
         comment.user = self.request.user
         comment.save()
         return super().form_valid(form)
+
 
     success_url = reverse_lazy('posts:allposts')
 

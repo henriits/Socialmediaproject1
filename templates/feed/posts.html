@@ -131,9 +131,9 @@
                                 </div>
                             </div>
 
-<p>
-  <span id="like-count" class="ms-3">{{ post.total_likes }}</span>
-</p>
+                            <p>
+                              <span id="like-count" class="ms-3">{{ post.total_likes }}</span>
+                            </p>
                         </div>
                         <div>
                             <p href="" class="text-muted">Total comments: {{ post.total_comments }}</p>
@@ -151,21 +151,21 @@
                         <!-- Buttons -->
                     <!-- Add this code within the section where you want to display the like button -->
 
-<!-- Like Button -->
-<form class="d-inline-block">
-  {% csrf_token %}
-  {% if request.user in post.likes.all %}
-    <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark">
-      <i class="far fa-thumbs-down me-2"></i>
-      Unlike
-    </button>
-  {% else %}
-    <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark">
-      <i class="fas fa-heart me-2"></i>
-      Like
-    </button>
-  {% endif %}
-</form>
+                    <!-- Like Button -->
+                    <form class="d-inline-block">
+                      {% csrf_token %}
+                      {% if request.user in post.likes.all %}
+                        <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark">
+                          <i class="far fa-thumbs-down me-2"></i>
+                          Unlike
+                        </button>
+                      {% else %}
+                        <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark">
+                          <i class="fas fa-heart me-2"></i>
+                          Like
+                        </button>
+                      {% endif %}
+                    </form>
 
 
                         {% if request.user == post.author %}

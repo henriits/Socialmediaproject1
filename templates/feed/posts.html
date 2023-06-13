@@ -30,26 +30,26 @@
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <div class="input-group my-3">
-                                        {{ form.text }}
+                                        <textarea class="form-control" id="id_text" name="text" rows="3"></textarea>
                                         <div class="row">
-                                            <div class="col-md-6 mb-3 my-3">
-                                                {{ form.image }}
+                                            <div class="col-md-6 mb-3 my-3 text-white">
+                                                <input class="form-control btn-success" type="file" id="id_image" name="image"  >
+
+                                                <!-- Remove btn-success to remove green button for choose file -->
+
                                             </div>
                                             <div class="col-md-6 mb-3 my-3">
                                                 <button class="btn btn-success w-100" type="submit">
-                                                    <i class="fas fa-upload me-2" style="color: #defa00;"></i>
+                                                    <i class="fas fa-upload me-2" style="color: #defa00; height:23px;"></i>
                                                     Upload the post
                                                 </button>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -87,7 +87,7 @@
 
                             <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
 
-                            <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">
+                            <!--                            <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">-->
                             {% endif %}
                         </div>
                     </div>
@@ -193,7 +193,8 @@
                             <div class="comment-form">
                                 <div class="mb-3">
                                     <label for="id_comment">Comment:</label>
-                                    <textarea class="form-control border border-dark w-100" id="id_comment" name="comment"
+                                    <textarea class="form-control border border-dark w-100" id="id_comment"
+                                              name="comment"
                                               rows="1"></textarea>
                                 </div>
 
@@ -232,18 +233,20 @@
                         </div>
 
                         <div class="d-flex align-items-center mt-2">
+
                             <form action="{% url 'posts:comment_like' comment_id=comment.pk %}" method="POST"
                                   class="mr-2">
                                 {% csrf_token %}
                                 {% if request.user in comment.likes.all %}
-                                <button type="submit" class="btn btn-success btn-sm">Unlike</button>
+                                <button type="submit" class="btn btn-success btn-sm me-2">Unlike</button>
                                 {% else %}
-                                <button type="submit" class="btn btn-outline-success btn-sm pr-2">Like</button>
+                                <button type="submit" class="btn btn-outline-success btn-sm me-2">Like</button>
                                 {% endif %}
                             </form>
-                            <a href="" class="text-muted small me-2 pr-2"><strong>{{ comment.total_likes }}
+                            <a href="" class="text-muted small "><strong>{{ comment.total_likes }}
                                 Likes</strong></a>
                         </div>
+
 
                     </div>
                 </div>
@@ -328,6 +331,8 @@
       });
     });
   });
+
+
 
 
 

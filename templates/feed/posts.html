@@ -5,6 +5,8 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'css/posts.css' %}">
+<script src="{% static 'js/scripts.js' %}"></script>
+
 </head>
 
 
@@ -132,8 +134,9 @@
                             </div>
 
                             <p>
-                                <span id="like-count" class="ms-3">{{ post.total_likes }}</span>
+                              <span id="like-count-{{ post.id }}" class="ms-3">{{ post.total_likes }}</span>
                             </p>
+
                         </div>
                         <div>
                             <p href="" class="text-muted">Total comments: {{ post.total_comments }}</p>
@@ -155,17 +158,15 @@
                         <form class="d-inline-block">
                             {% csrf_token %}
                             {% if request.user in post.likes.all %}
-                            <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}"
-                                    data-mdb-ripple-color="dark">
+                              <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark" data-count-element="#like-count-{{ post.id }}">
                                 <i class="far fa-thumbs-down me-2"></i>
                                 Unlike
-                            </button>
+                              </button>
                             {% else %}
-                            <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}"
-                                    data-mdb-ripple-color="dark">
+                              <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark" data-count-element="#like-count-{{ post.id }}">
                                 <i class="fas fa-heart me-2"></i>
                                 Like
-                            </button>
+                              </button>
                             {% endif %}
                         </form>
 
@@ -274,69 +275,6 @@
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function() {
-    // Get the CSRF token from the cookie
-    function getCookie(name) {
-      var cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-          var cookie = jQuery.trim(cookies[i]);
-          // Does this cookie string begin with the name we want?
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    }
-
-    $('.like-button').on('click', function(event) {
-      event.preventDefault();  // Prevent the default button behavior
-
-      var postId = $(this).data('post-id');  // Get the post ID from the data attribute
-      var button = $(this);  // Store the button element
-      var countElement = $('#like-count');
-
-      // Get the CSRF token
-      var csrftoken = getCookie('csrftoken');
-
-      // Send an AJAX POST request to the server
-      $.ajax({
-        type: 'POST',
-        url: '/like/' + postId + '/',
-        data: {
-          'post_id': postId  // Pass the post ID in the data
-        },
-        headers: {
-          'X-CSRFToken': csrftoken  // Include the CSRF token in the request headers
-        },
-        success: function(response) {
-          // Handle the successful response
-          if (response.liked) {
-            button.text('Unlike');  // Change the button text to Unlike
-            countElement.text(response.like_count); // Update the like count element
-          } else {
-            button.text('Like');  // Change the button text to Like
-            countElement.text(response.like_count); // Update the like count element
-          }
-        },
-        error: function(xhr) {
-          // Handle any errors that occur during the AJAX request
-        }
-      });
-    });
-  });
-
-
-
-
-
-</script>
 
 
 {% endblock %}

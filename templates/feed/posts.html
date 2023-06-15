@@ -139,7 +139,8 @@
 
                         </div>
                         <div>
-                            <p href="" class="text-muted">Total comments: {{ post.total_comments }}</p>
+                            <a href="{% url 'post_detail' post.pk %}" class="text-muted">Total comments: {{ post.total_comments }}</a>
+
                         </div>
                     </div>
 

@@ -208,7 +208,7 @@
 
                 <!-- COMMENT DISPLAY SECTION -->
 
-                {% for comment in post.comments.all %}
+                {% for comment in post.comments.all|slice:":2" %}
                 <div class="d-flex mb-3">
                     <a href="">
                         {% if comment.user.profile.image %}

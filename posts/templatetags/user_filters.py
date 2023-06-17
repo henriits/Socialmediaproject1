@@ -6,4 +6,4 @@ register = template.Library()
 @register.filter(name='time_since_registration')
 def time_since_registration(value):
     duration = timesince(value.date_joined)
-    return f"Has been a member: {duration}"
+    return f"You have been a member for : {duration}"

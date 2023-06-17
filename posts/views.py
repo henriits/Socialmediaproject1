@@ -1,11 +1,9 @@
-import profile
-
 import requests
 from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, DeleteView, UpdateView
 
 from notifications.models import Notification
 from .forms import CreateNewPost, CreateCommentForm
@@ -13,31 +11,16 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Comments, CommentLike
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
 
 # import pdb
 
-# Create your views here.
-class AllPostView(LoginRequiredMixin, ListView):
-    model = Post
-    template_name = "feed/posts.html"
-    success_url = reverse_lazy("posts")
-    context_object_name = "posts"
-    ordering = ["-created_date"]  # ordering posts in descending order
-    paginate_by = 10  # shows 10 posts per page
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        posts = context["posts"]
-        context["comments"] = Comments.objects.filter(post_id__in=posts)
-        return context
-
 
 @login_required(login_url='/login/')
 def post_view(request):
+    """The main view, displays posts, comments, likes, weather, quote, etc.."""
     template_name = "feed/posts.html"
     form = CreateNewPost()
     comment_form = CreateCommentForm()
@@ -112,6 +95,7 @@ def post_view(request):
 
 
 def get_weather(location):
+    """Displays the weather for location that user has set on edit profile"""
     api_key = '19ff05d2e9ea1a4230560400f04409ff'  # Replace with your OpenWeatherMap API key
     if location is None:
         location = 'Tallinn'  # Default location is set to Tallinn
@@ -125,6 +109,7 @@ def get_weather(location):
 
 
 class PostDetailView(DetailView):
+    """Displays detailed view of the post with comments, likes, allows to respond to comment from that view"""
     model = Post
     template_name = 'feed/post_detail.html'
     context_object_name = 'post'
@@ -139,24 +124,8 @@ class PostDetailView(DetailView):
         return context
 
 
-class CreateCommentView(CreateView, LoginRequiredMixin):
-    model = Comments
-    form_class = CreateCommentForm
-    template_name = 'feed/create_comment.html'
-    success_url = reverse_lazy('posts:posts')
-
-    def form_valid(self, form):
-        post = get_object_or_404(Post, id=self.kwargs['post_id'])
-        comment = form.save(commit=False)
-        comment.post_id = post
-        comment.user = self.request.user
-        comment.save()
-        return super().form_valid(form)
-
-    success_url = reverse_lazy('posts:allposts')
-
-
 def total_posts(request):
+    """Shows users total posts"""
     count_posts = Post.objects.count()
     context = {'total_posts': count_posts}
     return render(request, 'sidebar.html', context)
@@ -164,6 +133,7 @@ def total_posts(request):
 
 @login_required
 def like_view(request, pk):
+    """Shows who has liked or unliked the post, also displays it as notification"""
     post = get_object_or_404(Post, pk=pk)
 
     # Create notification for the post author
@@ -196,6 +166,7 @@ def like_view(request, pk):
 
 @login_required
 def comment_like_view(request, comment_id):
+    """Displays count for comments liked, allows delete comment"""
     comment = get_object_or_404(Comments, id=comment_id)
     user = request.user
 
@@ -209,16 +180,8 @@ def comment_like_view(request, comment_id):
     return redirect('posts:posts')
 
 
-class LikeListView(ListView):
-    model = Post
-    template_name = 'feed/likes.html'
-    context_object_name = 'post'
-
-    def get_queryset(self):
-        return super().get_queryset().filter(pk=self.kwargs['pk'])
-
-
 class PostDeleteView(DeleteView, LoginRequiredMixin):
+    """Allows user to delete post, if user is the author"""
     model = Post
     template_name = 'feed/post_delete.html'
     success_url = reverse_lazy('posts:posts')
@@ -234,6 +197,7 @@ class PostDeleteView(DeleteView, LoginRequiredMixin):
 
 
 class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """allows comment author to delete created comment"""
     model = Comments
     template_name = 'feed/delete_comment.html'
     success_url = reverse_lazy('posts:posts')
@@ -244,6 +208,7 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 class PostUpdateView(UpdateView):
+    """Allows user to update the previously created post"""
     model = Post
     form_class = CreateNewPost
     template_name = 'feed/update_post.html'
@@ -251,6 +216,7 @@ class PostUpdateView(UpdateView):
 
 
 def liked_users_view(request, post_id):
+    """Displays all the users that have liked the post"""
     post = get_object_or_404(Post, pk=post_id)
     liked_users = post.likes.all()
 

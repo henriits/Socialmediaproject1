@@ -20,65 +20,30 @@ from django.http import JsonResponse
 
 @login_required(login_url='/login/')
 def post_view(request):
-    """The main view, displays posts, comments, likes, weather, quote, etc.."""
     template_name = "feed/posts.html"
     form = CreateNewPost()
     comment_form = CreateCommentForm()
     user = request.user
 
-    response = requests.get('https://zenquotes.io/api/random')
-    quote_data = response.json()
-    quote = quote_data[0]['q']
-    author = quote_data[0]['a']
-
-    # Fetch weather data based on the user's location
+    quote, author = fetch_quote()
     location = user.profile.location
     weather_data = get_weather(location)
 
     posts = Post.objects.all().order_by("-created_date")
     post_count = Post.objects.filter(author=user).count()
     like_count = Post.objects.filter(author=user).aggregate(total_likes=Count('likes')).get('total_likes', 0)
+
     if request.method == 'POST':
         if 'post_id' not in request.POST:
             form = CreateNewPost(request.POST, request.FILES)
-            if form.is_valid():
-                post = form.save(commit=False)
-                post.author = request.user
-                post.created_date = timezone.now()
-                post.save()
-
-                # Create notifications for other users
-                users = User.objects.exclude(id=request.user.id)
-                for user in users:
-                    notification = Notification.objects.create(
-                        notification_type=1,
-                        from_user=request.user,
-                        to_user=user,
-                        post=post
-                    )
-
+            post = create_post(request, form)
+            if post:
                 return redirect('posts:posts')
         else:
-
             comment_form = CreateCommentForm(request.POST)
-            if comment_form.is_valid():
-                comment = comment_form.save(commit=False)
-                post_id = request.POST.get('post_id')
-                post = Post.objects.get(pk=post_id)
-                comment.post = post
-                comment.user = request.user
-                comment.created_at = timezone.now()
-                comment.save()
-
-                # Create notifications for other users
-                users = User.objects.exclude(id=request.user.id)
-                for user in users:
-                    notification = Notification.objects.create(
-                        notification_type=2,
-                        from_user=request.user,
-                        to_user=user,
-                        post=post
-                    )
+            comment = create_comment(request, comment_form)
+            if comment:
+                return redirect('posts:posts')
 
     context = {
         'form': form,
@@ -89,9 +54,57 @@ def post_view(request):
         'quote': quote,
         'author': author,
         'weather_data': weather_data,
-
     }
     return render(request, template_name, context)
+
+
+def fetch_quote():
+    response = requests.get('https://zenquotes.io/api/random')
+    quote_data = response.json()
+    quote = quote_data[0]['q']
+    author = quote_data[0]['a']
+    return quote, author
+
+
+def create_post(request, form):
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        post.created_date = timezone.now()
+        post.save()
+
+        users = User.objects.exclude(id=request.user.id)
+        for user in users:
+            notification = Notification.objects.create(
+                notification_type=1,
+                from_user=request.user,
+                to_user=user,
+                post=post
+            )
+
+        return post
+
+
+def create_comment(request, comment_form):
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        post_id = request.POST.get('post_id')
+        post = Post.objects.get(pk=post_id)
+        comment.post = post
+        comment.user = request.user
+        comment.created_at = timezone.now()
+        comment.save()
+
+        users = User.objects.exclude(id=request.user.id)
+        for user in users:
+            notification = Notification.objects.create(
+                notification_type=2,
+                from_user=request.user,
+                to_user=user,
+                post=post
+            )
+
+        return comment
 
 
 def get_weather(location):

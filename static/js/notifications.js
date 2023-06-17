@@ -28,7 +28,7 @@ function removeNotification(notificationId, element, redirectURL) {
         }
     };
 
-    xmlhttp.open("DELETE", `/notifications/remove/${notificationId}/`, true); // Update the URL with the correct endpoint
+    xmlhttp.open("DELETE", `/notifications/remove/${notificationId}/`, true);
     xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
     xmlhttp.send();
 }
@@ -39,7 +39,7 @@ function updateNotificationCount(change) {
         const count = parseInt(notificationCount.textContent);
         const updatedCount = count + change;
         if (updatedCount <= 0) {
-            notificationCount.remove(); // Remove the notification count badge if it becomes zero or negative
+            notificationCount.remove();
         } else {
             notificationCount.textContent = updatedCount;
         }

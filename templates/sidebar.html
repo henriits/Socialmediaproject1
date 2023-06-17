@@ -11,9 +11,9 @@
                 <img src="{{ user.profile.image.url }}" class="rounded" alt="Avatar" style="height: 140px">
             </div>
             <div class="follower-post-count">
-                <p class="followers">Total Likes:{{ like_count }}</p>
-                <p class="posts">Total Posts: {{ post_count }}</p>
-                <p class="registration-time">{{ user|time_since_registration }}</p>
+                <p class="followers">Total <i class="bi bi-suit-heart-fill"></i> {{ like_count }}</p>
+                <p class="posts">Total <i class="bi bi-file-post"></i> {{ post_count }}</p>
+                <footer class="registration-time blockquote-footer">{{ user|time_since_registration }}</footer>
             </div>
         </div>
 

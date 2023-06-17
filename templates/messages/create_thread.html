@@ -3,82 +3,33 @@
 
 {% block content %}
 
-<style>
-	.container {
-		background-color: #f8f9fa;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		border-radius: 4px;
-		padding: 20px;
-	}
-
-	.btn-light {
-		background-color: #fff;
-		color: #000;
-		border: none;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		border-radius: 4px;
-		padding: 10px 20px;
-		transition: background-color 0.3s ease;
-	}
-
-	.btn-light:hover {
-		background-color: #f0f0f0;
-	}
-
-	.card {
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		border-radius: 4px;
-		padding: 20px;
-		background-color: #fff;
-	}
-
-	.form-control {
-		box-shadow: none;
-		border: none;
-		border-radius: 4px;
-		padding: 12px;
-		background-color: #f0f0f0;
-	}
-
-	.btn-success {
-		background-color: #28a745;
-		color: #fff;
-		border: none;
-		border-radius: 4px;
-		padding: 10px 20px;
-		transition: background-color 0.3s ease;
-	}
-
-	.btn-success:hover {
-		background-color: #218838;
-	}
-</style>
 
 <div class="container">
-	<div class="row">
-		<div class="col-md-12 p-5">
-			<a href="{% url 'inbox' %}" class="btn btn-light">Back to Your Inbox</a>
-		</div>
-	</div>
+    <div class="message-thread-container">
+        <div class="row">
+            <div class="col-md-12 p-5">
+                <a href="{% url 'inbox' %}" class="btn btn-light">Back to Your Inbox</a>
+            </div>
+        </div>
 
-	<div class="row">
-		<div class="col-md-12 p-5">
-			<h3>Start a Conversation!</h3>
-		</div>
-	</div>
+        <div class="row">
+            <div class="col-md-12 p-5">
+                <h3>Start a Conversation!</h3>
+            </div>
+        </div>
 
-	<div class="row justify-content-center mt-3 mb-5">
-		<div class="col-md-5 col-sm-12 card">
-			<form method="POST">
-				{% csrf_token %}
-				<p>Enter the username for the person you would like to talk to.</p>
-				{{ form | crispy }}
-				<div class="d-grid gap-2">
-					<button class="btn btn-success mt-3" type="submit">Continue</button>
-				</div>
-			</form>
-		</div>
-	</div>
+        <div class="row justify-content-center mt-3 mb-5">
+            <div class="col-md-5 col-sm-12 card">
+                <form method="POST">
+                    {% csrf_token %}
+                    <p>Enter the username for the person you would like to talk to.</p>
+                    {{ form | crispy }}
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success mt-3" type="submit">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endblock content %}

@@ -20,21 +20,7 @@ from django.http import JsonResponse
 
 # import pdb
 
-# Create your views here.
-# class AllPostView(LoginRequiredMixin, ListView):
-#     model = Post
-#     template_name = "feed/posts.html"
-#     success_url = reverse_lazy("posts")
-#     context_object_name = "posts"
-#     ordering = ["-created_date"]  # ordering posts in descending order
-#     paginate_by = 10  # shows 10 posts per page
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         posts = context["posts"]
-#         context["comments"] = Comments.objects.filter(post_id__in=posts)
-#         return context
-#
+
 
 @login_required(login_url='/login/')
 def post_view(request):
@@ -139,22 +125,6 @@ class PostDetailView(DetailView):
         return context
 
 
-# class CreateCommentView(CreateView, LoginRequiredMixin):
-#     model = Comments
-#     form_class = CreateCommentForm
-#     template_name = 'feed/create_comment.html'
-#     success_url = reverse_lazy('posts:posts')
-#
-#     def form_valid(self, form):
-#         post = get_object_or_404(Post, id=self.kwargs['post_id'])
-#         comment = form.save(commit=False)
-#         comment.post_id = post
-#         comment.user = self.request.user
-#         comment.save()
-#         return super().form_valid(form)
-#
-#     success_url = reverse_lazy('posts:allposts')
-#
 
 def total_posts(request):
     count_posts = Post.objects.count()

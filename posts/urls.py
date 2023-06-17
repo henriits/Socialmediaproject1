@@ -18,7 +18,6 @@ urlpatterns = [
     path('<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
     path('<int:pk>/update', PostUpdateView.as_view(), name='post_update'),
     path('like/comment/<int:comment_id>/', comment_like_view, name='comment_like'),
-    #path('likes/<int:pk', LikeListView.as_view(), name='likes'),
     path('comment/<int:pk>/delete/', DeleteCommentView.as_view(), name='delete_comment'),
     path('liked_users/<int:post_id>', liked_users_view, name='liked_users'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

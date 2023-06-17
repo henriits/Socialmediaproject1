@@ -7,6 +7,13 @@
         <div class="col-md-8">
             <div class="card bg-light">
                 <div class="card-body">
+                    <a href="">
+                        <img src="{{ post.author.profile.image.url }}"
+                         class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
+                    </a>
+                    <a href="{% url 'users:profile' post.author.profile.pk %}" class="text-dark mb-0">
+                        <strong>{{ post.author.username }}</strong>
+                    </a>
                     <h2>{{ post.title }}</h2>
                     {% if post.image %}
                     <img src="{{ post.image.url }}" alt="Post Image" class="img-fluid">

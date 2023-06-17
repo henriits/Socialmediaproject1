@@ -166,6 +166,14 @@ def total_posts(request):
 def like_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
+    # Create notification for the post author
+    notification = Notification.objects.create(
+        notification_type=3,
+        from_user=request.user,
+        to_user=post.author,
+        post=post
+    )
+
     if request.method == 'POST' and request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         if request.user.is_authenticated:
             if post.likes.filter(id=request.user.id).exists():

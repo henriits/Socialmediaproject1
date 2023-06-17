@@ -8,6 +8,7 @@ from messaging.models import ThreadModel, MessageModel
 
 
 class ListThreads(View):
+    """Shows all possible messages created to or from user"""
     def get(self, request, *args, **kwargs):
         threads = ThreadModel.objects.filter(Q(user=request.user) | Q(receiver=request.user))
 
@@ -20,6 +21,7 @@ class ListThreads(View):
 
 
 class CreateThread(View):
+    """Creates a new thread for messages, where messages between users are shown"""
     def get(self, request, *args, **kwargs):
         form = ThreadForm()
         context = {
@@ -49,6 +51,7 @@ class CreateThread(View):
 
 
 class ThreadView(View):
+    """Shows all created threads"""
     def get(self, request, pk, *args, **kwargs):
         form = MessageForm()
         thread = ThreadModel.objects.get(pk=pk)

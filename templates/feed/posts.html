@@ -4,7 +4,6 @@
 {% block content %}
 
 
-
 <div class="container-fluid">
     <div class="row row-cols-1 row-cols-md-2">
         {% include 'sidebar.html' %}
@@ -30,14 +29,16 @@
                                         <textarea class="form-control" id="id_text" name="text" rows="3"></textarea>
                                         <div class="row">
                                             <div class="col-md-6 mb-3 my-3 text-white">
-                                                <input class="form-control btn-success" type="file" id="id_image" name="image"  >
+                                                <input class="form-control btn-success" type="file" id="id_image"
+                                                       name="image">
 
                                                 <!-- Remove btn-success to remove green button for choose file -->
 
                                             </div>
                                             <div class="col-md-6 mb-3 my-3">
                                                 <button class="btn btn-success w-100" type="submit">
-                                                    <i class="fas fa-upload me-2" style="color: #defa00; height:23px;"></i>
+                                                    <i class="fas fa-upload me-2"
+                                                       style="color: #defa00; height:23px;"></i>
                                                     Upload the post
                                                 </button>
                                             </div>
@@ -53,42 +54,41 @@
             <!-- Posts -->
             {% for post in posts %}
             <div class="card mb-4">
-                <div class="card-body mb-4">
+                <div class="card mb-4">
                     <!-- Data -->
-                    <div class="d-flex mb-4">
-                        <a href="">
-                            <img src="{{ post.author.profile.image.url }}"
-                                 class="border rounded-circle me-2" alt="Avatar" style="height: 40px"/>
+                    <div class="d-flex align-items-center mb-4">
+                        <a href="#">
+                            <img src="{{ post.author.profile.image.url }}" class="rounded-circle me-2" alt="Avatar"
+                                 style="height: 40px">
                         </a>
                         <div>
-                            <a href="{% url 'users:profile' post.author.profile.pk %}" class="text-dark mb-0">
-                                <strong>{{ post.author.username }}</strong>
-                            </a>
-                            <p>
-                                <small>{{ post.created_date }}</small>
-                            </p>
+                            <a href="{% url 'users:profile' post.author.profile.pk %}" class="text-dark mb-0 fw-bold">
+                                {{ post.author.username }}</a>
+                            <p class="mb-0"><small>{{ post.created_date }}</small></p>
                         </div>
                     </div>
                     <!-- Description -->
-                    <div>
+                    <div class="card-body">
                         <p>{{ post.text }}</p>
                     </div>
-                </div>
-                <!-- Media -->
-                <a href="{% url 'post_detail' post.pk %}">
-                    <div class="bg-image hover-overlay ripple rounded-0">
-                        <div class="resized-img">
-                            {% if post.image %}
-                            <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
-                            {% else %}
 
-                            <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
 
-                            <!--                            <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">-->
-                            {% endif %}
+                    <!-- Media -->
+                    <a href="{% url 'post_detail' post.pk %}">
+                        <div class="bg-image hover-overlay ripple rounded-0">
+                            <div class="resized-img">
+                                {% if post.image %}
+                                <img src="{{ post.image.url }}" class="post-img" alt="{{ post.title }}">
+                                {% else %}
+
+                                <!-- DO WE NEED DEFAULT IMG? or we make the img a MUST? -->
+
+                                <!--                            <img src="{% static 'img/defaultpost_img.jpg' %}" class="post-img" alt="Default Image">-->
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
                 <!-- Media -->
                 <!-- Interactions -->
                 <div class="card-body">
@@ -129,12 +129,13 @@
                             </div>
 
                             <p>
-                              <span id="like-count-{{ post.id }}" class="ms-3">{{ post.total_likes }}</span>
+                                <span id="like-count-{{ post.id }}" class="ms-3">{{ post.total_likes }}</span>
                             </p>
 
                         </div>
                         <div>
-                            <a href="{% url 'post_detail' post.pk %}" class="text-muted">Total comments: {{ post.total_comments }}</a>
+                            <a href="{% url 'post_detail' post.pk %}" class="text-muted">Total comments:
+                                {{ post.total_comments }}</a>
 
                         </div>
                     </div>
@@ -154,15 +155,17 @@
                         <form class="d-inline-block">
                             {% csrf_token %}
                             {% if request.user in post.likes.all %}
-                              <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark" data-count-element="#like-count-{{ post.id }}">
+                            <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}"
+                                    data-mdb-ripple-color="dark" data-count-element="#like-count-{{ post.id }}">
                                 <i class="far fa-thumbs-down me-2"></i>
                                 Unlike
-                              </button>
+                            </button>
                             {% else %}
-                              <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}" data-mdb-ripple-color="dark" data-count-element="#like-count-{{ post.id }}">
+                            <button type="button" class="btn btn-lg like-button" data-post-id="{{ post.id }}"
+                                    data-mdb-ripple-color="dark" data-count-element="#like-count-{{ post.id }}">
                                 <i class="fas fa-heart me-2"></i>
                                 Like
-                              </button>
+                            </button>
                             {% endif %}
                         </form>
 

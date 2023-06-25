@@ -117,14 +117,13 @@ def create_comment(request, comment_form):
         comment.created_at = timezone.now()
         comment.save()
 
-        users = User.objects.exclude(id=request.user.id)
-        for user in users:
-            notification = Notification.objects.create(
-                notification_type=2,
-                from_user=request.user,
-                to_user=user,
-                post=post
-            )
+
+        notification = Notification.objects.create(
+            notification_type=2,
+            from_user=request.user,
+            to_user=post.author,
+            post=post
+        )
 
         return comment
 

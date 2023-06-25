@@ -8,25 +8,25 @@ from notifications.models import Notification
 from posts.models import Post
 
 
-class PostNotification(View):
-    def get(self, request, notification_pk, post_pk, *args, **kwargs):
-        notification = Notification.objects.get(pk=notification_pk)
-        post = Post.objects.get(pk=post_pk)
-
-        notification.user_has_seen = True
-        notification.save()
-
-        return redirect('post-detail', pk=post_pk)
-
-class FollowNotification(View):
-    def get(self, request, notification_pk, profile_pk, *args, **kwargs):
-        notification = Notification.objects.get(pk=notification_pk)
-        profile = User.objects.get(pk=profile_pk)
-
-        notification.user_has_seen = True
-        notification.save()
-
-        return redirect('profile', pk=profile_pk)
+# class PostNotification(View):
+#     def get(self, request, notification_pk, post_pk, *args, **kwargs):
+#         notification = Notification.objects.get(pk=notification_pk)
+#         post = Post.objects.get(pk=post_pk)
+#
+#         notification.user_has_seen = True
+#         notification.save()
+#
+#         return redirect('post-detail', pk=post_pk)
+#
+# class FollowNotification(View):
+#     def get(self, request, notification_pk, profile_pk, *args, **kwargs):
+#         notification = Notification.objects.get(pk=notification_pk)
+#         profile = User.objects.get(pk=profile_pk)
+#
+#         notification.user_has_seen = True
+#         notification.save()
+#
+#         return redirect('profile', pk=profile_pk)
 
 class ThreadNotification(View):
     def get(self, request, notification_pk, object_pk, *args, **kwargs):

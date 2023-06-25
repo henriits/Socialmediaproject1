@@ -6,12 +6,17 @@ from .models import Profile
 
 
 class UserLoginForm(AuthenticationForm):
+    """
+    Form for user login.
+
+    Inherits from AuthenticationForm, a built-in Django form for user authentication.
+    Provides customizations for the username and password fields, including placeholder text.
+
+    """
     username = forms.CharField(widget=forms.TextInput(attrs={
-        # 'class': "form-control py-4", - moving this to def __init__
         'placeholder': 'Enter your username'
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        # 'class': "form-control py-4",
         'placeholder': 'Enter your password'
     }))
 
@@ -21,6 +26,14 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegisterForm(UserCreationForm):
+    """
+    Form for user registration.
+
+    Inherits from UserCreationForm, a built-in Django form for user registration.
+    Provides customizations for the username and password fields, including placeholder text and label.
+
+    Template: users/register.html
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['password1'].label = 'Password'
@@ -55,11 +68,17 @@ class UserRegisterForm(UserCreationForm):
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    """
+    Form for updating user profile.
+
+    Inherits from ModelForm, a built-in Django form for model-based forms.
+    Defines the fields to be included in the form for updating the Profile model.
+    Provides customization for the date_of_birth field with a date picker widget.
+
+    Template: users/edit_profile.html
+    """
     date_of_birth = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Profile
         fields = ['image', 'first_name', 'last_name', 'date_of_birth', 'bio', 'email', 'location']
-
-
-

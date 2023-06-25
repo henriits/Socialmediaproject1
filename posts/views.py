@@ -15,11 +15,13 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 
 
-# import pdb
-
-
 @login_required(login_url='/login/')
 def post_view(request):
+    """
+    This function-based view is responsible for displaying posts on the feed.
+    It handles creating new posts, creating comments, and rendering the feed template.
+    """
+
     template_name = "feed/posts.html"
     form = CreateNewPost()
     comment_form = CreateCommentForm()
@@ -35,11 +37,13 @@ def post_view(request):
 
     if request.method == 'POST':
         if 'post_id' not in request.POST:
+            # Create a new post
             form = CreateNewPost(request.POST, request.FILES)
             post = create_post(request, form)
             if post:
                 return redirect('posts:posts')
         else:
+            # Create a new comment on a post
             comment_form = CreateCommentForm(request.POST)
             comment = create_comment(request, comment_form)
             if comment:
@@ -59,6 +63,11 @@ def post_view(request):
 
 
 def fetch_quote():
+    """
+    This function fetches a random quote from an API.
+    It returns the quote and the author as a tuple.
+    """
+
     response = requests.get('https://zenquotes.io/api/random')
     quote_data = response.json()
     quote = quote_data[0]['q']
@@ -67,6 +76,12 @@ def fetch_quote():
 
 
 def create_post(request, form):
+    """
+    This function creates a new post based on the submitted form data.
+    It associates the post with the current user, saves it, and creates notifications for other users.
+    It returns the created post object.
+    """
+
     if form.is_valid():
         post = form.save(commit=False)
         post.author = request.user
@@ -86,6 +101,13 @@ def create_post(request, form):
 
 
 def create_comment(request, comment_form):
+    """
+    This function creates a new comment on a post based on the submitted form data.
+    It associates the comment with the current user, the corresponding post, and saves it.
+    It also creates notifications for other users.
+    It returns the created comment object.
+    """
+
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
         post_id = request.POST.get('post_id')
@@ -108,7 +130,11 @@ def create_comment(request, comment_form):
 
 
 def get_weather(location):
-    """Displays the weather for location that user has set on edit profile"""
+    """
+    This function retrieves weather data for a given location using an external weather API.
+    It returns the weather data as a dictionary.
+    """
+
     api_key = '19ff05d2e9ea1a4230560400f04409ff'  # Replace with your OpenWeatherMap API key
     if location is None:
         location = 'Tallinn'  # Default location is set to Tallinn
@@ -122,7 +148,11 @@ def get_weather(location):
 
 
 class PostDetailView(DetailView):
-    """Displays detailed view of the post with comments, likes, allows to respond to comment from that view"""
+    """
+    This class-based view displays a detailed view of a post, including comments and likes.
+    It allows users to respond to comments from the same view.
+    """
+
     model = Post
     template_name = 'feed/post_detail.html'
     context_object_name = 'post'
@@ -138,7 +168,10 @@ class PostDetailView(DetailView):
 
 
 def total_posts(request):
-    """Shows users total posts"""
+    """
+    This function displays the total number of posts on the sidebar.
+    """
+
     count_posts = Post.objects.count()
     context = {'total_posts': count_posts}
     return render(request, 'sidebar.html', context)
@@ -146,7 +179,12 @@ def total_posts(request):
 
 @login_required
 def like_view(request, pk):
-    """Shows who has liked or unliked the post, also displays it as notification"""
+    """
+    This function handles the like/unlike functionality for a post.
+    It allows users to like or unlike a post and sends appropriate notifications.
+    It returns a JSON response indicating the current like status and like count.
+    """
+
     post = get_object_or_404(Post, pk=pk)
 
     # Create notification for the post author
@@ -179,7 +217,11 @@ def like_view(request, pk):
 
 @login_required
 def comment_like_view(request, comment_id):
-    """Displays count for comments liked, allows delete comment"""
+    """
+    This function handles liking a comment.
+    It allows users to like or unlike a comment on a post.
+    """
+
     comment = get_object_or_404(Comments, id=comment_id)
     user = request.user
 
@@ -194,7 +236,11 @@ def comment_like_view(request, comment_id):
 
 
 class PostDeleteView(DeleteView, LoginRequiredMixin):
-    """Allows user to delete post, if user is the author"""
+    """
+    This class-based view allows the user to delete their own post.
+    Only the post author can delete a post.
+    """
+
     model = Post
     template_name = 'feed/post_delete.html'
     success_url = reverse_lazy('posts:posts')
@@ -210,7 +256,11 @@ class PostDeleteView(DeleteView, LoginRequiredMixin):
 
 
 class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    """allows comment author to delete created comment"""
+    """
+    This class-based view allows the comment author to delete their own comment.
+    Only the comment author can delete a comment.
+    """
+
     model = Comments
     template_name = 'feed/delete_comment.html'
     success_url = reverse_lazy('posts:posts')
@@ -221,7 +271,11 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 class PostUpdateView(UpdateView):
-    """Allows user to update the previously created post"""
+    """
+    This class-based view allows the user to update their own post.
+    Only the post author can update a post.
+    """
+
     model = Post
     form_class = CreateNewPost
     template_name = 'feed/update_post.html'
@@ -229,7 +283,10 @@ class PostUpdateView(UpdateView):
 
 
 def liked_users_view(request, post_id):
-    """Displays all the users that have liked the post"""
+    """
+    This function displays all the users who have liked a post.
+    """
+
     post = get_object_or_404(Post, pk=post_id)
     liked_users = post.likes.all()
 

@@ -5,17 +5,23 @@ from django.contrib import messages
 from django.urls import reverse
 from django.views import View
 from django.contrib.auth.models import User
-from posts.models import Post  # why this gives error?
+from posts.models import Post
 from .forms import UserRegisterForm, UserLoginForm, ProfileUpdateForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 
 
-# Create your views here.
-
 def login(request):
-    #
+    """
+    Handle user login.
+
+    If the request method is POST, validate the login form and authenticate the user.
+    If the user is authenticated and active, log in the user and redirect to the home page.
+    If the form is not valid, display the form errors.
+    If the request method is GET, display the login form.
+
+    """
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
@@ -29,12 +35,20 @@ def login(request):
             print(form.errors)
     else:
         form = UserLoginForm()
-    form = UserLoginForm()
     context = {'form': form}
     return render(request, 'users/login.html', context)
 
 
 def register(request):
+    """
+    Handle user registration.
+
+    If the request method is POST, validate the registration form and create a new user account.
+    If the form is valid, save the user account and display a success message.
+    If the form is not valid, display the form errors.
+    If the request method is GET, display the registration form.
+
+    """
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -43,7 +57,7 @@ def register(request):
             messages.success(request, f'Account created for {username}!')
 
             # Add a print statement to check if this line is reached
-            print('Redirecting to login page...')
+            print('Redirecting to the login page...')
 
             return redirect('login')
         else:
@@ -53,14 +67,13 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 
-# @login_required
-# def profile(request):
-#     # form = UserUpdateForm(instance=request.user)
-#     # context = {'form': form}
-#     return render(request, 'users/profile.html')
-#
-
 class ProfileView(View):
+    """
+
+    Retrieve the user's profile and associated data such as posts, post count, and like count.
+    Render the profile template with the retrieved data.
+
+    """
     def get(self, request, pk, *args, **kwargs):
         profile = Profile.objects.get(pk=pk)
         user = profile.user
@@ -80,11 +93,23 @@ class ProfileView(View):
 
 
 def logout(request):
+    """
+    Log out the currently authenticated user and redirect to the home page.
+    """
     auth.logout(request)
     return redirect('posts:home')
 
 
 def edit_profile(request):
+    """
+    Handle editing user profile.
+
+    If the request method is POST, validate the profile update form and save the updated profile data.
+    If the form is valid, redirect to the user's profile page.
+    If the form is not valid, display the form errors.
+    If the request method is GET, display the profile update form.
+
+    """
     profile = request.user.profile
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
@@ -101,6 +126,10 @@ def edit_profile(request):
 
 
 def get_weather(location):
+    """
+    Retrieve weather data for the specified location using the OpenWeatherMap API.
+    return The weather data as a JSON object or None if an error occurs.
+    """
     api_key = '19ff05d2e9ea1a4230560400f04409ff'  # Replace with your OpenWeatherMap API key
     if location is None:
         location = 'Tallinn'  # Default location is set to Tallinn
@@ -114,6 +143,16 @@ def get_weather(location):
 
 
 class UserSearch(View):
+    """
+    View class for searching user profiles.
+
+    Retrieve the search query from the request GET parameters.
+    Perform a case-insensitive search for profiles matching the query.
+    Retrieve additional data such as post count, like count, quote, author, and weather data.
+    Render the search results template with the retrieved data.
+
+    Template: users/search.html
+    """
     def get(self, request, *args, **kwargs):
         user = request.user
         post_count = Post.objects.filter(author=user).count()
@@ -144,6 +183,13 @@ class UserSearch(View):
 
 
 def user_profile(request, user_id):
+    """
+    Display the profile of a specific user.
+
+    Retrieve the user object and associated posts.
+    Render the profile template with the retrieved data.
+
+    """
     user = User.objects.get(id=user_id)
     posts = Post.objects.filter(author=user)
     return render(request, 'users/profile.html', {'user': user, 'posts': posts})
